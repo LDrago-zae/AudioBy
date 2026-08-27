@@ -1,10 +1,14 @@
 import SwiftUI
 
 public struct ProfileDetailsView: View {
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = true
     @AppStorage("autoRewindOnResume") private var autoRewindOnResume: Bool = true
     @AppStorage("highQualityAudio") private var highQualityAudio: Bool = true
+    @AppStorage("downloadWifiOnly") private var downloadWifiOnly: Bool = true
     @Bindable var repository = AudiobookRepository.shared
     @Bindable var playerService = AudioPlayerService.shared
+    @Bindable var downloadManager = DownloadManager.shared
+    @State private var showingClearStorageAlert = false
 
     public init() {}
 
@@ -20,29 +24,28 @@ public struct ProfileDetailsView: View {
                             Image(systemName: "person.crop.circle.fill")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 64, height: 64)
+                                .frame(width: 60, height: 60)
                                 .foregroundColor(Color(red: 0.85, green: 0.70, blue: 0.60))
                                 .clipShape(Circle())
                                 .overlay(
                                     Circle()
-                                        .stroke(Color.white, lineWidth: 2)
+                                        .stroke(Color.white.opacity(0.2), lineWidth: 2)
                                 )
-                                .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
 
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Michael Kamisado")
-                                    .font(.system(size: 20, weight: .bold))
+                                Text("Audiobook Enthusiast")
+                                    .font(.system(size: 19, weight: .bold))
                                     .foregroundColor(Theme.textDark)
 
-                                Text("Product Design Track • Senior Level")
-                                    .font(.system(size: 13, weight: .medium))
+                                Text("Premium Member • High Quality Stream")
+                                    .font(.system(size: 12, weight: .medium))
                                     .foregroundColor(Theme.textMuted)
 
                                 HStack(spacing: 6) {
                                     Circle()
                                         .fill(Theme.brandGreen)
                                         .frame(width: 8, height: 8)
-                                    Text("Active Learning Streak: 12 Days")
+                                    Text("Online & Synced")
                                         .font(.system(size: 12, weight: .bold))
                                         .foregroundColor(Theme.brandGreen)
                                 }
@@ -51,69 +54,144 @@ public struct ProfileDetailsView: View {
                         }
                         .padding(18)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.white)
+                        .background(Theme.surfaceWhite)
                         .cornerRadius(20)
-                        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Theme.cardBorder, lineWidth: 1)
+                        )
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
 
-                        // Skill Mastery Stats Grid
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Skill Mastery Breakdown")
-                                .font(.system(size: 18, weight: .bold))
+                        // Appearance & Theme Switcher (Clean Single Toggle Row)
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Appearance & Theme")
+                                .font(.system(size: 17, weight: .bold))
                                 .foregroundColor(Theme.textDark)
                                 .padding(.horizontal, 20)
 
-                            HStack(spacing: 12) {
-                                SkillStatBox(
-                                    title: "Visual Design",
-                                    score: "94%",
-                                    icon: "paintpalette.fill",
-                                    color: Theme.brandGreen
-                                )
+                            HStack {
+                                HStack(spacing: 12) {
+                                    Image(systemName: isDarkMode ? "moon.stars.fill" : "sun.max.fill")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(isDarkMode ? Theme.brandGreen : .orange)
+                                        .frame(width: 36, height: 36)
+                                        .background(isDarkMode ? Theme.brandGreen.opacity(0.15) : Color.orange.opacity(0.15))
+                                        .clipShape(Circle())
 
-                                SkillStatBox(
-                                    title: "Interaction",
-                                    score: "86%",
-                                    icon: "hand.tap.fill",
-                                    color: Color(red: 0.2, green: 0.6, blue: 0.9)
-                                )
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(isDarkMode ? "Dark Theme" : "Light Theme")
+                                            .font(.system(size: 15, weight: .semibold))
+                                            .foregroundColor(Theme.textDark)
+                                        Text(isDarkMode ? "Obsidian black with emerald accents" : "Clean light interface with crisp contrast")
+                                            .font(.system(size: 12))
+                                            .foregroundColor(Theme.textMuted)
+                                    }
+                                }
 
-                                SkillStatBox(
-                                    title: "Strategy",
-                                    score: "78%",
-                                    icon: "chart.line.uptrend.xyaxis",
-                                    color: Color(red: 0.9, green: 0.5, blue: 0.2)
-                                )
+                                Spacer()
+
+                                Toggle("", isOn: $isDarkMode)
+                                    .tint(Theme.brandGreen)
+                                    .labelsHidden()
                             }
+                            .padding(16)
+                            .background(Theme.surfaceWhite)
+                            .cornerRadius(18)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(Theme.cardBorder, lineWidth: 1)
+                            )
                             .padding(.horizontal, 20)
                         }
 
-                        // Audio & Learning Preferences
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Preferences")
-                                .font(.system(size: 18, weight: .bold))
+                        // Audio Playback Preferences
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Audio & Playback Settings")
+                                .font(.system(size: 17, weight: .bold))
                                 .foregroundColor(Theme.textDark)
                                 .padding(.horizontal, 20)
 
                             VStack(spacing: 1) {
                                 ToggleRow(
                                     title: "Auto-Rewind on Resume",
-                                    subtitle: "Rewinds 3-5 seconds after long pauses",
+                                    subtitle: "Rewinds 10s after long pause to restore context",
                                     isOn: $autoRewindOnResume
                                 )
 
-                                Divider().padding(.horizontal, 16)
+                                Divider().background(Theme.cardBorder).padding(.horizontal, 16)
 
                                 ToggleRow(
-                                    title: "High Quality Lossless Audio",
-                                    subtitle: "Studio grade voice narrations",
+                                    title: "Voice Clarity Boost",
+                                    subtitle: "Enhance narrator vocal clarity and cut background hiss",
+                                    isOn: $playerService.isVocalClarityBoosted
+                                )
+
+                                Divider().background(Theme.cardBorder).padding(.horizontal, 16)
+
+                                ToggleRow(
+                                    title: "High Quality Audio",
+                                    subtitle: "192 kbps high bitrate stream when available",
                                     isOn: $highQualityAudio
                                 )
                             }
-                            .background(Color.white)
+                            .background(Theme.surfaceWhite)
                             .cornerRadius(18)
-                            .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(Theme.cardBorder, lineWidth: 1)
+                            )
+                            .padding(.horizontal, 20)
+                        }
+
+                        // Offline Downloads & Storage
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Storage & Downloads")
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundColor(Theme.textDark)
+                                .padding(.horizontal, 20)
+
+                            VStack(spacing: 1) {
+                                ToggleRow(
+                                    title: "Download Over Wi-Fi Only",
+                                    subtitle: "Avoid cellular data consumption for audiobooks",
+                                    isOn: $downloadWifiOnly
+                                )
+
+                                Divider().background(Theme.cardBorder).padding(.horizontal, 16)
+
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Offline Storage Used")
+                                            .font(.system(size: 15, weight: .semibold))
+                                            .foregroundColor(Theme.textDark)
+                                        Text("\(downloadManager.formattedStorageUsed) occupied")
+                                            .font(.system(size: 12))
+                                            .foregroundColor(Theme.textMuted)
+                                    }
+
+                                    Spacer()
+
+                                    Button {
+                                        showingClearStorageAlert = true
+                                    } label: {
+                                        Text("Clear Cache")
+                                            .font(.system(size: 13, weight: .bold))
+                                            .foregroundColor(.red)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .background(Color.red.opacity(0.15))
+                                            .clipShape(Capsule())
+                                    }
+                                }
+                                .padding(16)
+                            }
+                            .background(Theme.surfaceWhite)
+                            .cornerRadius(18)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(Theme.cardBorder, lineWidth: 1)
+                            )
                             .padding(.horizontal, 20)
                         }
 
@@ -124,7 +202,7 @@ public struct ProfileDetailsView: View {
                                     .font(.system(size: 18))
                                     .foregroundColor(Theme.brandGreen)
                                     .frame(width: 36, height: 36)
-                                    .background(Theme.brandGreen.opacity(0.12))
+                                    .background(Theme.brandGreen.opacity(0.15))
                                     .clipShape(Circle())
 
                                 VStack(alignment: .leading, spacing: 2) {
@@ -143,47 +221,29 @@ public struct ProfileDetailsView: View {
                                     .foregroundColor(Theme.textMuted)
                             }
                             .padding(16)
-                            .background(Color.white)
+                            .background(Theme.surfaceWhite)
                             .cornerRadius(18)
-                            .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(Theme.cardBorder, lineWidth: 1)
+                            )
                             .padding(.horizontal, 20)
                         }
 
-                        Spacer(minLength: 120)
+                        Spacer(minLength: 160)
                     }
                 }
             }
-            .navigationTitle("Profile & Stats")
+            .navigationTitle("Settings")
+            .confirmationDialog("Clear Offline Audio Cache?", isPresented: $showingClearStorageAlert, titleVisibility: .visible) {
+                Button("Delete All Downloads", role: .destructive) {
+                    downloadManager.clearAllCache()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will remove all downloaded audiobooks from your device.")
+            }
         }
-    }
-}
-
-private struct SkillStatBox: View {
-    let title: String
-    let score: String
-    let icon: String
-    let color: Color
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Image(systemName: icon)
-                .font(.system(size: 14))
-                .foregroundColor(color)
-
-            Text(score)
-                .font(.system(size: 20, weight: .heavy, design: .rounded))
-                .foregroundColor(Theme.textDark)
-
-            Text(title)
-                .font(.system(size: 11, weight: .medium))
-                .foregroundColor(Theme.textMuted)
-                .lineLimit(1)
-        }
-        .padding(14)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
     }
 }
 
