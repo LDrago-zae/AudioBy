@@ -3,6 +3,7 @@ import Foundation
 public enum CatalogSourceKind: String, Sendable {
     case librivox = "LibriVox"
     case gutenberg = "Project Gutenberg"
+    case userPDF = "My PDF"
 }
 
 /// Fetches public-domain audiobooks from the Internet Archive (LibriVox collection)
@@ -58,11 +59,9 @@ public final class AudiobookAPIService: @unchecked Sendable {
         }
 
         let trimmedQuery = query?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if !trimmedQuery.isEmpty {
-            let gutenberg = await fetchFromGutendex(query: trimmedQuery, category: category, limit: 12)
-            for book in gutenberg where !results.contains(where: { Self.titlesMatch($0.title, book.title) }) {
-                results.append(book)
-            }
+        if results.isEmpty, !trimmedQuery.isEmpty {
+            let gutenberg = await fetchFromGutendex(query: trimmedQuery, category: category, limit: limit)
+            results.append(contentsOf: gutenberg)
         }
 
         if results.isEmpty, let lastError {
