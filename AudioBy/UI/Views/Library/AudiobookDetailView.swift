@@ -12,6 +12,7 @@ public struct AudiobookDetailView: View {
     @State private var showingReader = false
     @State private var selectedChapterForReader: Chapter?
     @State private var showingVoicePicker = false
+    @State private var showingPaywall = false
 
     public init(book: Audiobook) {
         self.book = book
@@ -230,7 +231,11 @@ public struct AudiobookDetailView: View {
                             if downloadManager.isBookDownloaded(activeBook.id) {
                                 downloadManager.deleteDownload(for: activeBook.id)
                             } else {
-                                downloadManager.downloadAudiobook(activeBook)
+                                if EntitlementService.shared.canDownloadMore {
+                                    downloadManager.downloadAudiobook(activeBook)
+                                } else {
+                                    showingPaywall = true
+                                }
                             }
                         } label: {
                             Group {
@@ -606,6 +611,7 @@ public struct AudiobookDetailView: View {
         }
         .navigationBarHidden(true)
             .task {
+                if activeBook.catalogSource == CatalogSourceKind.userPDF.rawValue { return }
                 if displayedChapters.contains(where: { !$0.hasReadableText }) || displayedChapters.isEmpty {
                     _ = await repository.loadLiveChapters(for: activeBook.id)
                 }
@@ -615,6 +621,9 @@ public struct AudiobookDetailView: View {
         }
         .sheet(isPresented: $showingVoicePicker) {
             VoicePickerSheet()
+        }
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView()
         }
     }
 }

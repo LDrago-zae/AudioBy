@@ -2,8 +2,10 @@ import SwiftUI
 
 public struct ExploreSearchView: View {
     @Bindable var repository = AudiobookRepository.shared
-    @Bindable var playerService = AudioPlayerService.shared
     @State private var showingFilterSheet = false
+    @State private var showingImporter = false
+    @State private var showingPaywall = false
+    @State private var localSearch = ""
     @Environment(\.dismiss) private var dismiss
 
     public init() {}
@@ -19,7 +21,6 @@ public struct ExploreSearchView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 18) {
-                    // Top Header Row
                     HStack(spacing: 12) {
                         Button {
                             dismiss()
@@ -38,28 +39,40 @@ public struct ExploreSearchView: View {
                             .foregroundColor(Theme.textDark)
 
                         Spacer()
+
+                        Button {
+                            showingImporter = true
+                        } label: {
+                            Image(systemName: "doc.badge.plus")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(Theme.brandGreen)
+                                .frame(width: 44, height: 44)
+                                .background(Theme.surfaceWhite)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Theme.cardBorder, lineWidth: 1))
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
 
-                    // Search Bar & Filter Button
                     HStack(spacing: 10) {
                         HStack {
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(Theme.textMuted)
-                            TextField("Search titles, authors, narrators...", text: $repository.searchQuery)
+                            TextField("Search titles, authors, narrators...", text: $localSearch)
                                 .font(.system(size: 15))
                                 .foregroundColor(Theme.textDark)
                                 .autocorrectionDisabled()
                                 .onSubmit {
-                                    Task {
-                                        await repository.fetchRemoteAudiobooks()
-                                    }
+                                    repository.searchQuery = localSearch
+                                    Task { await repository.fetchRemoteAudiobooks(reset: true) }
                                 }
 
-                            if !repository.searchQuery.isEmpty {
+                            if !localSearch.isEmpty {
                                 Button {
+                                    localSearch = ""
                                     repository.searchQuery = ""
+                                    Task { await repository.fetchRemoteAudiobooks(reset: true) }
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundColor(Theme.textMuted)
@@ -75,7 +88,6 @@ public struct ExploreSearchView: View {
                                 .stroke(Theme.cardBorder, lineWidth: 1)
                         )
 
-                        // Filter Button
                         Button {
                             showingFilterSheet = true
                         } label: {
@@ -93,7 +105,6 @@ public struct ExploreSearchView: View {
                     }
                     .padding(.horizontal, 20)
 
-                    // Category Chips Horizontal Scroll
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 8) {
                             ForEach(AudiobookCategory.allCases, id: \.self) { category in
@@ -101,7 +112,7 @@ public struct ExploreSearchView: View {
                                 Button {
                                     repository.selectedCategory = category
                                     Task {
-                                        await repository.fetchRemoteAudiobooks(for: category)
+                                        await repository.fetchRemoteAudiobooks(for: category, reset: true)
                                     }
                                 } label: {
                                     HStack(spacing: 6) {
@@ -128,9 +139,8 @@ public struct ExploreSearchView: View {
                         .padding(.horizontal, 20)
                     }
 
-                    // Results Header
                     HStack {
-                        Text(repository.searchQuery.isEmpty ? "All Audiobooks" : "Search Results (\(repository.filteredAudiobooks.count))")
+                        Text(repository.searchQuery.isEmpty ? "All Audiobooks" : "Search Results (\(repository.exploreBooks.count))")
                             .font(.system(size: 17, weight: .bold))
                             .foregroundColor(Theme.textDark)
 
@@ -142,7 +152,7 @@ public struct ExploreSearchView: View {
                                 .scaleEffect(0.8)
                         } else {
                             Button {
-                                Task { await repository.fetchRemoteAudiobooks() }
+                                Task { await repository.fetchRemoteAudiobooks(reset: true) }
                             } label: {
                                 Image(systemName: "arrow.clockwise")
                                     .font(.system(size: 14, weight: .semibold))
@@ -159,7 +169,7 @@ public struct ExploreSearchView: View {
                                 .foregroundColor(Theme.textMuted)
                                 .multilineTextAlignment(.center)
                             Button {
-                                Task { await repository.fetchRemoteAudiobooks() }
+                                Task { await repository.fetchRemoteAudiobooks(reset: true) }
                             } label: {
                                 Text("Retry catalog")
                                     .font(.system(size: 13, weight: .bold))
@@ -174,7 +184,7 @@ public struct ExploreSearchView: View {
                         .padding(.horizontal, 20)
                     }
 
-                    if !repository.isLoadingRemote && repository.filteredAudiobooks.isEmpty {
+                    if !repository.isLoadingRemote && repository.exploreBooks.isEmpty {
                         VStack(spacing: 10) {
                             Text("No titles matched this search.")
                                 .font(.system(size: 15, weight: .semibold))
@@ -187,9 +197,8 @@ public struct ExploreSearchView: View {
                         .padding(.vertical, 24)
                     }
 
-                    // 2-Column Catalog Grid
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(repository.filteredAudiobooks) { book in
+                        ForEach(repository.exploreBooks) { book in
                             NavigationLink(destination: AudiobookDetailView(book: book)) {
                                 VStack(alignment: .leading, spacing: 8) {
                                     CoverArtView(
@@ -236,21 +245,49 @@ public struct ExploreSearchView: View {
                     }
                     .padding(.horizontal, 20)
 
-                    // Extra bottom padding to clear the floating mini player and dock completely
+                    if repository.hasMoreCatalog && !repository.exploreBooks.isEmpty {
+                        Button {
+                            Task { await repository.loadMore() }
+                        } label: {
+                            HStack(spacing: 8) {
+                                if repository.isLoadingMore {
+                                    ProgressView().tint(.black)
+                                }
+                                Text(repository.isLoadingMore ? "Loading more..." : "Load more")
+                                    .font(.system(size: 15, weight: .bold))
+                            }
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .background(Theme.brandGreen)
+                            .cornerRadius(14)
+                        }
+                        .disabled(repository.isLoadingMore || repository.isLoadingRemote)
+                        .padding(.horizontal, 20)
+                    }
+
                     Spacer(minLength: 160)
                 }
             }
         }
         .navigationBarHidden(true)
         .refreshable {
-            await repository.fetchRemoteAudiobooks()
+            await repository.fetchRemoteAudiobooks(reset: true)
         }
         .sheet(isPresented: $showingFilterSheet) {
             FilterOptionsSheet()
         }
-        .task(id: repository.searchQuery) {
-            try? await Task.sleep(nanoseconds: 500_000_000)
-            await repository.fetchRemoteAudiobooks()
+        .sheet(isPresented: $showingPaywall) {
+            PaywallView()
+        }
+        .modifier(PDFImportPresenter(isPresented: $showingImporter, showingPaywall: $showingPaywall))
+        .task(id: localSearch) {
+            let trimmed = localSearch.trimmingCharacters(in: .whitespacesAndNewlines)
+            try? await Task.sleep(nanoseconds: 400_000_000)
+            guard !Task.isCancelled else { return }
+            if repository.searchQuery == trimmed { return }
+            repository.searchQuery = trimmed
+            await repository.fetchRemoteAudiobooks(reset: true)
         }
     }
 }
@@ -265,7 +302,6 @@ private struct FilterOptionsSheet: View {
                 Theme.appBackground.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 20) {
-                    // Duration Filter
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Duration Length")
                             .font(.system(size: 16, weight: .bold))
@@ -292,7 +328,6 @@ private struct FilterOptionsSheet: View {
                         }
                     }
 
-                    // Offline Downloaded Only
                     Toggle(isOn: $repository.isOnlyDownloadedFilterActive) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Downloaded Audiobooks Only")
