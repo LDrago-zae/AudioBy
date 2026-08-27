@@ -55,6 +55,11 @@ public final class DownloadManager: NSObject, @unchecked Sendable {
     public func downloadAudiobook(_ book: Audiobook) {
         guard !downloadedBookIds.contains(book.id) else { return }
 
+        if !EntitlementService.shared.canDownloadMore {
+            downloadStatuses[book.id] = .failed(error: "Free accounts can download 1 title. Upgrade to Plus for unlimited offline listening.")
+            return
+        }
+
         downloadStatuses[book.id] = .downloading(progress: 0.05)
 
         Task {

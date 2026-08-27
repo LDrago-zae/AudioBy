@@ -3,6 +3,7 @@ import SwiftUI
 public enum LibraryShelf: String, CaseIterable, Identifiable {
     case inProgress = "Listening"
     case saved = "Saved"
+    case imported = "Imported"
     case downloaded = "Downloads"
     case finished = "Finished"
 
@@ -15,6 +16,8 @@ public struct LibraryView: View {
     @Bindable var downloadManager = DownloadManager.shared
     @State private var selectedShelf: LibraryShelf = .inProgress
     @State private var showingClearConfirmation = false
+    @State private var showingImporter = false
+    @State private var showingPaywall = false
 
     public init() {}
 
@@ -24,6 +27,8 @@ public struct LibraryView: View {
             return repository.continueListeningBooks
         case .saved:
             return repository.favoriteBooks
+        case .imported:
+            return repository.importedBooks
         case .downloaded:
             return repository.downloadedBooks
         case .finished:
@@ -39,6 +44,7 @@ public struct LibraryView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 18) {
                         // Segmented Shelf Picker
+                        ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
                             ForEach(LibraryShelf.allCases) { shelf in
                                 let isSelected = selectedShelf == shelf
@@ -63,6 +69,7 @@ public struct LibraryView: View {
                             }
                         }
                         .padding(.horizontal, 20)
+                        }
                         .padding(.top, 8)
 
                         // Downloaded Storage Banner (Visible on Downloads Shelf)
@@ -111,11 +118,11 @@ public struct LibraryView: View {
                                     .foregroundColor(Theme.textMuted.opacity(0.5))
                                     .padding(.top, 40)
 
-                                Text(selectedShelf == .downloaded ? "No Offline Downloads Yet" : "No Audiobooks in this Shelf")
+                                Text(selectedShelf == .downloaded ? "No Offline Downloads Yet" : selectedShelf == .imported ? "No imported PDFs" : "No Audiobooks in this Shelf")
                                     .font(.system(size: 16, weight: .bold))
                                     .foregroundColor(Theme.textDark)
 
-                                Text("Explore the catalog and tap the download or bookmark icon to save titles here.")
+                                Text(selectedShelf == .imported ? "Import a PDF you have the right to use. Free accounts can add 1 book." : "Explore the catalog and tap the download or bookmark icon to save titles here.")
                                     .font(.system(size: 13))
                                     .foregroundColor(Theme.textMuted)
                                     .multilineTextAlignment(.center)
@@ -225,6 +232,20 @@ public struct LibraryView: View {
             }
             .navigationTitle("My Library")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showingImporter = true
+                    } label: {
+                        Image(systemName: "doc.badge.plus")
+                            .foregroundColor(Theme.brandGreen)
+                    }
+                }
+            }
+            .modifier(PDFImportPresenter(isPresented: $showingImporter, showingPaywall: $showingPaywall))
+            .sheet(isPresented: $showingPaywall) {
+                PaywallView()
+            }
             .confirmationDialog("Clear All Offline Downloads?", isPresented: $showingClearConfirmation, titleVisibility: .visible) {
                 Button("Delete All Downloads", role: .destructive) {
                     downloadManager.clearAllCache()
