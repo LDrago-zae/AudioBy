@@ -7,6 +7,7 @@ public struct PlaybackSlider: View {
 
     @State private var isDragging: Bool = false
     @State private var dragPosition: TimeInterval = 0
+    @State private var verticalOffset: CGFloat = 0
 
     public init(
         currentTime: TimeInterval,
@@ -27,8 +28,36 @@ public struct PlaybackSlider: View {
         return min(max(displayTime / duration, 0), 1)
     }
 
+    private var scrubbingRateText: String {
+        if verticalOffset > 100 {
+            return "Fine Scrubbing (0.1x)"
+        } else if verticalOffset > 50 {
+            return "Half-Speed Scrubbing (0.5x)"
+        } else {
+            return "Hi-Speed Scrubbing"
+        }
+    }
+
+    private var scrubbingRateFactor: Double {
+        if verticalOffset > 100 {
+            return 0.1
+        } else if verticalOffset > 50 {
+            return 0.5
+        } else {
+            return 1.0
+        }
+    }
+
     public var body: some View {
         VStack(spacing: 8) {
+            // Scrubbing Rate Indicator when dragging
+            if isDragging {
+                Text(scrubbingRateText)
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundColor(Theme.brandGreen)
+                    .transition(.opacity.combined(with: .scale))
+            }
+
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     // Track background
@@ -51,27 +80,42 @@ public struct PlaybackSlider: View {
                     Circle()
                         .fill(Color.white)
                         .frame(width: isDragging ? 16 : 12, height: isDragging ? 16 : 12)
-                        .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 1)
+                        .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 2)
                         .offset(x: max(0, min(CGFloat(progress) * geometry.size.width - (isDragging ? 8 : 6), geometry.size.width - (isDragging ? 16 : 12))))
                 }
-                .frame(height: 20)
+                .frame(height: 22)
                 .contentShape(Rectangle())
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged { value in
-                            isDragging = true
-                            let ratio = min(max(value.location.x / geometry.size.width, 0), 1)
-                            dragPosition = TimeInterval(ratio) * max(duration, 1)
+                            if !isDragging {
+                                isDragging = true
+                                let generator = UIImpactFeedbackGenerator(style: .light)
+                                generator.impactOccurred()
+                            }
+                            verticalOffset = max(0, abs(value.translation.height))
+                            let rawRatio = min(max(value.location.x / geometry.size.width, 0), 1)
+
+                            // Apply fine scrubbing modifier
+                            if scrubbingRateFactor < 1.0 {
+                                let initialPos = currentTime
+                                let targetPos = TimeInterval(rawRatio) * max(duration, 1)
+                                let finePos = initialPos + (targetPos - initialPos) * scrubbingRateFactor
+                                dragPosition = min(max(finePos, 0), duration)
+                            } else {
+                                dragPosition = TimeInterval(rawRatio) * max(duration, 1)
+                            }
                         }
                         .onEnded { value in
-                            let ratio = min(max(value.location.x / geometry.size.width, 0), 1)
-                            let finalTime = TimeInterval(ratio) * max(duration, 1)
-                            onSeek(finalTime)
+                            onSeek(dragPosition)
                             isDragging = false
+                            verticalOffset = 0
+                            let generator = UIImpactFeedbackGenerator(style: .medium)
+                            generator.impactOccurred()
                         }
                 )
             }
-            .frame(height: 20)
+            .frame(height: 22)
 
             // Timestamps
             HStack {

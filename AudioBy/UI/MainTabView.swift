@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct MainTabView: View {
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = true
     @State private var selectedTab: DockTab = .home
     @Bindable var playerService = AudioPlayerService.shared
 
@@ -13,10 +14,14 @@ public struct MainTabView: View {
                 switch selectedTab {
                 case .home:
                     HomeDashboardView()
-                case .path:
-                    LearningPathView()
-                case .test:
-                    InteractiveLessonView()
+                case .explore:
+                    NavigationStack {
+                        ExploreSearchView()
+                    }
+                case .library:
+                    LibraryView()
+                case .activity:
+                    ActivityStatsView()
                 case .profile:
                     ProfileDetailsView()
                 }
@@ -30,11 +35,11 @@ public struct MainTabView: View {
                 }
 
                 FloatingDockTabBar(selectedTab: $selectedTab)
-                    .padding(.bottom, 12)
+                    .padding(.bottom, 10)
             }
             .padding(.horizontal, 16)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .preferredColorScheme(.light)
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
