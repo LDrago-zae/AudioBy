@@ -1,0 +1,3 @@
+// Shared build settings. Override secrets locally with Secrets.xcconfig (gitignored).
+ELEVENLABS_API_KEY =
+#include? "Secrets.xcconfig"

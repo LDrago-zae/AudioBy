@@ -1,0 +1,7 @@
+.env
+AudioBy/Config/Secrets.xcconfig
+.DS_Store
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/

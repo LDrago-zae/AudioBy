@@ -24,6 +24,7 @@ targets:
       - path: AudioBy
         excludes:
           - "**/.DS_Store"
+          - "Config/*.xcconfig"
     info:
       path: AudioBy/Resources/Info.plist
       properties:
@@ -36,6 +37,10 @@ targets:
           - audio
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
+        ELEVENLABS_API_KEY: "$(ELEVENLABS_API_KEY)"
+    configFiles:
+      Debug: AudioBy/Config/Config.xcconfig
+      Release: AudioBy/Config/Config.xcconfig
     settings:
       base:
         PRODUCT_NAME: AudioBy

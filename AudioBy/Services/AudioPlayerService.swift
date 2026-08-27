@@ -28,6 +28,9 @@ public final class AudioPlayerService: NSObject, @unchecked Sendable {
     public var isFullScreenPlayerPresented: Bool = false
     public var isCarModePresented: Bool = false
     public var narrationMode: PlaybackNarrationMode = .streaming
+    public var useStudioVoice: Bool = UserDefaults.standard.bool(forKey: "AudioBy.UseStudioVoice") {
+        didSet { UserDefaults.standard.set(useStudioVoice, forKey: "AudioBy.UseStudioVoice") }
+    }
     public var playbackError: String?
     public var isVocalClarityBoosted: Bool = false {
         didSet {
@@ -359,6 +362,34 @@ public final class AudioPlayerService: NSObject, @unchecked Sendable {
             return
         }
 
+        let wantsStudio = useStudioVoice && EntitlementService.shared.isPremium
+        if wantsStudio {
+            isBuffering = true
+            Task {
+                do {
+                    let url = try await ElevenLabsService.shared.synthesize(
+                        text: text,
+                        bookId: book.id,
+                        chapterId: chapter.id,
+                        voiceId: ElevenLabsService.shared.selectedVoiceId
+                    )
+                    await MainActor.run {
+                        self.startFilePlayback(url: url, chapter: chapter, autoPlay: autoPlay)
+                    }
+                } catch {
+                    await MainActor.run {
+                        self.playbackError = error.localizedDescription
+                        self.speakWithAppleTTS(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
+                    }
+                }
+            }
+            return
+        }
+
+        speakWithAppleTTS(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
+    }
+
+    private func speakWithAppleTTS(text: String, chapter: Chapter, book: Audiobook, autoPlay: Bool) {
         self.duration = max(chapter.duration, 60.0)
         self.currentTime = 0
         self.isBuffering = false
@@ -371,6 +402,38 @@ public final class AudioPlayerService: NSObject, @unchecked Sendable {
             self.isPlaying = false
         }
         updateNowPlaying()
+    }
+
+    private func startFilePlayback(url: URL, chapter: Chapter, autoPlay: Bool) {
+        let item = AVPlayerItem(url: url)
+        item.audioTimePitchAlgorithm = .timeDomain
+        player = AVPlayer(playerItem: item)
+        player?.automaticallyWaitsToMinimizeStalling = true
+        duration = max(chapter.duration, 60)
+        currentTime = 0
+        isBuffering = false
+        let interval = CMTime(seconds: 0.25, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        timeObserverToken = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            guard let self else { return }
+            let seconds = CMTimeGetSeconds(time)
+            if !seconds.isNaN {
+                self.currentTime = seconds
+                self.isBuffering = self.player?.timeControlStatus == .waitingToPlayAtSpecifiedRate
+                self.syncProgress()
+                self.trackListeningHabitTime()
+            }
+        }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemDidReachEnd),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: item
+        )
+        if autoPlay {
+            play()
+        } else {
+            updateNowPlaying()
+        }
     }
 
     private func startTTSTimer() {

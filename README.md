@@ -96,7 +96,9 @@ AudioBy/
    xcodegen generate
    ```
 
-2. **Open in Xcode**:
+2. **ElevenLabs API key (Premium studio voices)** — keep the key out of the app. Copy `AudioBy/Config/Secrets.example.xcconfig` to `AudioBy/Config/Secrets.xcconfig` and set `ELEVENLABS_API_KEY`, or add `ELEVENLABS_API_KEY` under the Xcode scheme (Run → Arguments → Environment Variables). `.env.example` documents the same name. `Secrets.xcconfig` and `.env` are gitignored and never shipped as user-facing settings.
+
+3. **Open in Xcode**:
    ```bash
    open AudioBy.xcodeproj
    ```
