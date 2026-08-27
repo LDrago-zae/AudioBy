@@ -8,7 +8,9 @@ public struct ProfileDetailsView: View {
     @Bindable var repository = AudiobookRepository.shared
     @Bindable var playerService = AudioPlayerService.shared
     @Bindable var downloadManager = DownloadManager.shared
+    @Bindable var entitlements = EntitlementService.shared
     @State private var showingClearStorageAlert = false
+    @State private var showingPaywall = false
 
     public init() {}
 
@@ -37,7 +39,7 @@ public struct ProfileDetailsView: View {
                                     .font(.system(size: 19, weight: .bold))
                                     .foregroundColor(Theme.textDark)
 
-                                Text("Premium Member • High Quality Stream")
+                                Text(membershipLabel)
                                     .font(.system(size: 12, weight: .medium))
                                     .foregroundColor(Theme.textMuted)
 
@@ -62,6 +64,50 @@ public struct ProfileDetailsView: View {
                         )
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
+
+                        Button {
+                            showingPaywall = true
+                        } label: {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("AudioBy Plus & Premium")
+                                        .font(.system(size: 16, weight: .bold))
+                                        .foregroundColor(Theme.textDark)
+                                    Text("Unlimited PDFs, offline downloads, studio voices")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Theme.textMuted)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Theme.textMuted)
+                            }
+                            .padding(16)
+                            .background(Theme.surfaceWhite)
+                            .cornerRadius(18)
+                            .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.cardBorder, lineWidth: 1))
+                        }
+                        .padding(.horizontal, 20)
+
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Debug entitlements")
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundColor(Theme.textDark)
+                            HStack(spacing: 8) {
+                                ForEach([SubscriptionTier.free, .plus, .premium], id: \.self) { tier in
+                                    Button(tier.rawValue.capitalized) {
+                                        entitlements.setDebugTier(tier)
+                                    }
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(entitlements.tier == tier ? .black : Theme.textDark)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .background(entitlements.tier == tier ? Theme.brandGreen : Theme.surfaceWhite)
+                                    .clipShape(Capsule())
+                                    .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 20)
 
                         // Appearance & Theme Switcher (Clean Single Toggle Row)
                         VStack(alignment: .leading, spacing: 10) {
@@ -235,6 +281,9 @@ public struct ProfileDetailsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .sheet(isPresented: $showingPaywall) {
+                PaywallView()
+            }
             .confirmationDialog("Clear Offline Audio Cache?", isPresented: $showingClearStorageAlert, titleVisibility: .visible) {
                 Button("Delete All Downloads", role: .destructive) {
                     downloadManager.clearAllCache()
@@ -243,6 +292,14 @@ public struct ProfileDetailsView: View {
             } message: {
                 Text("This will remove all downloaded audiobooks from your device.")
             }
+        }
+    }
+
+    private var membershipLabel: String {
+        switch entitlements.tier {
+        case .free: return "Free • 1 PDF import • 1 offline title"
+        case .plus: return "Plus • Unlimited PDFs & downloads"
+        case .premium: return "Premium • Studio voices enabled"
         }
     }
 }

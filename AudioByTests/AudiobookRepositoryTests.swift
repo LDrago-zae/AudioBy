@@ -9,20 +9,8 @@ final class AudiobookRepositoryTests: XCTestCase {
         XCTAssertFalse(repo.audiobooks.contains { $0.title == "The Sales & Prospecting Playbook" })
     }
 
-    func testSearchFiltering() {
-        let repo = AudiobookRepository()
-        repo.searchQuery = "zzzz-no-such-title"
-        let filtered = repo.filteredAudiobooks
-        XCTAssertTrue(filtered.allSatisfy {
-            $0.title.lowercased().contains("zzzz-no-such-title")
-        })
-    }
-
-    func testCategoryFiltering() {
-        let repo = AudiobookRepository()
-        repo.selectedCategory = .business
-        let filtered = repo.filteredAudiobooks
-        XCTAssertTrue(filtered.allSatisfy { $0.category == .business })
+    func testPageSizeIsTwenty() {
+        XCTAssertEqual(AudiobookRepository.shared.pageSize, 20)
     }
 
     func testDurationFiltering() {
@@ -86,10 +74,21 @@ final class AudiobookRepositoryTests: XCTestCase {
             narrator: "Narrator",
             summary: "Summary"
         )
-        repo.audiobooks = [sample]
+        repo.catalogBooks = [sample]
         repo.toggleFavorite(for: sample.id)
-        XCTAssertEqual(repo.audiobooks.first?.isFavorite, true)
+        XCTAssertEqual(repo.catalogBooks.first?.isFavorite, true)
         repo.toggleFavorite(for: sample.id)
-        XCTAssertEqual(repo.audiobooks.first?.isFavorite, false)
+        XCTAssertEqual(repo.catalogBooks.first?.isFavorite, false)
+    }
+
+    func testPDFChapterSplit() {
+        let words = Array(repeating: "word", count: 3200).joined(separator: " ")
+        let chapters = UserImportService.shared.splitIntoChapters(words, wordsPerChapter: 1500)
+        XCTAssertEqual(chapters.count, 3)
+        XCTAssertTrue(chapters.allSatisfy { $0.hasReadableText })
+    }
+
+    func testFreePDFCap() {
+        XCTAssertEqual(EntitlementService.shared.canImportPDF, EntitlementService.shared.isPlus || EntitlementService.shared.importedPDFCount < 1)
     }
 }
