@@ -95,7 +95,7 @@ public struct LearningPathView: View {
 
                                 Text("Product designer")
                                     .font(.system(size: 26, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
                             }
 
                             Spacer()
@@ -105,11 +105,14 @@ public struct LearningPathView: View {
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
                                     .frame(width: 44, height: 44)
-                                    .background(Color.white)
+                                    .background(Theme.surfaceWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                                    .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 14)
+                                            .stroke(Theme.cardBorder, lineWidth: 1)
+                                    )
                             }
                         }
                         .padding(.horizontal, 20)
@@ -124,15 +127,15 @@ public struct LearningPathView: View {
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text("8")
                                     .font(.system(size: 40, weight: .heavy, design: .rounded))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
 
                                 Text("/14")
                                     .font(.system(size: 32, weight: .semibold, design: .rounded))
-                                    .foregroundColor(Color(white: 0.70))
+                                    .foregroundColor(Color.white.opacity(0.45))
 
                                 Text("Skills developed")
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
                                     .padding(.leading, 6)
                             }
 
@@ -141,9 +144,9 @@ public struct LearningPathView: View {
                                 ForEach(0..<14, id: \.self) { index in
                                     let isCompleted = index < 8
                                     Circle()
-                                        .fill(isCompleted ? Theme.brandGreen : Color(white: 0.85))
+                                        .fill(isCompleted ? Theme.brandGreen : Color.white.opacity(0.15))
                                         .frame(width: 14, height: 14)
-                                        .shadow(color: isCompleted ? Theme.brandGreen.opacity(0.4) : .clear, radius: 2)
+                                        .shadow(color: isCompleted ? Theme.brandGreen.opacity(0.5) : .clear, radius: 3)
                                 }
                             }
                             .padding(.vertical, 2)
@@ -154,14 +157,16 @@ public struct LearningPathView: View {
                         }
                         .padding(20)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.white)
+                        .background(Theme.surfaceWhite)
                         .cornerRadius(20)
-                        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 3)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Theme.cardBorder, lineWidth: 1)
+                        )
                         .padding(.horizontal, 20)
 
                         // 3D Acrylic Shelves with Lesson Cards
                         VStack(spacing: 28) {
-                            // 1. Foundation Lesson
                             AcrylicShelfView(
                                 shelfTitle: "Foundation lesson",
                                 shelfTint: Theme.foundationShelfTint,
@@ -170,7 +175,6 @@ public struct LearningPathView: View {
                                 playLesson(for: card)
                             }
 
-                            // 2. Build Lesson
                             AcrylicShelfView(
                                 shelfTitle: "Build lesson",
                                 shelfTint: Theme.buildShelfTint,
@@ -179,7 +183,6 @@ public struct LearningPathView: View {
                                 playLesson(for: card)
                             }
 
-                            // 3. Prove Lesson
                             AcrylicShelfView(
                                 shelfTitle: "Prove lesson",
                                 shelfTint: Theme.proveShelfTint,
@@ -190,7 +193,7 @@ public struct LearningPathView: View {
                         }
                         .padding(.top, 10)
 
-                        Spacer(minLength: 120) // Space for floating dock
+                        Spacer(minLength: 120)
                     }
                 }
             }
@@ -202,8 +205,8 @@ public struct LearningPathView: View {
     }
 
     private func playLesson(for card: PathCardItem) {
-        if let book = repository.audiobooks.first(where: { $0.title.contains("Innovation") }) ?? repository.audiobooks.first {
-            playerService.loadAudiobook(book, chapterIndex: 0, autoPlay: true)
+        if let book = repository.audiobooks.first {
+            playerService.playAudiobook(book, chapterIndex: 0, autoPlay: true)
             showingPlayerModal = true
         }
     }

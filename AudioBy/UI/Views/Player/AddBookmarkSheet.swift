@@ -17,7 +17,7 @@ public struct AddBookmarkSheet: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text(chapterTitle)
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(Theme.textDark)
+                            .foregroundColor(.white)
 
                         HStack {
                             Image(systemName: "bookmark.fill")
@@ -38,13 +38,13 @@ public struct AddBookmarkSheet: View {
                         TextField("Add key insights, quotes, or notes...", text: $note, axis: .vertical)
                             .lineLimit(4...6)
                             .padding(14)
-                            .background(Color.white)
+                            .background(Theme.surfaceWhite)
                             .cornerRadius(14)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 14)
-                                    .stroke(Color(white: 0.88), lineWidth: 1)
+                                    .stroke(Theme.cardBorder, lineWidth: 1)
                             )
-                            .foregroundColor(Theme.textDark)
+                            .foregroundColor(.white)
                     }
                     .padding(.horizontal, 20)
 
