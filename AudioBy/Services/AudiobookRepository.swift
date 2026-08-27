@@ -1,166 +1,148 @@
 import Foundation
 import Observation
 
+public enum DurationFilter: String, CaseIterable, Identifiable, Sendable {
+    case all = "Any Length"
+    case short = "< 1 hour"
+    case medium = "1 - 3 hours"
+    case long = "3 - 6 hours"
+    case epic = "6+ hours"
+
+    public var id: String { rawValue }
+}
+
 @Observable
 public final class AudiobookRepository: @unchecked Sendable {
     public static let shared = AudiobookRepository()
 
     public var audiobooks: [Audiobook] = []
     public var selectedCategory: AudiobookCategory = .all
+    public var selectedDurationFilter: DurationFilter = .all
     public var searchQuery: String = ""
+    public var isOnlyDownloadedFilterActive: Bool = false
+    public var isLoadingRemote: Bool = false
+    public var catalogError: String?
+    public var isShowingCachedCatalog: Bool = false
+    public var chapterErrors: [String: String] = [:]
+    public var loadingChapterBookIds: Set<String> = []
 
     private let storage = StorageService.shared
+    private let api = AudiobookAPIService.shared
+    private let downloadManager = DownloadManager.shared
+    private let catalogCacheKey = "AudioBy.LastLiveCatalog"
 
     public init() {
-        loadInitialData()
+        restoreCachedCatalog()
+        Task {
+            await fetchRemoteAudiobooks()
+        }
     }
 
-    public func loadInitialData() {
-        let sample1 = Audiobook(
-            id: "book-1",
-            title: "The Art of Innovation",
-            author: "Elena Rostova",
-            narrator: "Samantha Vance",
-            summary: "An exhilarating exploration of modern breakthrough thinking, deep tech transformations, and the creative habits of world-changing minds.",
-            coverGradientColors: ["#4A00E0", "#8E2DE2"],
-            category: .technology,
-            rating: 4.9,
-            reviewCount: 428,
-            chapters: [
-                Chapter(
-                    id: "c1-1",
-                    title: "Chapter 1: The Sparks of Observation",
-                    chapterNumber: 1,
-                    startTime: 0,
-                    duration: 35.0,
-                    audioResourceName: "sample_chapter1"
-                ),
-                Chapter(
-                    id: "c1-2",
-                    title: "Chapter 2: The Creative Engine",
-                    chapterNumber: 2,
-                    startTime: 0,
-                    duration: 34.0,
-                    audioResourceName: "sample_chapter2"
-                )
-            ]
-        )
+    public func fetchRemoteAudiobooks(for category: AudiobookCategory? = nil) async {
+        await MainActor.run {
+            self.isLoadingRemote = true
+            self.catalogError = nil
+        }
 
-        let sample2 = Audiobook(
-            id: "book-2",
-            title: "Echoes of Eternity",
-            author: "Marcus Vance",
-            narrator: "Karen Sterling",
-            summary: "A thrilling sci-fi odyssey across uncharted galaxies, ancient interstellar monoliths, and the philosophical search for human consciousness.",
-            coverGradientColors: ["#FF416C", "#FF4B2B"],
-            category: .fiction,
-            rating: 4.8,
-            reviewCount: 812,
-            chapters: [
-                Chapter(
-                    id: "c2-1",
-                    title: "Chapter 1: The Starward Call",
-                    chapterNumber: 1,
-                    startTime: 0,
-                    duration: 28.0,
-                    audioResourceName: "sample_chapter3"
-                ),
-                Chapter(
-                    id: "c2-2",
-                    title: "Chapter 2: Orbit of the Unknown",
-                    chapterNumber: 2,
-                    startTime: 0,
-                    duration: 32.0,
-                    audioResourceName: "sample_chapter1"
-                )
-            ]
-        )
+        let cat = category ?? selectedCategory
+        let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        do {
+            let remoteBooks = try await api.fetchAudiobooks(
+                query: query.isEmpty ? nil : query,
+                category: cat,
+                limit: 40
+            )
+            await MainActor.run {
+                var merged = remoteBooks
+                for i in 0..<merged.count {
+                    if let existing = self.audiobooks.first(where: { $0.id == merged[i].id }), !existing.chapters.isEmpty {
+                        merged[i].chapters = existing.chapters
+                    }
+                }
+                for existing in self.audiobooks where existing.isFavorite || existing.progress > 0 || self.downloadManager.isBookDownloaded(existing.id) {
+                    if !merged.contains(where: { $0.id == existing.id }) {
+                        merged.append(existing)
+                    }
+                }
+                self.hydrateUserData(into: &merged)
+                self.audiobooks = merged
+                self.isLoadingRemote = false
+                self.isShowingCachedCatalog = false
+                self.persistCatalog(merged)
+            }
+        } catch {
+            await MainActor.run {
+                self.isLoadingRemote = false
+                self.catalogError = error.localizedDescription
+                if self.audiobooks.isEmpty {
+                    self.restoreCachedCatalog()
+                    self.isShowingCachedCatalog = !self.audiobooks.isEmpty
+                } else {
+                    self.isShowingCachedCatalog = true
+                }
+            }
+        }
+    }
 
-        let sample3 = Audiobook(
-            id: "book-3",
-            title: "Zero to Unstoppable",
-            author: "David Sterling",
-            narrator: "Michael Vance",
-            summary: "Mastering high-performance leadership, resilient habits, and scalable execution in high-stakes environments.",
-            coverGradientColors: ["#00F260", "#0575E6"],
-            category: .business,
-            rating: 4.7,
-            reviewCount: 310,
-            chapters: [
-                Chapter(
-                    id: "c3-1",
-                    title: "Chapter 1: The Mindset Shift",
-                    chapterNumber: 1,
-                    startTime: 0,
-                    duration: 35.0,
-                    audioResourceName: "sample_chapter2"
-                ),
-                Chapter(
-                    id: "c3-2",
-                    title: "Chapter 2: Compounding Momentum",
-                    chapterNumber: 2,
-                    startTime: 0,
-                    duration: 30.0,
-                    audioResourceName: "sample_chapter1"
-                )
-            ]
-        )
+    public func updateChapters(for bookId: String, chapters: [Chapter]) {
+        if let index = audiobooks.firstIndex(where: { $0.id == bookId }) {
+            audiobooks[index].chapters = chapters
+            persistCatalog(audiobooks)
+        }
+    }
 
-        let sample4 = Audiobook(
-            id: "book-4",
-            title: "The Architecture of Quiet",
-            author: "Dr. Alicia Zhou",
-            narrator: "Samantha Vance",
-            summary: "Discovering stoic wisdom, cognitive clarity, and mental sanctuaries in an era of hyper-connectivity and endless noise.",
-            coverGradientColors: ["#8A2387", "#E94057"],
-            category: .philosophy,
-            rating: 4.9,
-            reviewCount: 560,
-            chapters: [
-                Chapter(
-                    id: "c4-1",
-                    title: "Chapter 1: Stillness in Chaos",
-                    chapterNumber: 1,
-                    startTime: 0,
-                    duration: 34.0,
-                    audioResourceName: "sample_chapter1"
-                ),
-                Chapter(
-                    id: "c4-2",
-                    title: "Chapter 2: The Art of Focused Attention",
-                    chapterNumber: 2,
-                    startTime: 0,
-                    duration: 35.0,
-                    audioResourceName: "sample_chapter2"
-                )
-            ]
-        )
+    @discardableResult
+    public func loadLiveChapters(for bookId: String, forceRefresh: Bool = false) async -> [Chapter] {
+        guard let index = audiobooks.firstIndex(where: { $0.id == bookId }) else { return [] }
+        let book = audiobooks[index]
 
-        let sample5 = Audiobook(
-            id: "book-5",
-            title: "Renaissance Minds",
-            author: "Julian Reynolds",
-            narrator: "Daniel Sterling",
-            summary: "The untold biographies of history's greatest polymaths, inventors, and architects who shaped our modern civilizations.",
-            coverGradientColors: ["#F37335", "#FDC830"],
-            category: .biography,
-            rating: 4.8,
-            reviewCount: 290,
-            chapters: [
-                Chapter(
-                    id: "c5-1",
-                    title: "Chapter 1: The Florentine Workshop",
-                    chapterNumber: 1,
-                    startTime: 0,
-                    duration: 33.0,
-                    audioResourceName: "sample_chapter2"
-                )
-            ]
-        )
+        await MainActor.run {
+            self.loadingChapterBookIds.insert(bookId)
+            self.chapterErrors[bookId] = nil
+        }
 
-        var books = [sample1, sample2, sample3, sample4, sample5]
+        do {
+            let liveChapters = try await api.fetchLiveChapters(for: book, forceRefresh: forceRefresh)
+            await MainActor.run {
+                if let currentIndex = self.audiobooks.firstIndex(where: { $0.id == bookId }) {
+                    self.audiobooks[currentIndex].chapters = liveChapters
+                    self.persistCatalog(self.audiobooks)
+                }
+                self.loadingChapterBookIds.remove(bookId)
+                self.chapterErrors[bookId] = nil
+                AudioPlayerService.shared.updateChaptersIfCurrent(bookId: bookId, chapters: liveChapters)
+            }
+            return liveChapters
+        } catch {
+            await MainActor.run {
+                self.loadingChapterBookIds.remove(bookId)
+                self.chapterErrors[bookId] = error.localizedDescription
+            }
+            return []
+        }
+    }
 
-        // Hydrate favorites & progress
+    public func retryChapters(for bookId: String) async -> [Chapter] {
+        api.clearChapterCache(for: bookId)
+        return await loadLiveChapters(for: bookId, forceRefresh: true)
+    }
+
+    private func persistCatalog(_ books: [Audiobook]) {
+        if let data = try? JSONEncoder().encode(Array(books.prefix(60))) {
+            UserDefaults.standard.set(data, forKey: catalogCacheKey)
+        }
+    }
+
+    private func restoreCachedCatalog() {
+        guard let data = UserDefaults.standard.data(forKey: catalogCacheKey),
+              var books = try? JSONDecoder().decode([Audiobook].self, from: data),
+              !books.isEmpty else { return }
+        hydrateUserData(into: &books)
+        audiobooks = books
+        isShowingCachedCatalog = true
+    }
+
+    private func hydrateUserData(into books: inout [Audiobook]) {
         let favSet = storage.loadFavorites()
         for i in 0..<books.count {
             let id = books[i].id
@@ -173,8 +155,6 @@ public final class AudiobookRepository: @unchecked Sendable {
                 books[i].progress = prog.progressRatio
             }
         }
-
-        self.audiobooks = books
     }
 
     public var filteredAudiobooks: [Audiobook] {
@@ -194,6 +174,23 @@ public final class AudiobookRepository: @unchecked Sendable {
             }
         }
 
+        switch selectedDurationFilter {
+        case .all:
+            break
+        case .short:
+            results = results.filter { $0.totalDuration > 0 && $0.totalDuration < 3600 }
+        case .medium:
+            results = results.filter { $0.totalDuration >= 3600 && $0.totalDuration < 10800 }
+        case .long:
+            results = results.filter { $0.totalDuration >= 10800 && $0.totalDuration < 21600 }
+        case .epic:
+            results = results.filter { $0.totalDuration >= 21600 }
+        }
+
+        if isOnlyDownloadedFilterActive {
+            results = results.filter { downloadManager.isBookDownloaded($0.id) }
+        }
+
         return results
     }
 
@@ -203,6 +200,18 @@ public final class AudiobookRepository: @unchecked Sendable {
 
     public var favoriteBooks: [Audiobook] {
         audiobooks.filter { $0.isFavorite }
+    }
+
+    public var downloadedBooks: [Audiobook] {
+        audiobooks.filter { downloadManager.isBookDownloaded($0.id) }
+    }
+
+    public var finishedBooks: [Audiobook] {
+        audiobooks.filter { $0.progress >= 0.99 }
+    }
+
+    public var featuredHeroBooks: [Audiobook] {
+        Array(filteredAudiobooks.prefix(4))
     }
 
     public func toggleFavorite(for bookId: String) {
