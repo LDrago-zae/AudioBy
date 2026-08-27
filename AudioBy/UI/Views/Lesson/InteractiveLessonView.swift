@@ -4,9 +4,8 @@ public struct InteractiveLessonView: View {
     @Bindable var playerService = AudioPlayerService.shared
     @Bindable var repository = AudiobookRepository.shared
 
-    @State private var selectedOptionIndex: Int = 0 // 0 = A. Reduce secondary content
+    @State private var selectedOptionIndex: Int = 0
     @State private var showingTip: Bool = false
-    @State private var isAudioPlaying: Bool = false
 
     private let options = [
         "A. Reduce secondary content",
@@ -30,11 +29,14 @@ public struct InteractiveLessonView: View {
                             } label: {
                                 Image(systemName: "arrow.left")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
                                     .frame(width: 44, height: 44)
-                                    .background(Color.white)
+                                    .background(Theme.surfaceWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                                    .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 14)
+                                            .stroke(Theme.cardBorder, lineWidth: 1)
+                                    )
                             }
 
                             Spacer()
@@ -42,7 +44,7 @@ public struct InteractiveLessonView: View {
                             VStack(spacing: 2) {
                                 Text("Interaction design")
                                     .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
 
                                 Text("Lesson 04 / 20")
                                     .font(.system(size: 13, weight: .medium))
@@ -56,11 +58,14 @@ public struct InteractiveLessonView: View {
                             } label: {
                                 Image(systemName: "lightbulb")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(showingTip ? Theme.brandGreen : Theme.textDark)
+                                    .foregroundColor(showingTip ? Theme.brandGreen : .white)
                                     .frame(width: 44, height: 44)
-                                    .background(Color.white)
+                                    .background(Theme.surfaceWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                                    .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 14)
+                                            .stroke(Theme.cardBorder, lineWidth: 1)
+                                    )
                             }
                         }
                         .padding(.horizontal, 20)
@@ -70,7 +75,7 @@ public struct InteractiveLessonView: View {
                         GeometryReader { geo in
                             ZStack(alignment: .leading) {
                                 Capsule()
-                                    .fill(Color(white: 0.90))
+                                    .fill(Color.white.opacity(0.12))
                                 Capsule()
                                     .fill(
                                         LinearGradient(
@@ -89,7 +94,7 @@ public struct InteractiveLessonView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Progressive Disclosure")
                                 .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(Theme.textDark)
+                                .foregroundColor(.white)
 
                             Text("Show only what people need, when they need it.")
                                 .font(.system(size: 15))
@@ -107,7 +112,7 @@ public struct InteractiveLessonView: View {
                             Button {
                                 if let book = repository.audiobooks.first {
                                     if playerService.currentBook == nil {
-                                        playerService.loadAudiobook(book, chapterIndex: 1, autoPlay: true)
+                                        playerService.playAudiobook(book, chapterIndex: 0, autoPlay: true)
                                     } else {
                                         playerService.togglePlayPause()
                                     }
@@ -115,7 +120,7 @@ public struct InteractiveLessonView: View {
                             } label: {
                                 Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
                                     .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     .frame(width: 34, height: 34)
                                     .background(Theme.brandGreen)
                                     .clipShape(Circle())
@@ -124,7 +129,7 @@ public struct InteractiveLessonView: View {
                             VStack(alignment: .leading, spacing: 1) {
                                 Text("Audio Narration: Progressive Disclosure")
                                     .font(.system(size: 13, weight: .semibold))
-                                    .foregroundColor(Theme.textDark)
+                                    .foregroundColor(.white)
                                 Text("Narrated by Samantha Vance • 3:45")
                                     .font(.system(size: 11))
                                     .foregroundColor(Theme.textMuted)
@@ -137,73 +142,71 @@ public struct InteractiveLessonView: View {
                                 .foregroundColor(playerService.isPlaying ? Theme.brandGreen : Theme.textMuted)
                         }
                         .padding(12)
-                        .background(Color.white)
-                        .cornerRadius(14)
-                        .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+                        .background(Theme.surfaceWhite)
+                        .cornerRadius(16)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Theme.cardBorder, lineWidth: 1)
+                        )
                         .padding(.horizontal, 20)
 
-                        // Question Prompt
+                        // Question Section
                         VStack(alignment: .leading, spacing: 14) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("You're redesigning this screen.")
-                                    .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
-                                Text("What would you change first?")
-                                    .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
-                            }
+                            Text("What is the primary benefit of progressive disclosure in mobile interfaces?")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                                .lineSpacing(3)
 
-                            // Multiple Choice Options
                             VStack(spacing: 10) {
                                 ForEach(Array(options.enumerated()), id: \.offset) { index, option in
                                     let isSelected = selectedOptionIndex == index
-
                                     Button {
-                                        withAnimation(.easeInOut(duration: 0.2)) {
-                                            selectedOptionIndex = index
-                                        }
+                                        selectedOptionIndex = index
                                     } label: {
                                         HStack {
                                             Text(option)
-                                                .font(.system(size: 15, weight: isSelected ? .bold : .medium))
-                                                .foregroundColor(isSelected ? .white : Theme.textDark)
+                                                .font(.system(size: 14, weight: isSelected ? .bold : .medium))
+                                                .foregroundColor(isSelected ? Theme.brandGreen : .white)
 
                                             Spacer()
 
-                                            if isSelected {
-                                                Image(systemName: "checkmark.circle.fill")
-                                                    .foregroundColor(.white)
+                                            ZStack {
+                                                Circle()
+                                                    .stroke(isSelected ? Theme.brandGreen : Color.white.opacity(0.3), lineWidth: 2)
+                                                    .frame(width: 20, height: 20)
+
+                                                if isSelected {
+                                                    Circle()
+                                                        .fill(Theme.brandGreen)
+                                                        .frame(width: 10, height: 10)
+                                                }
                                             }
                                         }
-                                        .padding(.horizontal, 18)
-                                        .frame(height: 52)
+                                        .padding(16)
                                         .background(
-                                            isSelected
-                                                ? AnyShapeStyle(Theme.activeGreenGradient)
-                                                : AnyShapeStyle(Color.white)
+                                            RoundedRectangle(cornerRadius: 14)
+                                                .fill(isSelected ? Theme.brandGreen.opacity(0.12) : Theme.surfaceWhite)
                                         )
-                                        .cornerRadius(14)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 14)
-                                                .stroke(isSelected ? Color.clear : Color(red: 0.88, green: 0.90, blue: 0.92), lineWidth: 1)
+                                                .stroke(isSelected ? Theme.brandGreen : Theme.cardBorder, lineWidth: 1)
                                         )
-                                        .shadow(color: isSelected ? Theme.brandGreen.opacity(0.3) : Color.black.opacity(0.02), radius: 6, x: 0, y: 2)
                                     }
-                                    .buttonStyle(PlainButtonStyle())
                                 }
                             }
                         }
+                        .padding(18)
+                        .background(Theme.surfaceWhite)
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Theme.cardBorder, lineWidth: 1)
+                        )
                         .padding(.horizontal, 20)
 
-                        Spacer(minLength: 120) // Space for floating dock
+                        Spacer(minLength: 120)
                     }
                 }
-            }
-            .navigationBarHidden(true)
-            .alert("Pro Tip", isPresented: $showingTip) {
-                Button("Got it", role: .cancel) {}
-            } message: {
-                Text("Progressive disclosure prevents cognitive overload by sequencing information across interaction steps rather than displaying everything at once.")
             }
         }
     }

@@ -14,13 +14,13 @@ public struct BookmarksView: View {
                 VStack(spacing: 16) {
                     Image(systemName: "bookmark.slash")
                         .font(.system(size: 44))
-                        .foregroundColor(Theme.textLightMuted)
+                        .foregroundColor(Theme.textMuted.opacity(0.4))
 
                     Text("No Bookmarks Yet")
                         .font(.system(size: 19, weight: .bold))
                         .foregroundColor(Theme.textDark)
 
-                    Text("While listening to audio briefs or lessons, tap the bookmark icon to save quotes and timestamps.")
+                    Text("While listening to audiobooks, tap the bookmark icon to save quotes and timestamps.")
                         .font(.system(size: 14))
                         .foregroundColor(Theme.textMuted)
                         .multilineTextAlignment(.center)
@@ -35,8 +35,10 @@ public struct BookmarksView: View {
                             Button {
                                 if let book = book {
                                     let chIndex = book.chapters.firstIndex(where: { $0.id == bookmark.chapterId }) ?? 0
-                                    playerService.loadAudiobook(book, chapterIndex: chIndex, autoPlay: true)
-                                    playerService.seek(to: bookmark.timestamp)
+                                    playerService.playAudiobook(book, chapterIndex: chIndex, autoPlay: true)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                        playerService.seek(to: bookmark.timestamp)
+                                    }
                                 }
                             } label: {
                                 VStack(alignment: .leading, spacing: 6) {
@@ -57,7 +59,7 @@ public struct BookmarksView: View {
                                             .foregroundColor(Theme.brandGreen)
                                             .padding(.horizontal, 8)
                                             .padding(.vertical, 3)
-                                            .background(Theme.brandGreen.opacity(0.12))
+                                            .background(Theme.brandGreen.opacity(0.15))
                                             .cornerRadius(6)
                                     }
 
@@ -74,15 +76,18 @@ public struct BookmarksView: View {
                                     }
                                 }
                                 .padding(16)
-                                .background(Color.white)
+                                .background(Theme.surfaceWhite)
                                 .cornerRadius(16)
-                                .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Theme.cardBorder, lineWidth: 1)
+                                )
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
                     }
                     .padding(20)
-                    .padding(.bottom, 120)
+                    .padding(.bottom, 160)
                 }
             }
         }
