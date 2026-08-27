@@ -138,8 +138,6 @@ public final class NowPlayingManager: @unchecked Sendable {
         let size = CGSize(width: 512, height: 512)
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { context in
-            let rect = CGRect(origin: .zero, size: size)
-
             // Gradient background
             let colors = [
                 UIColor(red: 0.15, green: 0.12, blue: 0.28, alpha: 1.0).cgColor,
