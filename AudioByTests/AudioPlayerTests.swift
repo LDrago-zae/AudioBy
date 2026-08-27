@@ -46,4 +46,18 @@ final class AudioPlayerTests: XCTestCase {
         let off = SleepTimerOption.off
         XCTAssertNil(off.duration)
     }
+
+    func testStorageServiceStats() {
+        let defaults = UserDefaults(suiteName: "AudioBy.Tests.\(UUID().uuidString)")!
+        let storage = StorageService(userDefaults: defaults)
+        storage.recordListeningSeconds(60)
+        let stats = storage.loadStats()
+        XCTAssertGreaterThanOrEqual(stats.totalMinutesListened, 1)
+        XCTAssertGreaterThanOrEqual(stats.streakDays, 1)
+    }
+
+    func testDownloadManagerStorage() {
+        let dm = DownloadManager.shared
+        XCTAssertNotNil(dm.formattedStorageUsed)
+    }
 }

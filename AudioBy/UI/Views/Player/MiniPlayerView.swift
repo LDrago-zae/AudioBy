@@ -19,22 +19,23 @@ public struct MiniPlayerView: View {
                         Rectangle()
                             .fill(Color.white.opacity(0.1))
                         Rectangle()
-                            .fill(Theme.activeGreenGradient)
+                            .fill(Theme.brandGreen)
                             .frame(width: geo.size.width * CGFloat(progressRatio))
                     }
                 }
                 .frame(height: 2)
 
                 HStack(spacing: 12) {
-                    // Small glowing dot thumbnail
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color(red: 0.12, green: 0.15, blue: 0.18))
-                        Image(systemName: "headphones")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Theme.brandGreen)
-                    }
-                    .frame(width: 38, height: 38)
+                    // Real cover artwork thumbnail
+                    CoverArtView(
+                        title: book.title,
+                        author: book.author,
+                        gradientHexes: book.coverGradientColors,
+                        coverImageURL: book.coverImageURL,
+                        cornerRadius: 8,
+                        shadowRadius: 2
+                    )
+                    .frame(width: 40, height: 40)
 
                     // Titles
                     VStack(alignment: .leading, spacing: 2) {
@@ -57,7 +58,7 @@ public struct MiniPlayerView: View {
                     } label: {
                         Image(systemName: "gobackward.15")
                             .font(.system(size: 16))
-                            .foregroundColor(Color.white.opacity(0.8))
+                            .foregroundColor(Color.white.opacity(0.85))
                             .frame(width: 32, height: 32)
                     }
 
@@ -66,9 +67,9 @@ public struct MiniPlayerView: View {
                         playerService.togglePlayPause()
                     } label: {
                         Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 32, height: 32)
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(.black)
+                            .frame(width: 34, height: 34)
                             .background(Theme.brandGreen)
                             .clipShape(Circle())
                     }
@@ -77,11 +78,11 @@ public struct MiniPlayerView: View {
                 .padding(.vertical, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(Color(red: 0.08, green: 0.09, blue: 0.11))
-                        .shadow(color: Color.black.opacity(0.35), radius: 10, x: 0, y: 4)
+                        .fill(Theme.surfaceWhite)
+                        .shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                                .stroke(Theme.cardBorder, lineWidth: 1)
                         )
                 )
             }

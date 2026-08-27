@@ -25,7 +25,7 @@ public struct SleepTimerSheet: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Sleep Timer")
                                 .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(Theme.textDark)
+                                .foregroundColor(.white)
                             Text("Playback will automatically stop after the timer ends.")
                                 .font(.system(size: 13))
                                 .foregroundColor(Theme.textMuted)
@@ -49,7 +49,7 @@ public struct SleepTimerSheet: View {
 
                                     Text(option.title)
                                         .font(.system(size: 16, weight: activeOption == option ? .bold : .regular))
-                                        .foregroundColor(activeOption == option ? Theme.brandGreen : Theme.textDark)
+                                        .foregroundColor(activeOption == option ? Theme.brandGreen : .white)
 
                                     Spacer()
 
@@ -63,11 +63,11 @@ public struct SleepTimerSheet: View {
                                 .padding(.vertical, 14)
                                 .background(
                                     RoundedRectangle(cornerRadius: 14)
-                                        .fill(activeOption == option ? Theme.brandGreen.opacity(0.10) : Color.white)
+                                        .fill(activeOption == option ? Theme.brandGreen.opacity(0.12) : Theme.surfaceWhite)
                                 )
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 14)
-                                        .stroke(activeOption == option ? Theme.brandGreen.opacity(0.3) : Color(white: 0.90), lineWidth: 1)
+                                        .stroke(activeOption == option ? Theme.brandGreen.opacity(0.35) : Theme.cardBorder, lineWidth: 1)
                                 )
                             }
                         }

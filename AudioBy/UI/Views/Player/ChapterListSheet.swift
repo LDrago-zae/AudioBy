@@ -12,6 +12,19 @@ public struct ChapterListSheet: View {
                 Theme.appBackground.ignoresSafeArea()
 
                 ScrollView {
+                    if chapters.isEmpty {
+                        VStack(spacing: 12) {
+                            Text("No chapters loaded")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(Theme.textDark)
+                            Text("Go back to the book page and tap Retry to fetch tracks from the catalog.")
+                                .font(.system(size: 13))
+                                .foregroundColor(Theme.textMuted)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 24)
+                        }
+                        .padding(.top, 40)
+                    } else {
                     LazyVStack(spacing: 8) {
                         ForEach(Array(chapters.enumerated()), id: \.element.id) { index, chapter in
                             Button {
@@ -21,24 +34,24 @@ public struct ChapterListSheet: View {
                                 HStack(spacing: 14) {
                                     ZStack {
                                         Circle()
-                                            .fill(currentChapterIndex == index ? Theme.brandGreen : Color(white: 0.92))
+                                            .fill(currentChapterIndex == index ? Theme.brandGreen : Theme.surfaceSubtle)
                                             .frame(width: 36, height: 36)
 
                                         if currentChapterIndex == index {
                                             Image(systemName: "speaker.wave.2.fill")
                                                 .font(.system(size: 14))
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.black)
                                         } else {
                                             Text("\(chapter.chapterNumber)")
                                                 .font(.system(size: 14, weight: .semibold))
-                                                .foregroundColor(Theme.textDark)
+                                                .foregroundColor(.white)
                                         }
                                     }
 
                                     VStack(alignment: .leading, spacing: 3) {
                                         Text(chapter.title)
                                             .font(.system(size: 15, weight: currentChapterIndex == index ? .bold : .medium))
-                                            .foregroundColor(currentChapterIndex == index ? Theme.brandGreen : Theme.textDark)
+                                            .foregroundColor(currentChapterIndex == index ? Theme.brandGreen : .white)
                                             .lineLimit(1)
 
                                         Text("Duration: \(chapter.formattedDuration)")
@@ -62,16 +75,17 @@ public struct ChapterListSheet: View {
                                 .padding(.vertical, 12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 14)
-                                        .fill(currentChapterIndex == index ? Theme.brandGreen.opacity(0.08) : Color.white)
+                                        .fill(currentChapterIndex == index ? Theme.brandGreen.opacity(0.12) : Theme.surfaceWhite)
                                 )
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 14)
-                                        .stroke(currentChapterIndex == index ? Theme.brandGreen.opacity(0.2) : Color(white: 0.92), lineWidth: 1)
+                                        .stroke(currentChapterIndex == index ? Theme.brandGreen.opacity(0.35) : Theme.cardBorder, lineWidth: 1)
                                 )
                             }
                         }
                     }
                     .padding(20)
+                    }
                 }
             }
             .navigationTitle("Chapters & Tracks")
