@@ -15,6 +15,9 @@ packages:
   GoogleSignIn:
     url: https://github.com/google/GoogleSignIn-iOS
     from: 8.0.0
+  RevenueCat:
+    url: https://github.com/RevenueCat/purchases-ios
+    from: 5.0.0
 
 settings:
   base:
@@ -51,6 +54,7 @@ targets:
           NSAllowsArbitraryLoads: true
         ELEVENLABS_API_KEY: "$(ELEVENLABS_API_KEY)"
         CATALOG_SQLITE_URL: "$(CATALOG_SQLITE_URL)"
+        REVENUECAT_API_KEY: "$(REVENUECAT_API_KEY)"
         GIDClientID: "$(GID_CLIENT_ID)"
         CFBundleURLTypes:
           - CFBundleTypeRole: Editor
@@ -68,6 +72,8 @@ targets:
         product: FirebaseCore
       - package: GoogleSignIn
         product: GoogleSignIn
+      - package: RevenueCat
+        product: RevenueCat
     settings:
       base:
         PRODUCT_NAME: AudioBy
