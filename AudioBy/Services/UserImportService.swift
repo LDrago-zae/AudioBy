@@ -68,6 +68,10 @@ public final class UserImportService: @unchecked Sendable {
         }
         try fileManager.copyItem(at: url, to: destPDF)
 
+        let textDir = BookCachePaths.default.bookDirectory(forKey: bookId)
+        try? fileManager.createDirectory(at: textDir, withIntermediateDirectories: true)
+        try? fullText.write(to: BookCachePaths.default.textFileURL(forKey: bookId), atomically: true, encoding: .utf8)
+
         let title = document.documentAttributes?[PDFDocumentAttribute.titleAttribute] as? String
         let author = document.documentAttributes?[PDFDocumentAttribute.authorAttribute] as? String
         let displayTitle = (title?.isEmpty == false ? title! : url.deletingPathExtension().lastPathComponent)

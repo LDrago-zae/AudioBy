@@ -52,8 +52,11 @@ public final class ElevenLabsService: @unchecked Sendable {
     }
 
     public func cachedURL(bookId: String, chapterId: String, voiceId: String) -> URL? {
-        let url = cacheDirectory.appendingPathComponent("\(bookId)-\(chapterId)-\(voiceId).mp3")
-        return fileManager.fileExists(atPath: url.path) ? url : nil
+        let key = BookCachePaths.cacheKey(bookId: bookId)
+        let unified = BookCachePaths.default.studioAudioURL(forKey: key, chapterId: chapterId, voiceId: voiceId)
+        if fileManager.fileExists(atPath: unified.path) { return unified }
+        let legacy = cacheDirectory.appendingPathComponent("\(bookId)-\(chapterId)-\(voiceId).mp3")
+        return fileManager.fileExists(atPath: legacy.path) ? legacy : nil
     }
 
     public func synthesize(text: String, bookId: String, chapterId: String, voiceId: String) async throws -> URL {
@@ -84,7 +87,10 @@ public final class ElevenLabsService: @unchecked Sendable {
         guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
             throw ElevenLabsError.badStatus((response as? HTTPURLResponse)?.statusCode ?? -1)
         }
-        let dest = cacheDirectory.appendingPathComponent("\(bookId)-\(chapterId)-\(voiceId).mp3")
+        let key = BookCachePaths.cacheKey(bookId: bookId)
+        let audioDir = BookCachePaths.default.audioDirectory(forKey: key)
+        try fileManager.createDirectory(at: audioDir, withIntermediateDirectories: true)
+        let dest = BookCachePaths.default.studioAudioURL(forKey: key, chapterId: chapterId, voiceId: voiceId)
         try data.write(to: dest, options: .atomic)
         return dest
     }

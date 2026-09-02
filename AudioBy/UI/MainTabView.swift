@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct MainTabView: View {
-    @AppStorage("isDarkMode") private var isDarkMode: Bool = true
     @State private var selectedTab: DockTab = .home
     @Bindable var playerService = AudioPlayerService.shared
 
@@ -40,6 +39,5 @@ public struct MainTabView: View {
             .padding(.horizontal, 16)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }

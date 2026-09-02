@@ -95,7 +95,7 @@ public struct LearningPathView: View {
 
                                 Text("Product designer")
                                     .font(.system(size: 26, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
                             }
 
                             Spacer()
@@ -105,7 +105,7 @@ public struct LearningPathView: View {
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
                                     .frame(width: 44, height: 44)
                                     .background(Theme.surfaceWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -127,15 +127,15 @@ public struct LearningPathView: View {
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text("8")
                                     .font(.system(size: 40, weight: .heavy, design: .rounded))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
 
                                 Text("/14")
                                     .font(.system(size: 32, weight: .semibold, design: .rounded))
-                                    .foregroundColor(Color.white.opacity(0.45))
+                                    .foregroundColor(Theme.textMuted)
 
                                 Text("Skills developed")
                                     .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
                                     .padding(.leading, 6)
                             }
 
@@ -144,7 +144,7 @@ public struct LearningPathView: View {
                                 ForEach(0..<14, id: \.self) { index in
                                     let isCompleted = index < 8
                                     Circle()
-                                        .fill(isCompleted ? Theme.brandGreen : Color.white.opacity(0.15))
+                                        .fill(isCompleted ? Theme.brandGreen : Theme.cardBorder)
                                         .frame(width: 14, height: 14)
                                         .shadow(color: isCompleted ? Theme.brandGreen.opacity(0.5) : .clear, radius: 3)
                                 }
