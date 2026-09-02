@@ -29,7 +29,7 @@ public struct InteractiveLessonView: View {
                             } label: {
                                 Image(systemName: "arrow.left")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
                                     .frame(width: 44, height: 44)
                                     .background(Theme.surfaceWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -44,7 +44,7 @@ public struct InteractiveLessonView: View {
                             VStack(spacing: 2) {
                                 Text("Interaction design")
                                     .font(.system(size: 17, weight: .bold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
 
                                 Text("Lesson 04 / 20")
                                     .font(.system(size: 13, weight: .medium))
@@ -58,7 +58,7 @@ public struct InteractiveLessonView: View {
                             } label: {
                                 Image(systemName: "lightbulb")
                                     .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(showingTip ? Theme.brandGreen : .white)
+                                    .foregroundColor(showingTip ? Theme.brandGreen : Theme.textDark)
                                     .frame(width: 44, height: 44)
                                     .background(Theme.surfaceWhite)
                                     .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -75,7 +75,7 @@ public struct InteractiveLessonView: View {
                         GeometryReader { geo in
                             ZStack(alignment: .leading) {
                                 Capsule()
-                                    .fill(Color.white.opacity(0.12))
+                                    .fill(Theme.cardBorder)
                                 Capsule()
                                     .fill(
                                         LinearGradient(
@@ -94,7 +94,7 @@ public struct InteractiveLessonView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Progressive Disclosure")
                                 .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.white)
+                                .foregroundColor(Theme.textDark)
 
                             Text("Show only what people need, when they need it.")
                                 .font(.system(size: 15))
@@ -129,7 +129,7 @@ public struct InteractiveLessonView: View {
                             VStack(alignment: .leading, spacing: 1) {
                                 Text("Audio Narration: Progressive Disclosure")
                                     .font(.system(size: 13, weight: .semibold))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.textDark)
                                 Text("Narrated by Samantha Vance • 3:45")
                                     .font(.system(size: 11))
                                     .foregroundColor(Theme.textMuted)
@@ -154,7 +154,7 @@ public struct InteractiveLessonView: View {
                         VStack(alignment: .leading, spacing: 14) {
                             Text("What is the primary benefit of progressive disclosure in mobile interfaces?")
                                 .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white)
+                                .foregroundColor(Theme.textDark)
                                 .lineSpacing(3)
 
                             VStack(spacing: 10) {
@@ -166,13 +166,13 @@ public struct InteractiveLessonView: View {
                                         HStack {
                                             Text(option)
                                                 .font(.system(size: 14, weight: isSelected ? .bold : .medium))
-                                                .foregroundColor(isSelected ? Theme.brandGreen : .white)
+                                                .foregroundColor(isSelected ? Theme.brandGreen : Theme.textDark)
 
                                             Spacer()
 
                                             ZStack {
                                                 Circle()
-                                                    .stroke(isSelected ? Theme.brandGreen : Color.white.opacity(0.3), lineWidth: 2)
+                                                    .stroke(isSelected ? Theme.brandGreen : Theme.cardBorder, lineWidth: 2)
                                                     .frame(width: 20, height: 20)
 
                                                 if isSelected {

@@ -17,7 +17,7 @@ public struct AddBookmarkSheet: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text(chapterTitle)
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.textDark)
 
                         HStack {
                             Image(systemName: "bookmark.fill")
@@ -44,7 +44,7 @@ public struct AddBookmarkSheet: View {
                                 RoundedRectangle(cornerRadius: 14)
                                     .stroke(Theme.cardBorder, lineWidth: 1)
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.textDark)
                     }
                     .padding(.horizontal, 20)
 
