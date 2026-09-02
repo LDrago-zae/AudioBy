@@ -1,5 +1,6 @@
 .env
 AudioBy/Config/Secrets.xcconfig
+AudioBy/Resources/GoogleService-Info.plist
 .DS_Store
 xcuserdata/
 *.xcuserstate
