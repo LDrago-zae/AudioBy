@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001C67E99D622826F0F0CA07 /* CatalogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547741754E13DEA14D4A6323 /* CatalogStore.swift */; };
+		0342F74340474097DF19F30B /* catalog.fixture.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = F0C80FB46F4AE8C97E4661EF /* catalog.fixture.sqlite */; };
 		075E9A2EE543DF1405A2D817 /* WaveformVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC679D11733E7313467DB71 /* WaveformVisualizer.swift */; };
 		07C36AC8E02581DF273A6E8F /* CoverArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE8F5DBEDBF27E3688D9D82 /* CoverArtView.swift */; };
 		084139D0234F0E7E8BD90999 /* ElevenLabsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95F59DE5693D22D1855BAE9 /* ElevenLabsService.swift */; };
@@ -17,27 +19,39 @@
 		2670B689EF6322566528090A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83C292025AD02AF1C6ACB7 /* SettingsView.swift */; };
 		26D3AD2BC13C1AD12E62DD82 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD9A06DC5F2E9BE7DE1E353 /* PaywallView.swift */; };
 		298234D981606B76EA629DE7 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92E7F37ADE569D00E6274D /* Bookmark.swift */; };
+		3221E95F8432732EBDC011D9 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4BA4DCDA5512B5DC4B6A7B /* ForgotPasswordView.swift */; };
 		3805CC27A28F01BD43177FE7 /* AudioByApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3123503837042FADFF44A4E /* AudioByApp.swift */; };
 		380C02D3EF8836DC5EDAE308 /* AudioPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C077F2787C1846A0F36CD5 /* AudioPlayerTests.swift */; };
 		3934E26F7551B613C8321BA6 /* Audiobook.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB1FB4AD98A90A435ACB41B /* Audiobook.swift */; };
 		3FD559B57D2394E14B648BD7 /* ProgressComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BED6C46425AAC4EADD22C /* ProgressComparisonView.swift */; };
 		43822A6FF4210EC6A3FCEE6B /* AudiobookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF997CD7B89A92799E99F331 /* AudiobookRepository.swift */; };
 		43C880F2F1F9E4DE732878E9 /* DotMatrixChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CADD55D4C6096098507980 /* DotMatrixChartView.swift */; };
+		4B7C89DD148B88FC83D3270B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD05E629BC1927BCAAD6463B /* GoogleService-Info.plist */; };
 		5354414A635670B4E32031E3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D664FD4EE09D3062A8A548 /* Theme.swift */; };
 		55F43F6A13E67509C9D10DA1 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADA4F08BBFA8C614B6C0FEC /* DiscoverView.swift */; };
+		5A90B1FBB4EB141AA60142A7 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = E92BF2C4234A277DE154CBF3 /* GRDB */; };
+		5B1DA85598B2997BD8D11F46 /* CatalogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5A2040900A476FEE2B3E7 /* CatalogRepository.swift */; };
+		5D76EB4409E1353ABA1AAC0E /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765B65F8F5B26FD17D84A376 /* SignUpView.swift */; };
 		5D943880B9A54315B4FE9BBF /* SleepTimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65A197F4BBF16C2E6970A73 /* SleepTimerService.swift */; };
+		5DDDE909B07EEA87AC0516BF /* CatalogBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FF3227ABB8E2C0F35C4D4 /* CatalogBook.swift */; };
 		5E9730A10B3FF65AAD97B1CF /* BookReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E688E7FE340335AA6F139 /* BookReview.swift */; };
 		5FA48D542220D80D7D1D0029 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FE093090D11862B88ACB45 /* AudioPlayerService.swift */; };
 		614CC7D999BF187DB429747B /* UserImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B04B7EF23F8CA3BDFE7A279 /* UserImportService.swift */; };
+		61A92C3AEC979F6C25B94EAB /* ContentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24326B5FD946AA4544D8EDE /* ContentCache.swift */; };
 		631737866FD44BFD47DDCC9D /* AcrylicShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE8A38DCED0EAAEA57D7C09 /* AcrylicShelfView.swift */; };
 		66CB1E61FCDFAAC0F86B5929 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB284C4E78D79400C9F719AF /* DownloadManager.swift */; };
+		696FC8845BA24A5E0633D7EC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E498FBAEA7DAC99D68F823A9 /* FirebaseAuth */; };
+		6ABF31E106C383CD88451F45 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1954855E562E0716E42AA2F /* AuthService.swift */; };
 		6DEDFD2CDBABDE9FB4BD3CA4 /* TTSVoiceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F3F01643ED72A1BEB1BF5B /* TTSVoiceOption.swift */; };
 		6FAF021B9B43954F746DDD54 /* BookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E7B1394A37A7C51327A8B /* BookmarksView.swift */; };
+		7AE920C826D175ABC48BA020 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5808FE13DAF6E0F55638E1C7 /* LoginView.swift */; };
 		7DC8AFC5986E4DB4A05DDDFC /* KaraokeTranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF68A84BC26A60F87CBC63F3 /* KaraokeTranscriptionView.swift */; };
 		82F3182B04D073FE5F04DA9D /* VoicePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0419264738C644761A26C07 /* VoicePickerSheet.swift */; };
 		836124F6B8CEECB4D304DB8B /* ChapterListSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FC95212EDE4B95BE4B35B0 /* ChapterListSheet.swift */; };
 		8D528C6D99AF632B6E31B5AE /* CarModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B87A4E3E87EC63F70EBDD94 /* CarModeView.swift */; };
+		9155E9FDFABB1FDD419BF30F /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65BA940DDFA9C2311536F25 /* SplashView.swift */; };
 		995E6F91CC704E40E390085F /* TTSEngineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7305619826254C94DFAAE5B1 /* TTSEngineService.swift */; };
+		9A04E01626E616D92B49BCEC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9E0009C70DA1E8F120DF59 /* RootView.swift */; };
 		9BA03E9821BEFB442F56AF42 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF276A66E57C25946163ED71 /* StorageService.swift */; };
 		9FC24101649820AF3815DED1 /* NowPlayingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F3B8B3AF37DEF561998E52 /* NowPlayingManager.swift */; };
 		ACF925F243B5F027EF02BB9B /* LearningPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A242CCADE67EAB42A895B0 /* LearningPathView.swift */; };
@@ -49,6 +63,7 @@
 		BFAE7482CC740C8DBDAD47AF /* PlaybackSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09816B83BBFC0C7EA11F1F70 /* PlaybackSlider.swift */; };
 		C1D5E4C003A2F30A6C4BE452 /* AddBookmarkSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8536A0987DB1F1DC4AC9D1D /* AddBookmarkSheet.swift */; };
 		C53518D98BAD1520E974D6BF /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B668E702A47ADD1D98650709 /* LibraryView.swift */; };
+		CA5553AA132C70AD2B66AA9C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 17760BC880B6405B20A6A61A /* GoogleSignIn */; };
 		CA92EC4E710F820F86C89973 /* sample_chapter2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */; };
 		CF9933E46D56BFFD83FFB5DD /* TranscriptSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B459C1ECCDABB9EF3D46B2B /* TranscriptSegment.swift */; };
 		D08DD9BB15DB86E8E78AF3E3 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2E6AE7036BE1687FDDCF1 /* MainTabView.swift */; };
@@ -57,11 +72,14 @@
 		D851F472688912AFE040F848 /* ExploreSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578C29491FB695FD8F877FC8 /* ExploreSearchView.swift */; };
 		DAD10B6BC255966CCAA46A17 /* PlaybackSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C6F3196F4BDBD5B65AE780 /* PlaybackSpeed.swift */; };
 		DC891D42AE0D9352DE13285B /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F328633C3AB5CE3DBB4536 /* MiniPlayerView.swift */; };
+		E3A0EC7DDA6718EB09C36398 /* AuthComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F584C28726B86C48DA90C3E4 /* AuthComponents.swift */; };
 		E61DDB283CF24E0E39FE104D /* HomeDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDF8EE41C563C35721B8B83 /* HomeDashboardView.swift */; };
 		E78CE490EB0DBF9ECACB0CF7 /* FullScreenPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD674C2255EB44F91709DE3 /* FullScreenPlayerView.swift */; };
 		EF1AA188DB306A2CF67337AD /* BookReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790C19B21CE7A6C871E9FEB9 /* BookReaderView.swift */; };
 		EFE8122E5A4118C21A666030 /* ProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EDEF4C79DD617B75C4FC90 /* ProfileDetailsView.swift */; };
 		F0E8E89F2A9E394FA4605B04 /* SleepTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29104A62768D5B0914D89382 /* SleepTimerSheet.swift */; };
+		F1E1997B8E59E58577F2EB4B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D444165BDD691CBA029345A /* OnboardingView.swift */; };
+		FA15C0BD9BD9687A17938558 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C31480CF601B757C498F4E2A /* FirebaseCore */; };
 		FD8B14BF90AB7281DE9D78A8 /* FloatingDockTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62745E5561D461A55DE9BFE7 /* FloatingDockTabBar.swift */; };
 		FFC596F217E39E7094566160 /* InteractiveLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EC5A9384BA6A5484B482A /* InteractiveLessonView.swift */; };
 /* End PBXBuildFile section */
@@ -88,8 +106,12 @@
 		1B459C1ECCDABB9EF3D46B2B /* TranscriptSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptSegment.swift; sourceTree = "<group>"; };
 		1DD9A06DC5F2E9BE7DE1E353 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		29104A62768D5B0914D89382 /* SleepTimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTimerSheet.swift; sourceTree = "<group>"; };
+		3A4BA4DCDA5512B5DC4B6A7B /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		3D444165BDD691CBA029345A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		46C6F3196F4BDBD5B65AE780 /* PlaybackSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSpeed.swift; sourceTree = "<group>"; };
+		547741754E13DEA14D4A6323 /* CatalogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogStore.swift; sourceTree = "<group>"; };
 		578C29491FB695FD8F877FC8 /* ExploreSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreSearchView.swift; sourceTree = "<group>"; };
+		5808FE13DAF6E0F55638E1C7 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5B87A4E3E87EC63F70EBDD94 /* CarModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarModeView.swift; sourceTree = "<group>"; };
 		62745E5561D461A55DE9BFE7 /* FloatingDockTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingDockTabBar.swift; sourceTree = "<group>"; };
 		65F3B8B3AF37DEF561998E52 /* NowPlayingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingManager.swift; sourceTree = "<group>"; };
@@ -97,35 +119,43 @@
 		6D944E971C0539961B296C31 /* AudioByTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AudioByTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE8A38DCED0EAAEA57D7C09 /* AcrylicShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylicShelfView.swift; sourceTree = "<group>"; };
 		7305619826254C94DFAAE5B1 /* TTSEngineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSEngineService.swift; sourceTree = "<group>"; };
+		765B65F8F5B26FD17D84A376 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		790C19B21CE7A6C871E9FEB9 /* BookReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderView.swift; sourceTree = "<group>"; };
+		7E9E0009C70DA1E8F120DF59 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		844B2811DF72620511B47BA4 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		87E2E6AE7036BE1687FDDCF1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		8F92E7F37ADE569D00E6274D /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		961BED6C46425AAC4EADD22C /* ProgressComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressComparisonView.swift; sourceTree = "<group>"; };
-		96CA9A6897B271411338B688 /* sample_chapter1.m4a */ = {isa = PBXFileReference; path = sample_chapter1.m4a; sourceTree = "<group>"; };
-		99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */ = {isa = PBXFileReference; path = sample_chapter3.m4a; sourceTree = "<group>"; };
+		96CA9A6897B271411338B688 /* sample_chapter1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter1.m4a; sourceTree = "<group>"; };
+		99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter3.m4a; sourceTree = "<group>"; };
 		9DD032AD2953255FD27D3091 /* ActivityStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatsView.swift; sourceTree = "<group>"; };
+		A24326B5FD946AA4544D8EDE /* ContentCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCache.swift; sourceTree = "<group>"; };
 		A26EC5A9384BA6A5484B482A /* InteractiveLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveLessonView.swift; sourceTree = "<group>"; };
 		A2FE093090D11862B88ACB45 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		A3123503837042FADFF44A4E /* AudioByApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioByApp.swift; sourceTree = "<group>"; };
-		A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */ = {isa = PBXFileReference; path = sample_chapter2.m4a; sourceTree = "<group>"; };
+		A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter2.m4a; sourceTree = "<group>"; };
 		A65A197F4BBF16C2E6970A73 /* SleepTimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTimerService.swift; sourceTree = "<group>"; };
 		AC83C292025AD02AF1C6ACB7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ACC60BE3276CDEC74AB92D39 /* SpeedPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedPickerSheet.swift; sourceTree = "<group>"; };
+		AD05E629BC1927BCAAD6463B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B1954855E562E0716E42AA2F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1F3F01643ED72A1BEB1BF5B /* TTSVoiceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSVoiceOption.swift; sourceTree = "<group>"; };
 		B668E702A47ADD1D98650709 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		B95F59DE5693D22D1855BAE9 /* ElevenLabsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevenLabsService.swift; sourceTree = "<group>"; };
+		BAB5A2040900A476FEE2B3E7 /* CatalogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRepository.swift; sourceTree = "<group>"; };
 		BAF6551849C5C7B38C7CA647 /* AudiobookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiobookDetailView.swift; sourceTree = "<group>"; };
 		BCCEA02B43E0958CB216AC09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C04FBD9AA3AA62975DF17D7F /* AudioBy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioBy.entitlements; sourceTree = "<group>"; };
 		C1CADD55D4C6096098507980 /* DotMatrixChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotMatrixChartView.swift; sourceTree = "<group>"; };
 		C46FA2C89387CDE315269E12 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		C67FF3227ABB8E2C0F35C4D4 /* CatalogBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogBook.swift; sourceTree = "<group>"; };
 		C6F1B5FF0290ABDA77E8ECDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C871445644A7027B4F04854C /* PDFImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFImportPresenter.swift; sourceTree = "<group>"; };
 		CADA4F08BBFA8C614B6C0FEC /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		CBD674C2255EB44F91709DE3 /* FullScreenPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPlayerView.swift; sourceTree = "<group>"; };
 		CF68A84BC26A60F87CBC63F3 /* KaraokeTranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokeTranscriptionView.swift; sourceTree = "<group>"; };
 		D24E688E7FE340335AA6F139 /* BookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReview.swift; sourceTree = "<group>"; };
-		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8536A0987DB1F1DC4AC9D1D /* AddBookmarkSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookmarkSheet.swift; sourceTree = "<group>"; };
 		D8C077F2787C1846A0F36CD5 /* AudioPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTests.swift; sourceTree = "<group>"; };
 		DA2476BC64F9F668BA8365CA /* AudiobookRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiobookRepositoryTests.swift; sourceTree = "<group>"; };
@@ -133,12 +163,29 @@
 		E0419264738C644761A26C07 /* VoicePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoicePickerSheet.swift; sourceTree = "<group>"; };
 		E1FC95212EDE4B95BE4B35B0 /* ChapterListSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterListSheet.swift; sourceTree = "<group>"; };
 		EAB1FB4AD98A90A435ACB41B /* Audiobook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audiobook.swift; sourceTree = "<group>"; };
+		F0C80FB46F4AE8C97E4661EF /* catalog.fixture.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = catalog.fixture.sqlite; sourceTree = "<group>"; };
 		F0D664FD4EE09D3062A8A548 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F2A242CCADE67EAB42A895B0 /* LearningPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningPathView.swift; sourceTree = "<group>"; };
 		F4F328633C3AB5CE3DBB4536 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
+		F584C28726B86C48DA90C3E4 /* AuthComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthComponents.swift; sourceTree = "<group>"; };
+		F65BA940DDFA9C2311536F25 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		FB284C4E78D79400C9F719AF /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		FF997CD7B89A92799E99F331 /* AudiobookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiobookRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C031F8BBF65908A12CB497C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A90B1FBB4EB141AA60142A7 /* GRDB in Frameworks */,
+				696FC8845BA24A5E0633D7EC /* FirebaseAuth in Frameworks */,
+				FA15C0BD9BD9687A17938558 /* FirebaseCore in Frameworks */,
+				CA5553AA132C70AD2B66AA9C /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0B1040138E2E294D41FE141D /* Bookmarks */ = {
@@ -180,12 +227,27 @@
 			path = AudioBy;
 			sourceTree = "<group>";
 		};
+		57C776B107E5042038875BA3 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				F584C28726B86C48DA90C3E4 /* AuthComponents.swift */,
+				3A4BA4DCDA5512B5DC4B6A7B /* ForgotPasswordView.swift */,
+				5808FE13DAF6E0F55638E1C7 /* LoginView.swift */,
+				3D444165BDD691CBA029345A /* OnboardingView.swift */,
+				7E9E0009C70DA1E8F120DF59 /* RootView.swift */,
+				765B65F8F5B26FD17D84A376 /* SignUpView.swift */,
+				F65BA940DDFA9C2311536F25 /* SplashView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		623E2C08B08DD4C3D426A399 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				EAB1FB4AD98A90A435ACB41B /* Audiobook.swift */,
 				8F92E7F37ADE569D00E6274D /* Bookmark.swift */,
 				D24E688E7FE340335AA6F139 /* BookReview.swift */,
+				C67FF3227ABB8E2C0F35C4D4 /* CatalogBook.swift */,
 				C46FA2C89387CDE315269E12 /* Chapter.swift */,
 				46C6F3196F4BDBD5B65AE780 /* PlaybackSpeed.swift */,
 				1B459C1ECCDABB9EF3D46B2B /* TranscriptSegment.swift */,
@@ -285,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				E7A2D422958181ED89115326 /* Activity */,
+				57C776B107E5042038875BA3 /* Auth */,
 				0B1040138E2E294D41FE141D /* Bookmarks */,
 				AF0D5F2FB14AB714612A5138 /* Discover */,
 				20F925038D42BFC77B2E9D33 /* Lesson */,
@@ -310,6 +373,9 @@
 			isa = PBXGroup;
 			children = (
 				BCCEA02B43E0958CB216AC09 /* Assets.xcassets */,
+				C04FBD9AA3AA62975DF17D7F /* AudioBy.entitlements */,
+				F0C80FB46F4AE8C97E4661EF /* catalog.fixture.sqlite */,
+				AD05E629BC1927BCAAD6463B /* GoogleService-Info.plist */,
 				C6F1B5FF0290ABDA77E8ECDF /* Info.plist */,
 				4271B69B3BE61AC4AD9BBE69 /* Audio */,
 			);
@@ -322,6 +388,10 @@
 				14B9D509F199A703CEB4DA8E /* AudiobookAPIService.swift */,
 				FF997CD7B89A92799E99F331 /* AudiobookRepository.swift */,
 				A2FE093090D11862B88ACB45 /* AudioPlayerService.swift */,
+				B1954855E562E0716E42AA2F /* AuthService.swift */,
+				BAB5A2040900A476FEE2B3E7 /* CatalogRepository.swift */,
+				547741754E13DEA14D4A6323 /* CatalogStore.swift */,
+				A24326B5FD946AA4544D8EDE /* ContentCache.swift */,
 				FB284C4E78D79400C9F719AF /* DownloadManager.swift */,
 				B95F59DE5693D22D1855BAE9 /* ElevenLabsService.swift */,
 				1092B052F1E71CD4E2E158F3 /* EntitlementService.swift */,
@@ -385,6 +455,7 @@
 			buildPhases = (
 				4975F32F6347A34FE24B8DBB /* Sources */,
 				1D778EEBBC7ACD6C0EB52F09 /* Resources */,
+				C031F8BBF65908A12CB497C8 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -392,6 +463,10 @@
 			);
 			name = AudioBy;
 			packageProductDependencies = (
+				E92BF2C4234A277DE154CBF3 /* GRDB */,
+				E498FBAEA7DAC99D68F823A9 /* FirebaseAuth */,
+				C31480CF601B757C498F4E2A /* FirebaseCore */,
+				17760BC880B6405B20A6A61A /* GoogleSignIn */,
 			);
 			productName = AudioBy;
 			productReference = D38EB3D4F107C466F8EA498C /* AudioBy.app */;
@@ -425,10 +500,10 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					10D51D1C1774F82AC85E21F5 = {
-						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
 					};
 					66BDA100D331CC344B5F199F = {
-						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -441,6 +516,11 @@
 			);
 			mainGroup = 8311086E983D83567BB21298;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				17745140FD50F1CF38AE793D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */,
+				51AFB192DA004D99CA1DC8FC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 63D929209716A62EA3A8680F /* Products */;
 			projectDirPath = "";
@@ -458,6 +538,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4E3D6383A448817B87AEF77 /* Assets.xcassets in Resources */,
+				4B7C89DD148B88FC83D3270B /* GoogleService-Info.plist in Resources */,
+				0342F74340474097DF19F30B /* catalog.fixture.sqlite in Resources */,
 				098178743A18792CD9E5927E /* sample_chapter1.m4a in Resources */,
 				CA92EC4E710F820F86C89973 /* sample_chapter2.m4a in Resources */,
 				B90CBB7B4416FAD287F696AD /* sample_chapter3.m4a in Resources */,
@@ -480,13 +562,19 @@
 				B79E458EE839D49AF0B3A5D0 /* AudiobookAPIService.swift in Sources */,
 				D4FC3A8BB42D196C77A47CAB /* AudiobookDetailView.swift in Sources */,
 				43822A6FF4210EC6A3FCEE6B /* AudiobookRepository.swift in Sources */,
+				E3A0EC7DDA6718EB09C36398 /* AuthComponents.swift in Sources */,
+				6ABF31E106C383CD88451F45 /* AuthService.swift in Sources */,
 				EF1AA188DB306A2CF67337AD /* BookReaderView.swift in Sources */,
 				5E9730A10B3FF65AAD97B1CF /* BookReview.swift in Sources */,
 				298234D981606B76EA629DE7 /* Bookmark.swift in Sources */,
 				6FAF021B9B43954F746DDD54 /* BookmarksView.swift in Sources */,
 				8D528C6D99AF632B6E31B5AE /* CarModeView.swift in Sources */,
+				5DDDE909B07EEA87AC0516BF /* CatalogBook.swift in Sources */,
+				5B1DA85598B2997BD8D11F46 /* CatalogRepository.swift in Sources */,
+				001C67E99D622826F0F0CA07 /* CatalogStore.swift in Sources */,
 				B31C19805625E5C1BC37C0EF /* Chapter.swift in Sources */,
 				836124F6B8CEECB4D304DB8B /* ChapterListSheet.swift in Sources */,
+				61A92C3AEC979F6C25B94EAB /* ContentCache.swift in Sources */,
 				07C36AC8E02581DF273A6E8F /* CoverArtView.swift in Sources */,
 				55F43F6A13E67509C9D10DA1 /* DiscoverView.swift in Sources */,
 				43C880F2F1F9E4DE732878E9 /* DotMatrixChartView.swift in Sources */,
@@ -495,25 +583,31 @@
 				2507A1208CE16E14C2FB434A /* EntitlementService.swift in Sources */,
 				D851F472688912AFE040F848 /* ExploreSearchView.swift in Sources */,
 				FD8B14BF90AB7281DE9D78A8 /* FloatingDockTabBar.swift in Sources */,
+				3221E95F8432732EBDC011D9 /* ForgotPasswordView.swift in Sources */,
 				E78CE490EB0DBF9ECACB0CF7 /* FullScreenPlayerView.swift in Sources */,
 				E61DDB283CF24E0E39FE104D /* HomeDashboardView.swift in Sources */,
 				FFC596F217E39E7094566160 /* InteractiveLessonView.swift in Sources */,
 				7DC8AFC5986E4DB4A05DDDFC /* KaraokeTranscriptionView.swift in Sources */,
 				ACF925F243B5F027EF02BB9B /* LearningPathView.swift in Sources */,
 				C53518D98BAD1520E974D6BF /* LibraryView.swift in Sources */,
+				7AE920C826D175ABC48BA020 /* LoginView.swift in Sources */,
 				D08DD9BB15DB86E8E78AF3E3 /* MainTabView.swift in Sources */,
 				DC891D42AE0D9352DE13285B /* MiniPlayerView.swift in Sources */,
 				9FC24101649820AF3815DED1 /* NowPlayingManager.swift in Sources */,
+				F1E1997B8E59E58577F2EB4B /* OnboardingView.swift in Sources */,
 				BCA95CD9CF622B577AD321CE /* PDFImportPresenter.swift in Sources */,
 				26D3AD2BC13C1AD12E62DD82 /* PaywallView.swift in Sources */,
 				BFAE7482CC740C8DBDAD47AF /* PlaybackSlider.swift in Sources */,
 				DAD10B6BC255966CCAA46A17 /* PlaybackSpeed.swift in Sources */,
 				EFE8122E5A4118C21A666030 /* ProfileDetailsView.swift in Sources */,
 				3FD559B57D2394E14B648BD7 /* ProgressComparisonView.swift in Sources */,
+				9A04E01626E616D92B49BCEC /* RootView.swift in Sources */,
 				2670B689EF6322566528090A /* SettingsView.swift in Sources */,
+				5D76EB4409E1353ABA1AAC0E /* SignUpView.swift in Sources */,
 				5D943880B9A54315B4FE9BBF /* SleepTimerService.swift in Sources */,
 				F0E8E89F2A9E394FA4605B04 /* SleepTimerSheet.swift in Sources */,
 				B377D87E6412CD6FC85C6596 /* SpeedPickerSheet.swift in Sources */,
+				9155E9FDFABB1FDD419BF30F /* SplashView.swift in Sources */,
 				9BA03E9821BEFB442F56AF42 /* StorageService.swift in Sources */,
 				995E6F91CC704E40E390085F /* TTSEngineService.swift in Sources */,
 				6DEDFD2CDBABDE9FB4BD3CA4 /* TTSVoiceOption.swift in Sources */,
@@ -551,12 +645,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AudioBy/Resources/AudioBy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJ3W4C6YYV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AudioBy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.audioby.app;
 				PRODUCT_NAME = AudioBy;
@@ -572,12 +674,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AudioBy/Resources/AudioBy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJ3W4C6YYV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AudioBy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.audioby.app;
 				PRODUCT_NAME = AudioBy;
@@ -620,11 +730,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -706,11 +815,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -783,6 +891,56 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		17745140FD50F1CF38AE793D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.18.0;
+			};
+		};
+		51AFB192DA004D99CA1DC8FC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.24.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		17760BC880B6405B20A6A61A /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51AFB192DA004D99CA1DC8FC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		C31480CF601B757C498F4E2A /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17745140FD50F1CF38AE793D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		E498FBAEA7DAC99D68F823A9 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17745140FD50F1CF38AE793D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E92BF2C4234A277DE154CBF3 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 33197F4EA6D0C96FDCF33372 /* Project object */;
 }

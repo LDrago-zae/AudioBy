@@ -5,6 +5,7 @@ public struct ProfileDetailsView: View {
     @AppStorage("autoRewindOnResume") private var autoRewindOnResume: Bool = true
     @AppStorage("highQualityAudio") private var highQualityAudio: Bool = true
     @AppStorage("downloadWifiOnly") private var downloadWifiOnly: Bool = true
+    @State private var cacheLimitChoice: Int = 2_000_000_000
     @Bindable var repository = AudiobookRepository.shared
     @Bindable var playerService = AudioPlayerService.shared
     @Bindable var downloadManager = DownloadManager.shared
@@ -35,9 +36,15 @@ public struct ProfileDetailsView: View {
                                 )
 
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Audiobook Enthusiast")
+                                Text(AuthService.shared.displayName)
                                     .font(.system(size: 19, weight: .bold))
                                     .foregroundColor(Theme.textDark)
+
+                                if !AuthService.shared.email.isEmpty {
+                                    Text(AuthService.shared.email)
+                                        .font(.system(size: 12, weight: .medium))
+                                        .foregroundColor(Theme.textMuted)
+                                }
 
                                 Text(membershipLabel)
                                     .font(.system(size: 12, weight: .medium))
@@ -64,6 +71,22 @@ public struct ProfileDetailsView: View {
                         )
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
+
+                        Button(role: .destructive) {
+                            AuthService.shared.signOut()
+                        } label: {
+                            HStack {
+                                Text("Sign out")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.red)
+                                Spacer()
+                            }
+                            .padding(16)
+                            .background(Theme.surfaceWhite)
+                            .cornerRadius(18)
+                            .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.cardBorder, lineWidth: 1))
+                        }
+                        .padding(.horizontal, 20)
 
                         Button {
                             showingPaywall = true
@@ -206,6 +229,32 @@ public struct ProfileDetailsView: View {
 
                                 Divider().background(Theme.cardBorder).padding(.horizontal, 16)
 
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Downloaded content limit")
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .foregroundColor(Theme.textDark)
+                                    Text("Oldest cached books are removed first when the limit is reached.")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Theme.textMuted)
+                                    Picker("Limit", selection: $cacheLimitChoice) {
+                                        Text("500 MB").tag(500_000_000)
+                                        Text("1 GB").tag(1_000_000_000)
+                                        Text("2 GB").tag(2_000_000_000)
+                                        Text("5 GB").tag(5_000_000_000)
+                                        Text("Unlimited").tag(0)
+                                    }
+                                    .pickerStyle(.menu)
+                                    .tint(Theme.brandGreen)
+                                }
+                                .padding(16)
+                                .onChange(of: cacheLimitChoice) { _, value in
+                                    UserDefaults.standard.set(Int64(value), forKey: ContentCache.limitDefaultsKey)
+                                    Task { await ContentCache.shared.evictIfNeeded() }
+                                    downloadManager.scanDownloadedFiles()
+                                }
+
+                                Divider().background(Theme.cardBorder).padding(.horizontal, 16)
+
                                 HStack {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("Offline Storage Used")
@@ -281,6 +330,9 @@ public struct ProfileDetailsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .onAppear {
+                cacheLimitChoice = Int(ContentCache.currentLimitBytes())
+            }
             .sheet(isPresented: $showingPaywall) {
                 PaywallView()
             }
@@ -290,7 +342,7 @@ public struct ProfileDetailsView: View {
                 }
                 Button("Cancel", role: .cancel) {}
             } message: {
-                Text("This will remove all downloaded audiobooks from your device.")
+                Text("This will remove downloaded audiobooks and cached book text from your device.")
             }
         }
     }

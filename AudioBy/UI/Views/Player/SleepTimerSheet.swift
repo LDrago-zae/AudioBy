@@ -25,7 +25,7 @@ public struct SleepTimerSheet: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Sleep Timer")
                                 .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.white)
+                                .foregroundColor(Theme.textDark)
                             Text("Playback will automatically stop after the timer ends.")
                                 .font(.system(size: 13))
                                 .foregroundColor(Theme.textMuted)
@@ -49,7 +49,7 @@ public struct SleepTimerSheet: View {
 
                                     Text(option.title)
                                         .font(.system(size: 16, weight: activeOption == option ? .bold : .regular))
-                                        .foregroundColor(activeOption == option ? Theme.brandGreen : .white)
+                                        .foregroundColor(activeOption == option ? Theme.brandGreen : Theme.textDark)
 
                                     Spacer()
 

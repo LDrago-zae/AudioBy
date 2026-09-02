@@ -41,12 +41,12 @@ public struct MiniPlayerView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(playerService.currentChapter?.title ?? book.title)
                             .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.textDark)
                             .lineLimit(1)
 
                         Text("Narrated by \(book.narrator)")
                             .font(.system(size: 11))
-                            .foregroundColor(Color.white.opacity(0.65))
+                            .foregroundColor(Theme.textMuted)
                             .lineLimit(1)
                     }
 
@@ -58,7 +58,7 @@ public struct MiniPlayerView: View {
                     } label: {
                         Image(systemName: "gobackward.15")
                             .font(.system(size: 16))
-                            .foregroundColor(Color.white.opacity(0.85))
+                            .foregroundColor(Theme.textMuted)
                             .frame(width: 32, height: 32)
                     }
 

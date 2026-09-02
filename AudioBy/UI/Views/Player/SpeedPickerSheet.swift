@@ -13,7 +13,7 @@ public struct SpeedPickerSheet: View {
                 VStack(spacing: 20) {
                     Text("Playback Speed")
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.textDark)
                         .padding(.top, 14)
 
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
@@ -25,7 +25,7 @@ public struct SpeedPickerSheet: View {
                                 VStack(spacing: 4) {
                                     Text(speed.shortTitle)
                                         .font(.system(size: 18, weight: .bold, design: .rounded))
-                                        .foregroundColor(currentSpeed == speed ? .black : .white)
+                                        .foregroundColor(currentSpeed == speed ? .black : Theme.textDark)
 
                                     if speed == .normal {
                                         Text("Normal")

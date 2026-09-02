@@ -44,14 +44,14 @@ public struct ChapterListSheet: View {
                                         } else {
                                             Text("\(chapter.chapterNumber)")
                                                 .font(.system(size: 14, weight: .semibold))
-                                                .foregroundColor(.white)
+                                                .foregroundColor(Theme.textDark)
                                         }
                                     }
 
                                     VStack(alignment: .leading, spacing: 3) {
                                         Text(chapter.title)
                                             .font(.system(size: 15, weight: currentChapterIndex == index ? .bold : .medium))
-                                            .foregroundColor(currentChapterIndex == index ? Theme.brandGreen : .white)
+                                            .foregroundColor(currentChapterIndex == index ? Theme.brandGreen : Theme.textDark)
                                             .lineLimit(1)
 
                                         Text("Duration: \(chapter.formattedDuration)")
