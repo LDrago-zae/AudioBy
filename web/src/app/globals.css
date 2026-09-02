@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F9FAF9;
+  --foreground: #111813;
+  --card-bg: #FFFFFF;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --background: #0C100E;
+  --foreground: #F3F5F4;
+  --card-bg: #121714;
+  --border-subtle: rgba(255, 255, 255, 0.10);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", -system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hairline grid */
+.grid-hairline {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.dark .grid-hairline {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Editorial glow */
+.editorial-glow {
+  background: radial-gradient(circle at 50% -20%, rgba(15, 155, 81, 0.08) 0%, rgba(15, 155, 81, 0.01) 45%, transparent 70%);
+}
+
+.dark .editorial-glow {
+  background: radial-gradient(circle at 50% -20%, rgba(59, 227, 130, 0.12) 0%, rgba(59, 227, 130, 0.02) 45%, transparent 70%);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F9FAF9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D5DDD6;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B5BFB6;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0C100E;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1F2823;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2B3830;
+}
