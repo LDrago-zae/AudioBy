@@ -101,6 +101,30 @@ public final class EntitlementService: NSObject, @unchecked Sendable {
         }
     }
 
+    public func logIn(appUserID: String) async {
+        guard Purchases.isConfigured else { return }
+        do {
+            let (customerInfo, _) = try await Purchases.shared.logIn(appUserID)
+            await MainActor.run {
+                self.apply(customerInfo)
+            }
+        } catch {
+            print("RevenueCat logIn error: \(error.localizedDescription)")
+        }
+    }
+
+    public func logOut() async {
+        guard Purchases.isConfigured else { return }
+        do {
+            let customerInfo = try await Purchases.shared.logOut()
+            await MainActor.run {
+                self.apply(customerInfo)
+            }
+        } catch {
+            print("RevenueCat logOut error: \(error.localizedDescription)")
+        }
+    }
+
     public func purchasePlus() async {
         await purchase(package: plusPackage, fallbackProductID: productPlusMonthly)
     }
