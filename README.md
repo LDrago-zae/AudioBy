@@ -98,7 +98,22 @@ AudioBy/
 
 2. **ElevenLabs API key (Premium studio voices)** — keep the key out of the app. Copy `AudioBy/Config/Secrets.example.xcconfig` to `AudioBy/Config/Secrets.xcconfig` and set `ELEVENLABS_API_KEY`, or add `ELEVENLABS_API_KEY` under the Xcode scheme (Run → Arguments → Environment Variables). `.env.example` documents the same name. `Secrets.xcconfig` and `.env` are gitignored and never shipped as user-facing settings.
 
-3. **Open in Xcode**:
+3. **Local catalog (SQLite)** — Explore/search reads a bundled `catalog.fixture.sqlite` (no network). For a full Gutenberg catalog, run the Mac ingest job and host the file:
+
+   ```bash
+   cd Tools/catalog-ingest
+   python3 -m venv .venv && source .venv/bin/activate
+   pip install -r requirements.txt
+   python3 ingest_catalog.py --write-fixture ../../AudioBy/Resources/catalog.fixture.sqlite
+   # Full rebuild (download dumps yourself first):
+   # python3 ingest_catalog.py --gutenberg-rdf rdf-files.tar.zip --ol-dump ol_dump_editions.txt.gz -o catalog.sqlite
+   ```
+
+   Host `catalog.sqlite` and set `CATALOG_SQLITE_URL` in `Secrets.xcconfig` or the scheme environment. The app downloads it once (ETag / Last-Modified) into Application Support. Do not parse RDF dumps on-device.
+
+4. **Firebase Auth** — project `audioby-app` is wired via `GoogleService-Info.plist`. Email/password and Google are enabled. In [Firebase Console → Authentication → Sign-in method](https://console.firebase.google.com/project/audioby-app/authentication/providers), enable **Apple**. Sign in with Apple also needs a paid Apple Developer team in Xcode (Signing & Capabilities), the Sign in with Apple capability, and an Apple ID signed in on the Simulator or device. After enabling Google, re-download the plist if `CLIENT_ID` / `REVERSED_CLIENT_ID` are missing, then set `GID_CLIENT_ID` and `GOOGLE_REVERSED_CLIENT_ID` in `Secrets.xcconfig`.
+
+5. **Open in Xcode**:
    ```bash
    open AudioBy.xcodeproj
    ```
