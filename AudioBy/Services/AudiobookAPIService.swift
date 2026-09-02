@@ -345,9 +345,14 @@ public final class AudiobookAPIService: @unchecked Sendable {
     // MARK: - Gutenberg / Gutendex
 
     public func fetchAndParseGutenbergBook(gutenbergId: Int, customURL: URL? = nil) async throws -> [Chapter] {
-        let textURL = customURL ?? URL(string: "https://www.gutenberg.org/cache/epub/\(gutenbergId)/pg\(gutenbergId).txt")
-        guard let url = textURL else { throw APIServiceError.invalidURL }
-        return try await fetchAndParseTextFromURL(url, bookTitle: "Gutenberg Book \(gutenbergId)")
+        let raw: String
+        if let customURL {
+            raw = try await fetchRawText(from: customURL)
+            try? await ContentCache.shared.persistText(raw, key: "\(gutenbergId)")
+        } else {
+            raw = try await ContentCache.shared.fetchText(for: gutenbergId)
+        }
+        return try Self.parsePlainText(raw, bookTitle: "Gutenberg Book \(gutenbergId)")
     }
 
     private func fetchCompanionTextChapters(
@@ -492,17 +497,26 @@ public final class AudiobookAPIService: @unchecked Sendable {
     }
 
     private func fetchAndParseTextFromURL(_ url: URL, bookTitle: String) async throws -> [Chapter] {
+        let fullText = try await fetchRawText(from: url)
+        return try Self.parsePlainText(fullText, bookTitle: bookTitle)
+    }
+
+    private func fetchRawText(from url: URL) async throws -> String {
         var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
             throw APIServiceError.badStatus((response as? HTTPURLResponse)?.statusCode ?? -1)
         }
-        guard var fullText = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .ascii),
+        guard let fullText = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .ascii),
               fullText.count > 200 else {
             throw APIServiceError.emptyChapters
         }
+        return fullText
+    }
 
+    public static func parsePlainText(_ source: String, bookTitle: String = "") throws -> [Chapter] {
+        var fullText = source
         if let headerRange = fullText.range(of: "*** START OF", options: .caseInsensitive) {
             fullText = String(fullText[headerRange.upperBound...])
             if let lineBreak = fullText.firstIndex(of: "\n") {
@@ -773,7 +787,7 @@ public final class AudiobookAPIService: @unchecked Sendable {
         return text.replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
     }
 
-    static func categoryFromSubjects(_ subjects: String) -> AudiobookCategory {
+    public static func categoryFromSubjects(_ subjects: String) -> AudiobookCategory {
         let s = subjects.lowercased()
         if s.contains("philosoph") || s.contains("ethic") { return .philosophy }
         if s.contains("biograph") || s.contains("history") { return .biography }

@@ -35,16 +35,16 @@ public final class AudiobookRepository: @unchecked Sendable {
     private let storage = StorageService.shared
     private let api = AudiobookAPIService.shared
     private let downloadManager = DownloadManager.shared
-    private let catalogCacheKey = "AudioBy.LastLiveCatalog"
+    private let catalog = CatalogRepository.shared
 
     public var audiobooks: [Audiobook] {
         mergedBooks()
     }
 
     public init() {
-        restoreCachedCatalog()
         importedBooks = UserImportService.shared.loadImportedBooks()
         Task {
+            await CatalogStore.shared.prepare()
             await fetchRemoteAudiobooks(reset: true)
         }
     }
@@ -68,31 +68,30 @@ public final class AudiobookRepository: @unchecked Sendable {
             }
         }
 
+        if CatalogStore.shared.dbQueue == nil {
+            await CatalogStore.shared.prepare()
+        }
+
         let cat = selectedCategory
         let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         let offset = reset ? 0 : catalogOffset
 
         do {
-            let remoteBooks = try await api.fetchAudiobooks(
+            let page = try catalog.page(
                 query: query.isEmpty ? nil : query,
                 category: cat,
                 limit: pageSize,
                 offset: offset
             )
             await MainActor.run {
-                self.applyFetchedPage(remoteBooks, reset: reset, offset: offset)
+                self.applyFetchedPage(page, reset: reset, offset: offset)
             }
         } catch {
             await MainActor.run {
                 self.isLoadingRemote = false
                 self.isLoadingMore = false
                 self.catalogError = error.localizedDescription
-                if self.catalogBooks.isEmpty {
-                    self.restoreCachedCatalog()
-                    self.isShowingCachedCatalog = !self.catalogBooks.isEmpty
-                } else {
-                    self.isShowingCachedCatalog = true
-                }
+                self.isShowingCachedCatalog = !self.catalogBooks.isEmpty
             }
         }
     }
@@ -119,13 +118,11 @@ public final class AudiobookRepository: @unchecked Sendable {
         isLoadingRemote = false
         isLoadingMore = false
         isShowingCachedCatalog = false
-        persistCatalog(catalogBooks)
     }
 
     public func updateChapters(for bookId: String, chapters: [Chapter]) {
         if let index = catalogBooks.firstIndex(where: { $0.id == bookId }) {
             catalogBooks[index].chapters = chapters
-            persistCatalog(catalogBooks)
         }
         if let index = importedBooks.firstIndex(where: { $0.id == bookId }) {
             importedBooks[index].chapters = chapters
@@ -146,6 +143,7 @@ public final class AudiobookRepository: @unchecked Sendable {
         importedBooks.removeAll { $0.id == id }
         UserImportService.shared.saveImportedBooks(importedBooks)
         UserImportService.shared.deleteStoredPDF(bookId: id)
+        Task { await ContentCache.shared.removeBook(key: id) }
     }
 
     public func book(id: String) -> Audiobook? {
@@ -185,23 +183,6 @@ public final class AudiobookRepository: @unchecked Sendable {
     public func retryChapters(for bookId: String) async -> [Chapter] {
         api.clearChapterCache(for: bookId)
         return await loadLiveChapters(for: bookId, forceRefresh: true)
-    }
-
-    private func persistCatalog(_ books: [Audiobook]) {
-        if let data = try? JSONEncoder().encode(Array(books.prefix(80))) {
-            UserDefaults.standard.set(data, forKey: catalogCacheKey)
-        }
-    }
-
-    private func restoreCachedCatalog() {
-        guard let data = UserDefaults.standard.data(forKey: catalogCacheKey),
-              var books = try? JSONDecoder().decode([Audiobook].self, from: data),
-              !books.isEmpty else { return }
-        hydrateUserData(into: &books)
-        catalogBooks = Array(books.prefix(pageSize))
-        catalogOffset = catalogBooks.count
-        hasMoreCatalog = books.count >= pageSize
-        isShowingCachedCatalog = true
     }
 
     private func hydrateUserData(into books: inout [Audiobook]) {
@@ -294,6 +275,5 @@ public final class AudiobookRepository: @unchecked Sendable {
             favSet.remove(bookId)
         }
         storage.saveFavorites(favSet)
-        persistCatalog(catalogBooks)
     }
 }
