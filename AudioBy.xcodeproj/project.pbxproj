@@ -60,6 +60,7 @@
 		B79E458EE839D49AF0B3A5D0 /* AudiobookAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9D509F199A703CEB4DA8E /* AudiobookAPIService.swift */; };
 		B90CBB7B4416FAD287F696AD /* sample_chapter3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */; };
 		BCA95CD9CF622B577AD321CE /* PDFImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C871445644A7027B4F04854C /* PDFImportPresenter.swift */; };
+		BE052DCF7BC6E63A8E55068C /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A29618EB4154DC8A99C63BB5 /* RevenueCat */; };
 		BFAE7482CC740C8DBDAD47AF /* PlaybackSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09816B83BBFC0C7EA11F1F70 /* PlaybackSlider.swift */; };
 		C1D5E4C003A2F30A6C4BE452 /* AddBookmarkSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8536A0987DB1F1DC4AC9D1D /* AddBookmarkSheet.swift */; };
 		C53518D98BAD1520E974D6BF /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B668E702A47ADD1D98650709 /* LibraryView.swift */; };
@@ -73,6 +74,7 @@
 		DAD10B6BC255966CCAA46A17 /* PlaybackSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C6F3196F4BDBD5B65AE780 /* PlaybackSpeed.swift */; };
 		DC891D42AE0D9352DE13285B /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F328633C3AB5CE3DBB4536 /* MiniPlayerView.swift */; };
 		E3A0EC7DDA6718EB09C36398 /* AuthComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F584C28726B86C48DA90C3E4 /* AuthComponents.swift */; };
+		E4E82CF2760821E2D4526BF9 /* GoogleService-Info.example.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BC035CD8EBE901741E62836 /* GoogleService-Info.example.plist */; };
 		E61DDB283CF24E0E39FE104D /* HomeDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDF8EE41C563C35721B8B83 /* HomeDashboardView.swift */; };
 		E78CE490EB0DBF9ECACB0CF7 /* FullScreenPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD674C2255EB44F91709DE3 /* FullScreenPlayerView.swift */; };
 		EF1AA188DB306A2CF67337AD /* BookReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790C19B21CE7A6C871E9FEB9 /* BookReaderView.swift */; };
@@ -97,6 +99,7 @@
 /* Begin PBXFileReference section */
 		09816B83BBFC0C7EA11F1F70 /* PlaybackSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSlider.swift; sourceTree = "<group>"; };
 		0B04B7EF23F8CA3BDFE7A279 /* UserImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImportService.swift; sourceTree = "<group>"; };
+		0BC035CD8EBE901741E62836 /* GoogleService-Info.example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.example.plist"; sourceTree = "<group>"; };
 		0CDF8EE41C563C35721B8B83 /* HomeDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDashboardView.swift; sourceTree = "<group>"; };
 		0EE8F5DBEDBF27E3688D9D82 /* CoverArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArtView.swift; sourceTree = "<group>"; };
 		1092B052F1E71CD4E2E158F3 /* EntitlementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementService.swift; sourceTree = "<group>"; };
@@ -126,14 +129,14 @@
 		87E2E6AE7036BE1687FDDCF1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		8F92E7F37ADE569D00E6274D /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		961BED6C46425AAC4EADD22C /* ProgressComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressComparisonView.swift; sourceTree = "<group>"; };
-		96CA9A6897B271411338B688 /* sample_chapter1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter1.m4a; sourceTree = "<group>"; };
-		99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter3.m4a; sourceTree = "<group>"; };
+		96CA9A6897B271411338B688 /* sample_chapter1.m4a */ = {isa = PBXFileReference; path = sample_chapter1.m4a; sourceTree = "<group>"; };
+		99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */ = {isa = PBXFileReference; path = sample_chapter3.m4a; sourceTree = "<group>"; };
 		9DD032AD2953255FD27D3091 /* ActivityStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatsView.swift; sourceTree = "<group>"; };
 		A24326B5FD946AA4544D8EDE /* ContentCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCache.swift; sourceTree = "<group>"; };
 		A26EC5A9384BA6A5484B482A /* InteractiveLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveLessonView.swift; sourceTree = "<group>"; };
 		A2FE093090D11862B88ACB45 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		A3123503837042FADFF44A4E /* AudioByApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioByApp.swift; sourceTree = "<group>"; };
-		A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter2.m4a; sourceTree = "<group>"; };
+		A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */ = {isa = PBXFileReference; path = sample_chapter2.m4a; sourceTree = "<group>"; };
 		A65A197F4BBF16C2E6970A73 /* SleepTimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTimerService.swift; sourceTree = "<group>"; };
 		AC83C292025AD02AF1C6ACB7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ACC60BE3276CDEC74AB92D39 /* SpeedPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedPickerSheet.swift; sourceTree = "<group>"; };
@@ -155,7 +158,7 @@
 		CBD674C2255EB44F91709DE3 /* FullScreenPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPlayerView.swift; sourceTree = "<group>"; };
 		CF68A84BC26A60F87CBC63F3 /* KaraokeTranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokeTranscriptionView.swift; sourceTree = "<group>"; };
 		D24E688E7FE340335AA6F139 /* BookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReview.swift; sourceTree = "<group>"; };
-		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8536A0987DB1F1DC4AC9D1D /* AddBookmarkSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookmarkSheet.swift; sourceTree = "<group>"; };
 		D8C077F2787C1846A0F36CD5 /* AudioPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTests.swift; sourceTree = "<group>"; };
 		DA2476BC64F9F668BA8365CA /* AudiobookRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiobookRepositoryTests.swift; sourceTree = "<group>"; };
@@ -182,6 +185,7 @@
 				696FC8845BA24A5E0633D7EC /* FirebaseAuth in Frameworks */,
 				FA15C0BD9BD9687A17938558 /* FirebaseCore in Frameworks */,
 				CA5553AA132C70AD2B66AA9C /* GoogleSignIn in Frameworks */,
+				BE052DCF7BC6E63A8E55068C /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +379,7 @@
 				BCCEA02B43E0958CB216AC09 /* Assets.xcassets */,
 				C04FBD9AA3AA62975DF17D7F /* AudioBy.entitlements */,
 				F0C80FB46F4AE8C97E4661EF /* catalog.fixture.sqlite */,
+				0BC035CD8EBE901741E62836 /* GoogleService-Info.example.plist */,
 				AD05E629BC1927BCAAD6463B /* GoogleService-Info.plist */,
 				C6F1B5FF0290ABDA77E8ECDF /* Info.plist */,
 				4271B69B3BE61AC4AD9BBE69 /* Audio */,
@@ -467,6 +472,7 @@
 				E498FBAEA7DAC99D68F823A9 /* FirebaseAuth */,
 				C31480CF601B757C498F4E2A /* FirebaseCore */,
 				17760BC880B6405B20A6A61A /* GoogleSignIn */,
+				A29618EB4154DC8A99C63BB5 /* RevenueCat */,
 			);
 			productName = AudioBy;
 			productReference = D38EB3D4F107C466F8EA498C /* AudioBy.app */;
@@ -518,8 +524,9 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				17745140FD50F1CF38AE793D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */,
+				B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				51AFB192DA004D99CA1DC8FC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				F2115626BF0ADD879D46B6D7 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 63D929209716A62EA3A8680F /* Products */;
@@ -538,6 +545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4E3D6383A448817B87AEF77 /* Assets.xcassets in Resources */,
+				E4E82CF2760821E2D4526BF9 /* GoogleService-Info.example.plist in Resources */,
 				4B7C89DD148B88FC83D3270B /* GoogleService-Info.plist in Resources */,
 				0342F74340474097DF19F30B /* catalog.fixture.sqlite in Resources */,
 				098178743A18792CD9E5927E /* sample_chapter1.m4a in Resources */,
@@ -649,7 +657,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GJ3W4C6YYV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AudioBy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -678,7 +685,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GJ3W4C6YYV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AudioBy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -909,12 +915,20 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */ = {
+		B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.24.0;
+			};
+		};
+		F2115626BF0ADD879D46B6D7 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -924,6 +938,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 51AFB192DA004D99CA1DC8FC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
+		};
+		A29618EB4154DC8A99C63BB5 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2115626BF0ADD879D46B6D7 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
 		};
 		C31480CF601B757C498F4E2A /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -937,7 +956,7 @@
 		};
 		E92BF2C4234A277DE154CBF3 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */;
+			package = B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */

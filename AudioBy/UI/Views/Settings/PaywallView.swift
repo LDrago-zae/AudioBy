@@ -1,3 +1,4 @@
+import RevenueCat
 import SwiftUI
 
 private enum PaywallPlan: Hashable {
@@ -65,6 +66,11 @@ public struct PaywallView: View {
                     selectedPlan = .plus
                 }
             }
+            .task {
+                if entitlements.offering == nil {
+                    await entitlements.loadOfferings()
+                }
+            }
         }
     }
 
@@ -118,7 +124,7 @@ public struct PaywallView: View {
             planCard(
                 plan: .premium,
                 title: "Premium",
-                price: "$9.99",
+                price: localizedPrice(for: entitlements.premiumPackage, fallback: "$9.99"),
                 cadence: "per month",
                 badge: "Most popular",
                 points: [
@@ -131,7 +137,7 @@ public struct PaywallView: View {
             planCard(
                 plan: .plus,
                 title: "Plus",
-                price: "$4.99",
+                price: localizedPrice(for: entitlements.plusPackage, fallback: "$4.99"),
                 cadence: "per month",
                 badge: nil,
                 points: [
@@ -141,6 +147,13 @@ public struct PaywallView: View {
                 ]
             )
         }
+    }
+
+    /// Prefers the price configured in App Store Connect (via RevenueCat) in the user's local
+    /// storefront currency. Falls back to a display-only placeholder while offerings are loading
+    /// or haven't been configured yet (e.g. during local development).
+    private func localizedPrice(for package: Package?, fallback: String) -> String {
+        package?.storeProduct.localizedPriceString ?? fallback
     }
 
     private func planCard(
