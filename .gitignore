@@ -5,3 +5,10 @@ xcuserdata/
 *.xcuserstate
 DerivedData/
 build/
+Tools/catalog-ingest/data/
+Tools/catalog-ingest/*.tar
+Tools/catalog-ingest/*.zip
+Tools/catalog-ingest/*.gz
+catalog.sqlite
+*.sqlite
+!AudioBy/Resources/catalog.fixture.sqlite
