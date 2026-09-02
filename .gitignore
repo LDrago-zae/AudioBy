@@ -16,4 +16,11 @@ catalog.sqlite
 !AudioBy/Resources/catalog.fixture.sqlite
 AudioBy.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
 AudioBy.xcodeproj/project.xcworkspace/xcuserdata/zaeemimtiaz.xcuserdatad/UserInterfaceState.xcuserstate
-AudioBy.xcodeproj/project.xcworkspace/xcuserdata/zaeemimtiaz.xcuserdatad/UserInterfaceState.xcuserstate
+# Web dependencies & build artifacts
+**/node_modules/
+**/.next/
+**/.env*.local
+**/next-env.d.ts
+**/package-lock.json
+**/.vercel/
+

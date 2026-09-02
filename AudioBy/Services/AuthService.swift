@@ -59,6 +59,13 @@ public final class AuthService: NSObject {
             guard let self else { return }
             self.currentUser = user
             self.isSignedIn = user != nil
+            Task {
+                if let uid = user?.uid {
+                    await EntitlementService.shared.logIn(appUserID: uid)
+                } else {
+                    await EntitlementService.shared.logOut()
+                }
+            }
         }
         configureGoogleSignIn()
     }
