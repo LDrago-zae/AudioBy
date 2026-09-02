@@ -1,5 +1,6 @@
 .env
 AudioBy/Config/Secrets.xcconfig
+Tools/appstoreconnect/
 AudioBy/Resources/GoogleService-Info.plist
 .DS_Store
 xcuserdata/
@@ -14,3 +15,5 @@ catalog.sqlite
 *.sqlite
 !AudioBy/Resources/catalog.fixture.sqlite
 AudioBy.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+AudioBy.xcodeproj/project.xcworkspace/xcuserdata/zaeemimtiaz.xcuserdatad/UserInterfaceState.xcuserstate
+AudioBy.xcodeproj/project.xcworkspace/xcuserdata/zaeemimtiaz.xcuserdatad/UserInterfaceState.xcuserstate
