@@ -118,3 +118,34 @@ AudioBy/
    open AudioBy.xcodeproj
    ```
    Select any iOS Simulator (e.g. `iPhone 17 Pro`) and press **Cmd + R** to run!
+
+---
+
+## 💳 Monetization: Subscriptions via StoreKit + RevenueCat
+
+Plus and Premium tiers ([EntitlementService.swift](AudioBy/Services/EntitlementService.swift)) are sold as **native iOS in-app subscriptions**. Apple requires that unlocking features inside a native app go through **StoreKit In-App Purchase** — RevenueCat sits on top of StoreKit as an entitlement/analytics layer, it does not replace Apple as the payment processor and does not change how you get paid. Money always flows: user pays via the App Store → Apple takes its commission (15–30%) → Apple pays out to whatever bank/Payoneer account you configure in App Store Connect.
+
+### 1. Create the subscription products in App Store Connect
+In [App Store Connect](https://appstoreconnect.apple.com) → your app → **Monetization → Subscriptions**:
+1. Create a Subscription Group (e.g. "AudioBy Plans").
+2. Add two auto-renewable subscriptions matching the identifiers already hardcoded in `EntitlementService.swift`:
+   - `com.audioby.plus.monthly`
+   - `com.audioby.premium.monthly`
+3. Set a price for each in your base territory; App Store Connect auto-generates localized prices for every storefront (including Pakistan's PKR pricing tier).
+4. Fill in the required subscription display name, description, and review screenshot for each product, then submit them for review alongside your next app build.
+
+### 2. Connect RevenueCat
+1. Create a free [RevenueCat](https://app.revenuecat.com) project (free up to $2.5k/mo tracked revenue, then 1%).
+2. Under **Project settings → Apps**, add your iOS app and connect it to App Store Connect using an **App Store Connect API Key** (recommended) or your app's shared secret.
+3. Under **Entitlements**, create two entitlements named exactly `plus` and `premium` (these identifiers are hardcoded in `EntitlementService.swift`), and attach the matching App Store Connect products to each.
+4. Under **Offerings**, create a `default` offering with two Packages, one pointing at `com.audioby.plus.monthly` and one at `com.audioby.premium.monthly`. The app fetches this offering on launch and in the paywall to show live, localized prices.
+5. Copy your **Public app-specific API key** (starts with `appl_`) from **Project settings → API keys**, then set `REVENUECAT_API_KEY` in `Secrets.xcconfig` (copy `Secrets.example.xcconfig` if you haven't already).
+
+### 3. Testing without live App Store products
+While product review/setup is pending, use the **Debug unlock** control in Settings (`EntitlementService.setDebugTier`) to preview Plus/Premium-gated UI locally without a real purchase. `PaywallView` falls back to placeholder prices ("$9.99"/"$4.99") until RevenueCat successfully fetches your configured offering.
+
+### 4. Getting paid in Pakistan
+This is an App Store Connect account setting, not something in this codebase. In **App Store Connect → Agreements, Tax, and Banking**, add your banking details:
+- Apple has supported direct PKR bank transfers via partner banks in Pakistan for several years — check if your bank is listed first.
+- If your bank isn't supported, a [Payoneer](https://www.payoneer.com) USD receiving account is the common workaround Pakistani developers use to receive Apple's payouts, then withdraw locally.
+- RevenueCat itself never touches your money — it only reads purchase/entitlement data from Apple's servers, so there is nothing to configure there for payouts.

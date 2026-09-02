@@ -13,3 +13,4 @@ Tools/catalog-ingest/*.gz
 catalog.sqlite
 *.sqlite
 !AudioBy/Resources/catalog.fixture.sqlite
+AudioBy.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
