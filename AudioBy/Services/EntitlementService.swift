@@ -1,6 +1,6 @@
 import Foundation
 import Observation
-import StoreKit
+import RevenueCat
 
 public enum SubscriptionTier: String, Codable, Sendable {
     case free
@@ -9,16 +9,23 @@ public enum SubscriptionTier: String, Codable, Sendable {
 }
 
 @Observable
-public final class EntitlementService: @unchecked Sendable {
+public final class EntitlementService: NSObject, @unchecked Sendable {
     public static let shared = EntitlementService()
 
     public var tier: SubscriptionTier = .free
     public var isPurchasing: Bool = false
     public var lastPurchaseError: String?
+    public var offering: Offering?
 
     private let debugUnlockKey = "AudioBy.DebugUnlockTier"
+
+    /// Product identifiers as configured in App Store Connect / RevenueCat.
     private let productPlusMonthly = "com.audioby.plus.monthly"
     private let productPremiumMonthly = "com.audioby.premium.monthly"
+
+    /// RevenueCat entitlement identifiers as configured in the RevenueCat dashboard.
+    private let entitlementPlus = "plus"
+    private let entitlementPremium = "premium"
 
     public var isPlus: Bool { tier == .plus || tier == .premium }
     public var isPremium: Bool { tier == .premium }
@@ -40,9 +47,40 @@ public final class EntitlementService: @unchecked Sendable {
         max(0, 1 - DownloadManager.shared.downloadedBookIds.count)
     }
 
-    public init() {
+    /// RevenueCat package backing the Plus plan in the current offering, if fetched.
+    public var plusPackage: Package? {
+        package(forProductID: productPlusMonthly)
+    }
+
+    /// RevenueCat package backing the Premium plan in the current offering, if fetched.
+    public var premiumPackage: Package? {
+        package(forProductID: productPremiumMonthly)
+    }
+
+    public override init() {
+        super.init()
         restoreDebugUnlock()
-        Task { await refreshEntitlements() }
+        if Purchases.isConfigured {
+            Purchases.shared.delegate = self
+        }
+        Task {
+            await loadOfferings()
+            await refreshEntitlements()
+        }
+    }
+
+    public func loadOfferings() async {
+        guard Purchases.isConfigured else { return }
+        do {
+            let offerings = try await Purchases.shared.offerings()
+            await MainActor.run {
+                self.offering = offerings.current
+            }
+        } catch {
+            await MainActor.run {
+                self.lastPurchaseError = error.localizedDescription
+            }
+        }
     }
 
     public func refreshEntitlements() async {
@@ -50,32 +88,39 @@ public final class EntitlementService: @unchecked Sendable {
             restoreDebugUnlock()
             return
         }
-        var highest: SubscriptionTier = .free
-        for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else { continue }
-            if transaction.productID.contains("premium") {
-                highest = .premium
-            } else if transaction.productID.contains("plus"), highest != .premium {
-                highest = .plus
+        guard Purchases.isConfigured else { return }
+        do {
+            let customerInfo = try await Purchases.shared.customerInfo()
+            await MainActor.run {
+                self.apply(customerInfo)
             }
-        }
-        await MainActor.run {
-            self.tier = highest
+        } catch {
+            await MainActor.run {
+                self.lastPurchaseError = error.localizedDescription
+            }
         }
     }
 
     public func purchasePlus() async {
-        await purchase(productID: productPlusMonthly, fallbackTier: .plus)
+        await purchase(package: plusPackage, fallbackProductID: productPlusMonthly)
     }
 
     public func purchasePremium() async {
-        await purchase(productID: productPremiumMonthly, fallbackTier: .premium)
+        await purchase(package: premiumPackage, fallbackProductID: productPremiumMonthly)
     }
 
     public func restorePurchases() async {
+        guard Purchases.isConfigured else {
+            await MainActor.run {
+                self.lastPurchaseError = "Purchases are not configured yet. Set REVENUECAT_API_KEY in Secrets.xcconfig."
+            }
+            return
+        }
         do {
-            try await AppStore.sync()
-            await refreshEntitlements()
+            let customerInfo = try await Purchases.shared.restorePurchases()
+            await MainActor.run {
+                self.apply(customerInfo)
+            }
         } catch {
             await MainActor.run {
                 self.lastPurchaseError = error.localizedDescription
@@ -95,30 +140,45 @@ public final class EntitlementService: @unchecked Sendable {
         }
     }
 
-    private func purchase(productID: String, fallbackTier: SubscriptionTier) async {
+    private func package(forProductID productID: String) -> Package? {
+        offering?.availablePackages.first { $0.storeProduct.productIdentifier == productID }
+    }
+
+    private func apply(_ customerInfo: CustomerInfo) {
+        if customerInfo.entitlements[entitlementPremium]?.isActive == true {
+            tier = .premium
+        } else if customerInfo.entitlements[entitlementPlus]?.isActive == true {
+            tier = .plus
+        } else {
+            tier = .free
+        }
+    }
+
+    private func purchase(package: Package?, fallbackProductID: String) async {
         await MainActor.run {
             self.isPurchasing = true
             self.lastPurchaseError = nil
         }
-        do {
-            let products = try await Product.products(for: [productID])
-            guard let product = products.first else {
-                await MainActor.run {
-                    self.isPurchasing = false
-                    self.lastPurchaseError = "Products are not configured in App Store Connect yet. Use Debug unlock in Settings."
-                }
-                return
+        guard Purchases.isConfigured else {
+            await MainActor.run {
+                self.isPurchasing = false
+                self.lastPurchaseError = "Purchases are not configured yet. Set REVENUECAT_API_KEY in Secrets.xcconfig, or use Debug unlock in Settings."
             }
-            let result = try await product.purchase()
-            switch result {
-            case .success(let verification):
-                if case .verified = verification {
-                    await refreshEntitlements()
+            return
+        }
+        guard let package else {
+            await MainActor.run {
+                self.isPurchasing = false
+                self.lastPurchaseError = "\(fallbackProductID) is not available in the current RevenueCat offering yet. Use Debug unlock in Settings while you finish App Store Connect / RevenueCat setup."
+            }
+            return
+        }
+        do {
+            let result = try await Purchases.shared.purchase(package: package)
+            if !result.userCancelled {
+                await MainActor.run {
+                    self.apply(result.customerInfo)
                 }
-            case .userCancelled, .pending:
-                break
-            @unknown default:
-                break
             }
         } catch {
             await MainActor.run {
@@ -127,6 +187,16 @@ public final class EntitlementService: @unchecked Sendable {
         }
         await MainActor.run {
             self.isPurchasing = false
+        }
+    }
+}
+
+// MARK: - PurchasesDelegate
+
+extension EntitlementService: PurchasesDelegate {
+    public func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
+        Task { @MainActor in
+            self.apply(customerInfo)
         }
     }
 }
