@@ -40,17 +40,17 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-14 sm:py-20 md:py-24 border-t border-black/[0.08] dark:border-white/[0.08] bg-[#F1F5F2] dark:bg-[#0A0D0B] relative transition-colors duration-200">
+    <section id="faq" className="py-14 sm:py-20 md:py-24 border-t border-black/[0.08] dark:border-white/[0.08] bg-zinc-100/60 dark:bg-[#0B0D11] relative transition-colors duration-200">
       <div className="mx-auto max-w-3xl px-3.5 sm:px-6">
         <div className="text-center mb-8 sm:mb-14">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 mb-3 text-[10px] font-mono tracking-eyebrow uppercase text-[#0F9B51] dark:text-emerald"
+            className="flex items-center justify-center gap-2 mb-3 text-[11px] font-mono tracking-wider uppercase text-zinc-500 dark:text-zinc-400"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
-            <span>Questions People Actually Ask</span>
+            <span className="font-bold text-[#059669] dark:text-[#10B981]">[ 06 ]</span>
+            <span className="font-semibold text-zinc-700 dark:text-zinc-300">TECHNICAL SPECIFICATIONS & QUERIES</span>
           </motion.div>
 
           <motion.h2
@@ -58,9 +58,9 @@ export const FAQSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white"
           >
-            Frequently Asked Questions
+            Questions, answered plainly.
           </motion.h2>
 
           <motion.p
@@ -68,35 +68,35 @@ export const FAQSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-ink-secondary"
+            className="mt-2 text-xs sm:text-base text-zinc-600 dark:text-zinc-400"
           >
-            Clear answers about syncing, offline storage, and privacy.
+            Clear architectural details on local privacy, synchronization, and voice models.
           </motion.p>
         </div>
 
-        <div className="space-y-2.5 sm:space-y-3">
-          {FAQS.map((item, idx) => {
+        <div className="space-y-3">
+          {FAQS.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: idx * 0.08 }}
-                className="rounded-xl border border-black/[0.08] dark:border-white/10 bg-white dark:bg-[#121714] overflow-hidden shadow-sm"
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#0E1015] overflow-hidden transition-colors shadow-sm"
               >
                 <button
                   onClick={() => toggle(idx)}
-                  className="flex w-full items-center justify-between p-3.5 sm:p-5 text-left text-xs sm:text-sm font-semibold text-zinc-900 dark:text-white hover:text-[#0F9B51] dark:hover:text-emerald transition-colors gap-2"
+                  className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-xs sm:text-sm font-bold text-zinc-950 dark:text-white hover:text-[#059669] dark:hover:text-[#10B981] transition-colors gap-3"
                 >
-                  <span className="pr-2">{item.q}</span>
+                  <span>{faq.q}</span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="shrink-0"
+                    transition={{ duration: 0.25 }}
+                    className="shrink-0 text-zinc-400 dark:text-zinc-500"
                   >
-                    <ChevronDown className="h-4 w-4 text-zinc-400 dark:text-ink-muted" />
+                    <ChevronDown className="h-4 w-4" />
                   </motion.div>
                 </button>
 
@@ -106,11 +106,11 @@ export const FAQSection: React.FC = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-3.5 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-zinc-600 dark:text-ink-secondary leading-relaxed border-t border-black/[0.04] dark:border-white/[0.04] pt-2.5 sm:pt-3">
-                        {item.a}
+                      <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.04] pt-3 sm:pt-4">
+                        {faq.a}
                       </div>
                     </motion.div>
                   )}

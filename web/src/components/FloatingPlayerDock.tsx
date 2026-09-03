@@ -65,13 +65,13 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
           transition={{ type: "spring", damping: 22, stiffness: 260 }}
           className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] sm:w-[94%] max-w-xl pb-[env(safe-area-inset-bottom)]"
         >
-          <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-black/10 dark:border-white/15 bg-white/95 dark:bg-[#121714]/95 p-2 sm:p-3 shadow-2xl backdrop-blur-xl transition-colors duration-200">
+          <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-black/10 dark:border-white/[0.1] bg-white/95 dark:bg-[#0E1015]/95 p-2 sm:p-3 shadow-2xl backdrop-blur-xl transition-colors duration-200">
             {/* Play Button & Title */}
             <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
               <motion.button
                 whileTap={{ scale: 0.92 }}
                 onClick={toggleAudio}
-                className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-emerald text-black shadow-md hover:bg-emerald-light transition-colors"
+                className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] text-black shadow-sm transition-colors"
                 aria-label={isPlaying ? "Pause audio" : "Play audio"}
               >
                 {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
@@ -79,16 +79,16 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
 
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5 sm:gap-2">
-                  <p className="text-[11px] sm:text-xs font-bold text-zinc-900 dark:text-white truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
+                  <p className="text-[11px] sm:text-xs font-bold text-zinc-950 dark:text-white truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
                     Dorian Gray · Ch. 1
                   </p>
-                  <span className="hidden sm:inline-flex items-center gap-1 text-[9px] font-mono text-[#0F9B51] dark:text-emerald px-1.5 py-0.5 rounded bg-emerald/10 border border-emerald/20">
-                    <span className="h-1 w-1 rounded-full bg-emerald animate-pulse" />
+                  <span className="hidden sm:inline-flex items-center gap-1 text-[9px] font-mono text-[#059669] dark:text-[#10B981] px-1.5 py-0.5 rounded bg-[#10B981]/10 border border-[#10B981]/20">
+                    <span className="h-1 w-1 rounded-full bg-[#10B981]" />
                     ElevenLabs
                   </span>
                 </div>
-                <p className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-ink-muted truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
-                  {isPlaying ? "Playing sample voice..." : "Click to test anywhere"}
+                <p className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400 truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
+                  {isPlaying ? "Rendering acoustic synthesis..." : "Click to test sample voice"}
                 </p>
               </div>
             </div>
@@ -103,7 +103,7 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
               <button
                 onClick={cycleSpeed}
                 title="Playback Speed"
-                className="rounded-lg border border-black/[0.08] dark:border-white/10 bg-black/[0.03] dark:bg-[#161D19] px-2 py-1 text-[10px] sm:text-[11px] font-mono font-bold text-zinc-800 dark:text-ink-primary hover:text-zinc-900 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors"
+                className="rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-black/[0.03] dark:bg-[#161922] px-2 py-1 text-[10px] sm:text-[11px] font-mono font-bold text-zinc-800 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors"
               >
                 {speed}x
               </button>
@@ -112,7 +112,7 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onUpgrade}
-                className="flex items-center gap-1 rounded-xl bg-emerald px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-bold text-black hover:bg-emerald-light transition-colors shadow-md"
+                className="flex items-center gap-1 rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-bold text-black transition-colors shadow-sm"
               >
                 <span>Upgrade</span>
                 <ArrowRight className="h-3 w-3" />
