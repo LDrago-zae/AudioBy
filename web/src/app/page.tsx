@@ -44,7 +44,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#F9FAF9] dark:bg-[#0C100E] text-[#111813] dark:text-ink-primary font-sans transition-colors duration-200">
+    <div className="relative min-h-screen bg-[#F8FAF8] dark:bg-[#08090B] text-zinc-900 dark:text-white font-sans transition-colors duration-200">
       {/* Sticky Header */}
       <Navbar onOpenAuth={() => setAuthOpen(true)} />
 

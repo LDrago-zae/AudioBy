@@ -5,8 +5,8 @@ import { ThemeProvider } from "@/lib/theme-context";
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0C100E" },
-    { media: "(prefers-color-scheme: light)", color: "#F9FAF9" },
+    { media: "(prefers-color-scheme: dark)", color: "#08090B" },
+    { media: "(prefers-color-scheme: light)", color: "#F8FAF8" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -53,7 +53,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-[#F9FAF9] dark:bg-[#0C100E] text-[#111813] dark:text-[#F3F5F4] selection:bg-[#3BE382] selection:text-black transition-colors duration-200">
+      <body className="min-h-screen bg-[#F8FAF8] dark:bg-[#08090B] text-zinc-900 dark:text-white selection:bg-[#10B981] selection:text-black transition-colors duration-200">
         <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>

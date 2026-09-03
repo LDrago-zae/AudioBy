@@ -13,28 +13,28 @@ const config: Config = {
         xs: "480px",
       },
       colors: {
-        canvas: "#0C100E",
-        surface: {
-          DEFAULT: "#121714",
-          subtle: "#161D19",
-          elevated: "#1B231E",
-          highlight: "#242E28",
-        },
-        border: {
-          DEFAULT: "#232D27",
-          subtle: "rgba(255, 255, 255, 0.07)",
-          focus: "rgba(59, 227, 130, 0.4)",
+        obsidian: {
+          canvas: "#08090B",
+          surface: "#0F1115",
+          subtle: "#14171D",
+          elevated: "#1A1E26",
+          highlight: "#222832",
+          well: "#060709",
         },
         emerald: {
-          DEFAULT: "#3BE382",
-          light: "#62FFA4",
-          dark: "#0F9B51",
-          glow: "rgba(59, 227, 130, 0.12)",
+          DEFAULT: "#10B981",
+          light: "#34D399",
+          dark: "#059669",
+          faint: "rgba(16, 185, 129, 0.12)",
+        },
+        amber: {
+          studio: "#F59E0B",
         },
         ink: {
-          primary: "#F3F5F4",
-          secondary: "#9EAA9F",
-          muted: "#667268",
+          primary: "#FFFFFF",
+          secondary: "#A1A1AA",
+          muted: "#71717A",
+          faint: "#52525B",
         },
       },
       fontFamily: {
@@ -46,6 +46,13 @@ const config: Config = {
           "Inter",
           "system-ui",
           "sans-serif",
+        ],
+        serif: [
+          '"Newsreader"',
+          '"Source Serif Pro"',
+          '"Charter"',
+          "Georgia",
+          "serif",
         ],
         mono: [
           '"SF Mono"',
@@ -59,12 +66,13 @@ const config: Config = {
       letterSpacing: {
         tighter: "-0.04em",
         tight: "-0.025em",
-        eyebrow: "0.18em",
+        eyebrow: "0.14em",
       },
       boxShadow: {
-        card: "0 1px 2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05)",
-        elevated: "0 8px 30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)",
-        glow: "0 0 40px rgba(59, 227, 130, 0.15)",
+        tactile: "inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.4)",
+        console: "inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08)",
+        "tactile-btn": "inset 0 1px 0 0 rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.3)",
+        "inset-well": "inset 0 2px 5px 0 rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.4)",
       },
     },
   },
