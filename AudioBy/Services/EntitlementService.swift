@@ -14,6 +14,8 @@ public final class EntitlementService: NSObject, @unchecked Sendable {
 
     public var tier: SubscriptionTier = .free
     public var isPurchasing: Bool = false
+    public var isRefreshing: Bool = false
+    public var refreshStatusMessage: String?
     public var lastPurchaseError: String?
     public var offering: Offering?
 
@@ -84,19 +86,43 @@ public final class EntitlementService: NSObject, @unchecked Sendable {
     }
 
     public func refreshEntitlements() async {
+        await MainActor.run {
+            self.isRefreshing = true
+            self.refreshStatusMessage = nil
+            self.lastPurchaseError = nil
+        }
+        defer {
+            Task { @MainActor in
+                self.isRefreshing = false
+            }
+        }
         if UserDefaults.standard.string(forKey: debugUnlockKey) != nil {
             restoreDebugUnlock()
+            await MainActor.run {
+                self.refreshStatusMessage = "Debug mode: \(self.tier.rawValue.capitalized) tier active."
+            }
             return
         }
-        guard Purchases.isConfigured else { return }
+        guard Purchases.isConfigured else {
+            await MainActor.run {
+                self.refreshStatusMessage = "Purchases service not configured yet."
+            }
+            return
+        }
         do {
             let customerInfo = try await Purchases.shared.customerInfo()
             await MainActor.run {
                 self.apply(customerInfo)
+                if self.isPlus {
+                    self.refreshStatusMessage = "Verified! \(self.tier.rawValue.capitalized) subscription is active."
+                } else {
+                    self.refreshStatusMessage = "Checked! Currently on Free tier. Subscribe at audioby.app to unlock Plus or Premium."
+                }
             }
         } catch {
             await MainActor.run {
                 self.lastPurchaseError = error.localizedDescription
+                self.refreshStatusMessage = "Check failed: \(error.localizedDescription)"
             }
         }
     }

@@ -26,7 +26,13 @@ public struct PaywallView: View {
                             hero
                             planPicker
                             comparison
-                            if let error = entitlements.lastPurchaseError {
+                            if let status = entitlements.refreshStatusMessage {
+                                Text(status)
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .foregroundColor(entitlements.isPlus ? Theme.brandGreen : .orange)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 8)
+                            } else if let error = entitlements.lastPurchaseError {
                                 Text(error)
                                     .font(.system(size: 13, weight: .medium))
                                     .foregroundColor(.orange)
@@ -312,40 +318,67 @@ public struct PaywallView: View {
 
     private var footerCTA: some View {
         VStack(spacing: 12) {
-            Button {
-                Task { await purchaseSelected() }
-            } label: {
+            if isCurrent(selectedPlan) {
                 HStack(spacing: 8) {
-                    if entitlements.isPurchasing {
-                        ProgressView()
-                            .tint(.black)
-                    } else {
-                        Text(ctaTitle)
-                            .font(.system(size: 16, weight: .bold))
-                    }
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.system(size: 18))
+                        .foregroundColor(Theme.brandGreen)
+                    Text(selectedPlan == .premium ? "You’re on Premium" : "You’re on Plus")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(Theme.textDark)
                 }
-                .foregroundColor(.black)
                 .frame(maxWidth: .infinity)
-                .frame(height: 54)
-                .background(
-                    LinearGradient(
-                        colors: [Theme.brandGreenLight, Theme.brandGreen],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
+                .frame(height: 52)
+                .background(Theme.surfaceWhite)
                 .cornerRadius(16)
-            }
-            .disabled(entitlements.isPurchasing || ctaDisabled)
-            .opacity(ctaDisabled ? 0.45 : 1)
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Theme.brandGreen, lineWidth: 1.5))
+            } else {
+                Button {
+                    openWebUpgrade()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "safari")
+                            .font(.system(size: 16, weight: .semibold))
+                        Text("Upgrade on Web (\(planTitle))")
+                            .font(.system(size: 16, weight: .bold))
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 13, weight: .bold))
+                    }
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 54)
+                    .background(
+                        LinearGradient(
+                            colors: [Theme.brandGreenLight, Theme.brandGreen],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .cornerRadius(16)
+                    .shadow(color: Theme.brandGreen.opacity(0.3), radius: 8, y: 3)
+                }
 
-            Button("Restore purchases") {
-                Task { await entitlements.restorePurchases() }
+                Button {
+                    Task { await entitlements.refreshEntitlements() }
+                } label: {
+                    HStack(spacing: 6) {
+                        if entitlements.isRefreshing {
+                            ProgressView()
+                                .controlSize(.small)
+                        } else {
+                            Image(systemName: "arrow.clockwise")
+                                .font(.system(size: 12, weight: .semibold))
+                        }
+                        Text("Already subscribed? Refresh status")
+                            .font(.system(size: 13, weight: .semibold))
+                    }
+                    .foregroundColor(Theme.brandGreen)
+                    .padding(.vertical, 4)
+                }
+                .disabled(entitlements.isRefreshing)
             }
-            .font(.system(size: 14, weight: .semibold))
-            .foregroundColor(Theme.brandGreen)
 
-            Text("Subscriptions renew monthly until cancelled in Settings. Studio narration uses AudioBy’s ElevenLabs configuration — no API key in the app.")
+            Text("AudioBy subscriptions are multiplatform and managed via our secure web checkout. Sign in with your AudioBy account on any device to unlock your subscription.")
                 .font(.system(size: 11))
                 .foregroundColor(Theme.textMuted)
                 .multilineTextAlignment(.center)
@@ -353,19 +386,12 @@ public struct PaywallView: View {
         }
         .padding(.horizontal, 20)
         .padding(.top, 12)
-        .padding(.bottom, 10)
+        .padding(.bottom, 12)
         .background(.ultraThinMaterial)
     }
 
-    private var ctaTitle: String {
-        if isCurrent(selectedPlan) {
-            return selectedPlan == .premium ? "You’re on Premium" : "You’re on Plus"
-        }
-        return selectedPlan == .premium ? "Continue with Premium" : "Continue with Plus"
-    }
-
-    private var ctaDisabled: Bool {
-        isCurrent(selectedPlan)
+    private var planTitle: String {
+        selectedPlan == .premium ? "Premium" : "Plus"
     }
 
     private func isCurrent(_ plan: PaywallPlan) -> Bool {
@@ -375,12 +401,9 @@ public struct PaywallView: View {
         }
     }
 
-    private func purchaseSelected() async {
-        switch selectedPlan {
-        case .plus:
-            await entitlements.purchasePlus()
-        case .premium:
-            await entitlements.purchasePremium()
+    private func openWebUpgrade() {
+        if let url = URL(string: "https://audioby.app#pricing") {
+            UIApplication.shared.open(url)
         }
     }
 }
