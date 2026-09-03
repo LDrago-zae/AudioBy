@@ -21,8 +21,8 @@ export const WaveformVisualizer: React.FC<WaveformVisualizerProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { isDark } = useTheme();
 
-  const activeColor = accent || (isDark ? "#3BE382" : "#0F9B51");
-  const idleColor = isDark ? "rgba(255, 255, 255, 0.16)" : "rgba(0, 0, 0, 0.12)";
+  const activeColor = accent || (isDark ? "#10B981" : "#059669");
+  const idleColor = isDark ? "rgba(255, 255, 255, 0.14)" : "rgba(0, 0, 0, 0.12)";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -78,8 +78,7 @@ export const WaveformVisualizer: React.FC<WaveformVisualizerProps> = ({
 
         // Rounded bar
         ctx.beginPath();
-        const r = Math.min(barWidth / 2, 2);
-        ctx.roundRect(x, y, barWidth, barHeight, [r, r, r, r]);
+        ctx.roundRect(x, y, barWidth, barHeight, 1.5);
         ctx.fill();
       }
 

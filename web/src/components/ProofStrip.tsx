@@ -45,29 +45,29 @@ const AnimatedCounter: React.FC<CounterProps> = ({ target, suffix = "", prefix =
 
 export const ProofStrip: React.FC = () => {
   return (
-    <div className="border-y border-black/[0.08] dark:border-white/[0.08] bg-[#F1F5F2] dark:bg-[#0A0D0B] relative overflow-hidden transition-colors duration-200">
-      <div className="mx-auto max-w-6xl px-3.5 sm:px-6 py-7 sm:py-10">
-        <div className="flex items-center gap-2 mb-6 sm:mb-8 text-[10px] font-mono tracking-eyebrow uppercase text-[#0F9B51] dark:text-emerald">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
-          <span>Day One, No Asterisk</span>
+    <section className="border-y border-black/[0.08] dark:border-white/[0.08] bg-zinc-100/70 dark:bg-[#0B0D11] relative overflow-hidden transition-colors duration-200">
+      <div className="mx-auto max-w-6xl px-3.5 sm:px-6 py-8 sm:py-10">
+        <div className="flex items-center gap-2 mb-6 sm:mb-8 text-[11px] font-mono tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
+          <span className="font-bold text-[#059669] dark:text-[#10B981]">[ 01 ]</span>
+          <span className="font-semibold text-zinc-700 dark:text-zinc-300">BENCHMARKED STANDARDS · ZERO COMPROMISE</span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 divide-y sm:divide-y-0 md:divide-x divide-black/[0.06] dark:divide-white/[0.06]">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="flex flex-col"
+            className="flex flex-col pt-3 sm:pt-0 md:px-4 first:px-0"
           >
-            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white font-mono">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white font-mono">
               <AnimatedCounter target={70000} suffix="+" />
             </span>
-            <span className="mt-1 text-xs font-semibold text-zinc-800 dark:text-ink-primary">
-              Public domain books
+            <span className="mt-1.5 text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-200">
+              Curated public classics
             </span>
-            <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-ink-muted leading-tight mt-0.5">
-              Free forever via Project Gutenberg
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal mt-0.5">
+              Available instantly without paywalls via Gutenberg
             </span>
           </motion.div>
 
@@ -76,16 +76,16 @@ export const ProofStrip: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex flex-col"
+            className="flex flex-col pt-3 sm:pt-0 md:px-4"
           >
-            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white font-mono">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white font-mono">
               0 bytes
             </span>
-            <span className="mt-1 text-xs font-semibold text-zinc-800 dark:text-ink-primary">
+            <span className="mt-1.5 text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-200">
               Leave your device
             </span>
-            <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-ink-muted leading-tight mt-0.5">
-              Private on-device neural synthesis
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal mt-0.5">
+              Private on-device neural synthesis option
             </span>
           </motion.div>
 
@@ -94,16 +94,16 @@ export const ProofStrip: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="flex flex-col"
+            className="flex flex-col pt-3 sm:pt-0 md:px-4"
           >
-            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white font-mono">
-              <AnimatedCounter target={100} suffix="%" />
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white font-mono">
+              &lt; 500 ms
             </span>
-            <span className="mt-1 text-xs font-semibold text-zinc-800 dark:text-ink-primary">
-              Offline caching
+            <span className="mt-1.5 text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-200">
+              First syllable latency
             </span>
-            <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-ink-muted leading-tight mt-0.5">
-              Play on flights with zero cellular
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal mt-0.5">
+              Immediate audio feedback from cold start
             </span>
           </motion.div>
 
@@ -112,20 +112,20 @@ export const ProofStrip: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className="flex flex-col"
+            className="flex flex-col pt-3 sm:pt-0 md:px-4"
           >
-            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white font-mono">
-              1 sub
+            <span className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white font-mono">
+              100%
             </span>
-            <span className="mt-1 text-xs font-semibold text-zinc-800 dark:text-ink-primary">
-              Universal access
+            <span className="mt-1.5 text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-200">
+              Offline cached playback
             </span>
-            <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-ink-muted leading-tight mt-0.5">
-              Seamless sync across iOS and Web
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal mt-0.5">
+              Airplanes, subways, and remote wilderness
             </span>
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
