@@ -24,3 +24,4 @@ AudioBy.xcodeproj/project.xcworkspace/xcuserdata/zaeemimtiaz.xcuserdatad/UserInt
 **/package-lock.json
 **/.vercel/
 
+web/.env.example

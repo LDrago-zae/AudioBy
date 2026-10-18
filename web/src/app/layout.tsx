@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description:
       "Listen to 70,000+ books and custom documents with studio-quality audio. Seamless cross-platform access.",
     type: "website",
-    url: "https://audioby.app",
+    url: "https://audioby.vercel.app",
   },
 };
 

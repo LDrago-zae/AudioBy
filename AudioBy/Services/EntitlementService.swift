@@ -116,7 +116,7 @@ public final class EntitlementService: NSObject, @unchecked Sendable {
                 if self.isPlus {
                     self.refreshStatusMessage = "Verified! \(self.tier.rawValue.capitalized) subscription is active."
                 } else {
-                    self.refreshStatusMessage = "Checked! Currently on Free tier. Subscribe at audioby.app to unlock Plus or Premium."
+                    self.refreshStatusMessage = "Checked! Currently on Free tier. Subscribe at audioby.vercel.app to unlock Plus or Premium."
                 }
             }
         } catch {

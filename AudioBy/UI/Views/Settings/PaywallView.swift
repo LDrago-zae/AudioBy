@@ -130,12 +130,12 @@ public struct PaywallView: View {
             planCard(
                 plan: .premium,
                 title: "Premium",
-                price: localizedPrice(for: entitlements.premiumPackage, fallback: "$9.99"),
+                price: localizedPrice(for: entitlements.premiumPackage, fallback: "$39"),
                 cadence: "per month",
                 badge: "Most popular",
                 points: [
                     "Everything in Plus",
-                    "ElevenLabs studio voices",
+                    "150,000 ElevenLabs characters / month",
                     "Cached neural narration"
                 ]
             )
@@ -143,7 +143,7 @@ public struct PaywallView: View {
             planCard(
                 plan: .plus,
                 title: "Plus",
-                price: localizedPrice(for: entitlements.plusPackage, fallback: "$4.99"),
+                price: localizedPrice(for: entitlements.plusPackage, fallback: "$14"),
                 cadence: "per month",
                 badge: nil,
                 points: [
@@ -402,7 +402,7 @@ public struct PaywallView: View {
     }
 
     private func openWebUpgrade() {
-        if let url = URL(string: "https://audioby.app#pricing") {
+        if let url = URL(string: "https://audioby.vercel.app/#pricing") {
             UIApplication.shared.open(url)
         }
     }
