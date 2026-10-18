@@ -11,10 +11,10 @@ interface PricingSectionProps {
 export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) => {
   const [isAnnual, setIsAnnual] = useState(false);
 
-  const plusPrice = isAnnual ? "$3.99" : "$4.99";
+  const plusPrice = isAnnual ? "$10" : "$14";
   const plusPeriod = isAnnual ? "/ month, billed annually" : "/ month";
 
-  const premiumPrice = isAnnual ? "$7.99" : "$9.99";
+  const premiumPrice = isAnnual ? "$29" : "$39";
   const premiumPeriod = isAnnual ? "/ month, billed annually" : "/ month";
 
   return (
@@ -261,7 +261,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
               <div className="space-y-2.5 sm:space-y-3 text-xs text-zinc-800 dark:text-zinc-300">
                 <div className="flex items-center gap-2.5 font-semibold text-[#059669] dark:text-[#10B981]">
                   <Check className="h-4 w-4 shrink-0 text-[#059669] dark:text-[#10B981]" />
-                  <span>ElevenLabs AI Neural voices included</span>
+                  <span>150,000 ElevenLabs characters / month</span>
                 </div>
                 <div className="flex items-center gap-2.5 font-medium text-zinc-950 dark:text-white">
                   <Check className="h-4 w-4 text-[#059669] dark:text-[#10B981] shrink-0" />

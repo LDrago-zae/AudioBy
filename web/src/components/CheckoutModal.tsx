@@ -25,7 +25,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   if (!plan) return null;
 
   const planName = plan === "premium" ? "Premium Monthly" : "Plus Monthly";
-  const planPrice = plan === "premium" ? "$9.99" : "$4.99";
+  const planPrice = plan === "premium" ? "$39" : "$14";
 
   const handleProceed = async () => {
     if (!user) {

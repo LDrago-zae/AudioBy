@@ -11,7 +11,7 @@ export const TimeCalculator: React.FC = () => {
   const hoursPerYear = Math.round(Number(hoursPerWeek) * 52);
   const booksPerYear = Math.max(1, Math.round((pagesPerWeek * 52) / 250));
   const audibleCreditCost = booksPerYear * 15;
-  const audioByAnnualCost = 59;
+  const audioByAnnualCost = 348;
   const savings = Math.max(0, audibleCreditCost - audioByAnnualCost);
 
   return (

@@ -1,7 +1,7 @@
 /**
  * RevenueCat Server-Side REST API Helper
  *
- * Used by webhooks (Lemon Squeezy, Stripe, etc.) to grant and revoke
+ * Used by the Whop webhook to grant and revoke
  * Plus / Premium entitlements for users using their Firebase UID.
  */
 
