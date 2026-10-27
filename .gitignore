@@ -25,3 +25,4 @@ AudioBy.xcodeproj/project.xcworkspace/xcuserdata/zaeemimtiaz.xcuserdatad/UserInt
 **/.vercel/
 
 web/.env.example
+.DS_Store
