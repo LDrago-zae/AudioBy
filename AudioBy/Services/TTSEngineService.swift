@@ -30,6 +30,9 @@ public final class TTSEngineService: NSObject, @unchecked Sendable {
     @ObservationIgnored
     private var currentUtterance: AVSpeechUtterance?
 
+    @ObservationIgnored
+    private var neuralPlayer: AVAudioPlayer?
+
     override private init() {
         super.init()
         self.synthesizer.delegate = self
@@ -51,94 +54,21 @@ public final class TTSEngineService: NSObject, @unchecked Sendable {
     /// triggering the Apple iOS simulator VoiceServices container decoding bug.
     public func loadStandardVoices() {
         self.availableVoices = [
-            TTSVoiceOption(
-                id: "en-US",
-                name: "Samantha",
-                language: "en-US",
-                regionName: "United States",
-                qualityDescription: "Natural Studio",
-                gender: "Female",
-                flag: "🇺🇸"
-            ),
-            TTSVoiceOption(
-                id: "en-GB",
-                name: "Daniel",
-                language: "en-GB",
-                regionName: "United Kingdom",
-                qualityDescription: "Enhanced Studio",
-                gender: "Male",
-                flag: "🇬🇧"
-            ),
-            TTSVoiceOption(
-                id: "en-AU",
-                name: "Karen",
-                language: "en-AU",
-                regionName: "Australia",
-                qualityDescription: "Natural Studio",
-                gender: "Female",
-                flag: "🇦🇺"
-            ),
-            TTSVoiceOption(
-                id: "en-IE",
-                name: "Moira",
-                language: "en-IE",
-                regionName: "Ireland",
-                qualityDescription: "Natural Studio",
-                gender: "Female",
-                flag: "🇮🇪"
-            ),
-            TTSVoiceOption(
-                id: "en-IN",
-                name: "Rishi",
-                language: "en-IN",
-                regionName: "India",
-                qualityDescription: "Natural Studio",
-                gender: "Male",
-                flag: "🇮🇳"
-            ),
-            TTSVoiceOption(
-                id: "en-ZA",
-                name: "Tessa",
-                language: "en-ZA",
-                regionName: "South Africa",
-                qualityDescription: "Natural Studio",
-                gender: "Female",
-                flag: "🇿🇦"
-            ),
-            TTSVoiceOption(
-                id: "fr-FR",
-                name: "Thomas",
-                language: "fr-FR",
-                regionName: "France",
-                qualityDescription: "Natural Studio",
-                gender: "Male",
-                flag: "🇫🇷"
-            ),
-            TTSVoiceOption(
-                id: "es-ES",
-                name: "Monica",
-                language: "es-ES",
-                regionName: "Spain",
-                qualityDescription: "Natural Studio",
-                gender: "Female",
-                flag: "🇪🇸"
-            ),
-            TTSVoiceOption(
-                id: "de-DE",
-                name: "Anna",
-                language: "de-DE",
-                regionName: "Germany",
-                qualityDescription: "Natural Studio",
-                gender: "Female",
-                flag: "🇩🇪"
-            )
+            TTSVoiceOption(id: "en-US-AriaNeural", name: "Aria", language: "en-US", regionName: "United States", qualityDescription: "Neural", gender: "Female", flag: "🇺🇸"),
+            TTSVoiceOption(id: "en-US-JennyNeural", name: "Jenny", language: "en-US", regionName: "United States", qualityDescription: "Neural", gender: "Female", flag: "🇺🇸"),
+            TTSVoiceOption(id: "en-US-GuyNeural", name: "Guy", language: "en-US", regionName: "United States", qualityDescription: "Neural", gender: "Male", flag: "🇺🇸"),
+            TTSVoiceOption(id: "en-GB-SoniaNeural", name: "Sonia", language: "en-GB", regionName: "United Kingdom", qualityDescription: "Neural", gender: "Female", flag: "🇬🇧"),
+            TTSVoiceOption(id: "en-GB-RyanNeural", name: "Ryan", language: "en-GB", regionName: "United Kingdom", qualityDescription: "Neural", gender: "Male", flag: "🇬🇧"),
+            TTSVoiceOption(id: "en-AU-NatashaNeural", name: "Natasha", language: "en-AU", regionName: "Australia", qualityDescription: "Neural", gender: "Female", flag: "🇦🇺")
         ]
 
-        if let savedLang = UserDefaults.standard.string(forKey: "selectedLanguageCode"), !savedLang.isEmpty {
+        if let savedLang = UserDefaults.standard.string(forKey: "selectedLanguageCode"),
+           availableVoices.contains(where: { $0.id == savedLang }) {
             self.selectedLanguageCode = savedLang
         } else {
-            self.selectedLanguageCode = "en-US"
+            self.selectedLanguageCode = "en-US-AriaNeural"
         }
+        self.selectedVoiceName = availableVoices.first { $0.id == selectedLanguageCode }?.name ?? "Aria"
     }
 
     // MARK: - Live Speech Narration
@@ -170,10 +100,34 @@ public final class TTSEngineService: NSObject, @unchecked Sendable {
         self.isPlaying = true
         self.isPaused = false
 
-        synthesizer.speak(utterance)
+        let voice = selectedLanguageCode
+        Task {
+            do {
+                let url = try await EdgeSpeechService.shared.synthesize(
+                    text: String(trimmed.prefix(2400)),
+                    voice: voice,
+                    cacheKey: "read-\(bookTitle)-\(chapterTitle)-\(voice)"
+                )
+                let player = try AVAudioPlayer(contentsOf: url)
+                await MainActor.run {
+                    self.neuralPlayer = player
+                    player.play()
+                }
+            } catch {
+                await MainActor.run {
+                    self.synthesizer.speak(utterance)
+                }
+            }
+        }
     }
 
     public func pause() {
+        if let neuralPlayer {
+            neuralPlayer.pause()
+            self.isPaused = true
+            self.isPlaying = false
+            return
+        }
         if synthesizer.isSpeaking {
             synthesizer.pauseSpeaking(at: .word)
             self.isPaused = true
@@ -182,6 +136,12 @@ public final class TTSEngineService: NSObject, @unchecked Sendable {
     }
 
     public func resume() {
+        if isPaused, let neuralPlayer {
+            neuralPlayer.play()
+            self.isPaused = false
+            self.isPlaying = true
+            return
+        }
         if synthesizer.isPaused {
             synthesizer.continueSpeaking()
             self.isPaused = false
@@ -198,6 +158,8 @@ public final class TTSEngineService: NSObject, @unchecked Sendable {
     }
 
     public func stop() {
+        neuralPlayer?.stop()
+        neuralPlayer = nil
         if synthesizer.isSpeaking || synthesizer.isPaused {
             synthesizer.stopSpeaking(at: .immediate)
         }
@@ -208,6 +170,7 @@ public final class TTSEngineService: NSObject, @unchecked Sendable {
 
     public func selectVoice(id: String) {
         self.selectedLanguageCode = id
+        self.selectedVoiceName = availableVoices.first { $0.id == id }?.name ?? id
         UserDefaults.standard.set(id, forKey: "selectedLanguageCode")
         if isPlaying {
             speak(text: currentText, bookTitle: currentBookTitle, chapterTitle: currentChapterTitle)

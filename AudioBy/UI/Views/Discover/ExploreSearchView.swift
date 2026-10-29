@@ -6,6 +6,7 @@ public struct ExploreSearchView: View {
     @State private var showingImporter = false
     @State private var showingPaywall = false
     @State private var localSearch = ""
+    @State private var section: ExploreSection = .books
     @Environment(\.dismiss) private var dismiss
 
     public init() {}
@@ -55,6 +56,27 @@ public struct ExploreSearchView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
 
+                    HStack(spacing: 8) {
+                        ForEach(ExploreSection.allCases) { item in
+                            Button {
+                                section = item
+                            } label: {
+                                Text(item.title)
+                                    .font(.system(size: 14, weight: section == item ? .bold : .medium))
+                                    .foregroundColor(section == item ? .black : Theme.textDark)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(section == item ? AnyShapeStyle(Theme.brandGreen) : AnyShapeStyle(Theme.surfaceWhite))
+                                    .clipShape(Capsule())
+                                    .overlay(Capsule().stroke(section == item ? Color.clear : Theme.cardBorder, lineWidth: 1))
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 20)
+
+                    if section == .manga {
+                        MangaShelfView()
+                    } else {
                     HStack(spacing: 10) {
                         HStack {
                             Image(systemName: "magnifyingglass")
@@ -63,10 +85,9 @@ public struct ExploreSearchView: View {
                                 .font(.system(size: 15))
                                 .foregroundColor(Theme.textDark)
                                 .autocorrectionDisabled()
-                                .onSubmit {
-                                    repository.searchQuery = localSearch
-                                    Task { await repository.fetchRemoteAudiobooks(reset: true) }
-                                }
+                                .textInputAutocapitalization(.never)
+                                .submitLabel(.search)
+                                .onSubmit { runBookSearch() }
 
                             if !localSearch.isEmpty {
                                 Button {
@@ -267,6 +288,7 @@ public struct ExploreSearchView: View {
                     }
 
                     Spacer(minLength: 160)
+                    }
                 }
             }
         }
@@ -282,16 +304,38 @@ public struct ExploreSearchView: View {
         }
         .modifier(PDFImportPresenter(isPresented: $showingImporter, showingPaywall: $showingPaywall))
         .task(id: localSearch) {
-            let trimmed = localSearch.trimmingCharacters(in: .whitespacesAndNewlines)
-            try? await Task.sleep(nanoseconds: 400_000_000)
-            guard !Task.isCancelled else { return }
-            if repository.searchQuery == trimmed { return }
-            repository.searchQuery = trimmed
-            await repository.fetchRemoteAudiobooks(reset: true)
+            guard section == .books else { return }
+            await observeBookSearch()
         }
+    }
+
+    private func runBookSearch() {
+        repository.searchQuery = localSearch
+        Task { await repository.fetchRemoteAudiobooks(reset: true) }
+    }
+
+    private func observeBookSearch() async {
+        let trimmed = localSearch.trimmingCharacters(in: .whitespacesAndNewlines)
+        try? await Task.sleep(nanoseconds: 400_000_000)
+        guard !Task.isCancelled else { return }
+        if repository.searchQuery == trimmed { return }
+        repository.searchQuery = trimmed
+        await repository.fetchRemoteAudiobooks(reset: true)
     }
 }
 
+private enum ExploreSection: String, CaseIterable, Identifiable {
+    case books
+    case manga
+
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .books: return "Books"
+        case .manga: return "Manga"
+        }
+    }
+}
 private struct FilterOptionsSheet: View {
     @Bindable var repository = AudiobookRepository.shared
     @Environment(\.dismiss) private var dismiss
@@ -303,7 +347,7 @@ private struct FilterOptionsSheet: View {
 
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Duration Length")
+                        Text("Length")
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(Theme.textDark)
 
@@ -356,9 +400,9 @@ private struct FilterOptionsSheet: View {
                 }
                 .padding(24)
             }
-            .navigationTitle("Filter Audiobooks")
+            .navigationTitle("Filter")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.large])
     }
 }
