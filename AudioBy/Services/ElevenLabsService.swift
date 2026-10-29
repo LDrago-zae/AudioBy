@@ -38,6 +38,10 @@ public final class ElevenLabsService: @unchecked Sendable {
         set { UserDefaults.standard.set(newValue, forKey: selectedVoiceDefaults) }
     }
 
+    public var selectedVoiceName: String {
+        voices.first { $0.id == selectedVoiceId }?.name ?? voices[0].name
+    }
+
     public var isConfigured: Bool {
         !apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }

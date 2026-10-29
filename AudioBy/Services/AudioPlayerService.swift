@@ -379,14 +379,38 @@ public final class AudioPlayerService: NSObject, @unchecked Sendable {
                 } catch {
                     await MainActor.run {
                         self.playbackError = error.localizedDescription
-                        self.speakWithAppleTTS(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
+                        self.speakWithNeuralVoice(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
                     }
                 }
             }
             return
         }
 
-        speakWithAppleTTS(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
+        speakWithNeuralVoice(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
+    }
+
+    private func speakWithNeuralVoice(text: String, chapter: Chapter, book: Audiobook, autoPlay: Bool) {
+        isBuffering = true
+        let voice = TTSEngineService.shared.selectedLanguageCode
+        let rate = EdgeSpeechService.rate(for: playbackSpeed.rawValue)
+        Task {
+            do {
+                let url = try await EdgeSpeechService.shared.synthesize(
+                    text: text,
+                    voice: voice,
+                    rate: rate,
+                    cacheKey: "\(book.id)-\(chapter.id)-\(voice)"
+                )
+                await MainActor.run {
+                    self.startFilePlayback(url: url, chapter: chapter, autoPlay: autoPlay)
+                }
+            } catch {
+                await MainActor.run {
+                    self.playbackError = error.localizedDescription
+                    self.speakWithAppleTTS(text: text, chapter: chapter, book: book, autoPlay: autoPlay)
+                }
+            }
+        }
     }
 
     private func speakWithAppleTTS(text: String, chapter: Chapter, book: Audiobook, autoPlay: Bool) {
@@ -470,6 +494,23 @@ public final class AudioPlayerService: NSObject, @unchecked Sendable {
     }
 
     public func play() {
+        if let player {
+            if ttsService.isPlaying || ttsService.isPaused {
+                ttsService.pause()
+            }
+            if let pausedAt = lastPausedTimestamp, Date().timeIntervalSince(pausedAt) > 300, currentTime > 10 {
+                jump(by: -10)
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            }
+            lastPausedTimestamp = nil
+            player.rate = playbackSpeed.rawValue
+            isPlaying = true
+            isBuffering = player.timeControlStatus == .waitingToPlayAtSpecifiedRate
+            lastListeningTick = Date()
+            updateNowPlaying()
+            return
+        }
+
         if ttsService.isPaused {
             ttsService.resume()
             isPlaying = true
@@ -478,40 +519,16 @@ public final class AudioPlayerService: NSObject, @unchecked Sendable {
             return
         }
 
-        guard let player = player else {
-            if let book = currentBook {
-                loadAudiobook(book, chapterIndex: currentChapterIndex, autoPlay: true)
-            }
-            return
+        if let book = currentBook {
+            loadAudiobook(book, chapterIndex: currentChapterIndex, autoPlay: true)
         }
-
-        if let pausedAt = lastPausedTimestamp, Date().timeIntervalSince(pausedAt) > 300, currentTime > 10 {
-            jump(by: -10)
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
-        }
-        lastPausedTimestamp = nil
-
-        player.rate = playbackSpeed.rawValue
-        isPlaying = true
-        isBuffering = player.timeControlStatus == .waitingToPlayAtSpecifiedRate
-        lastListeningTick = Date()
-        updateNowPlaying()
     }
 
     public func pause() {
-        if ttsService.isPlaying {
-            ttsService.pause()
-            isPlaying = false
-            ttsProgressTimer?.invalidate()
-            lastPausedTimestamp = Date()
-            flushListeningHabitTime()
-            updateNowPlaying()
-            return
-        }
-
         player?.pause()
+        ttsService.pause()
         isPlaying = false
+        ttsProgressTimer?.invalidate()
         lastPausedTimestamp = Date()
         flushListeningHabitTime()
         updateNowPlaying()
