@@ -86,7 +86,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
 
         <p
           data-hero-line
-          className="mt-4 sm:mt-5 max-w-[36rem] text-sm sm:text-base text-white/82 leading-relaxed"
+          className="mt-4 sm:mt-5 max-w-[36rem] text-sm sm:text-base leading-relaxed"
         >
           Import papers and notes—or stream 70,000+ public classics. Lifelike narration, chapter tracking, and offline playback on iOS and web.
         </p>
@@ -188,7 +188,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
 
         <div
           data-hero-line
-          className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-white/60"
+          className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px]"
         >
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald shrink-0" />

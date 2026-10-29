@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
             aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
             className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-leaf-raised text-leaf-ink hover:border-emerald/40 transition-colors"
           >
-            {isDark ? <Sun className="h-3.5 w-3.5 text-amber-300" /> : <Moon className="h-3.5 w-3.5" />}
+            {isDark ? <Sun className="h-3.5 w-3.5 text-emerald" /> : <Moon className="h-3.5 w-3.5" />}
           </button>
 
           {!loading && user ? (

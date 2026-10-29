@@ -375,7 +375,7 @@ export function useHeroEntrance(ready = true) {
       if (chars.length) {
         chars.forEach((c) => {
           const node = c as HTMLElement;
-          node.style.color = "#ffffff";
+          node.style.color = "#fffcf2";
           node.style.opacity = "0";
         });
         timeline.add(chars, {
@@ -394,6 +394,9 @@ export function useHeroEntrance(ready = true) {
       }
 
       if (lines.length) {
+        lines.forEach((line) => {
+          line.style.color = "#fffcf2";
+        });
         timeline.add(
           lines,
           {

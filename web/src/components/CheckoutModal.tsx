@@ -81,7 +81,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.94, opacity: 0, y: 16 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="relative w-full max-w-md rounded-2xl border border-black/10 dark:border-white/[0.1] bg-white dark:bg-[#0E1015] p-5 sm:p-6 shadow-2xl z-10 max-h-[92vh] overflow-y-auto transition-colors"
+            className="relative w-full max-w-md rounded-2xl border border-black/10 dark:border-white/[0.1] bg-leaf-raised p-5 sm:p-6 shadow-2xl z-10 max-h-[92vh] overflow-y-auto transition-colors"
           >
             {/* Close Button */}
             <button
@@ -89,7 +89,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 setSuccess(false);
                 onClose();
               }}
-              className="absolute right-4 top-4 rounded-lg p-1 text-zinc-400 hover:bg-black/[0.04] dark:hover:bg-[#161922] hover:text-zinc-800 dark:hover:text-white transition-colors"
+              className="absolute right-4 top-4 rounded-lg p-1 text-leaf-faint hover:bg-black/[0.04] dark:hover:bg-leaf-surface hover:text-leaf-ink transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -97,43 +97,43 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             {!success ? (
               <div>
                 <div className="mb-4">
-                  <h3 className="text-xl font-bold text-zinc-950 dark:text-white">Subscribe to {planName}</h3>
-                  <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
+                  <h3 className="text-xl font-bold text-leaf-ink">Subscribe to {planName}</h3>
+                  <p className="mt-1 text-xs text-leaf-muted">
                     Unlock full access across your web browser and the AudioBy iOS app.
                   </p>
                 </div>
 
                 {/* Plan card summary */}
-                <div className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-zinc-50 dark:bg-[#14171E] p-4 mb-4">
+                <div className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-leaf-surface p-4 mb-4">
                   <div className="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.06] mb-3">
-                    <span className="text-sm font-bold text-zinc-950 dark:text-white">{planName}</span>
-                    <span className="text-base font-bold text-[#059669] dark:text-[#10B981] font-mono">{planPrice} / mo</span>
+                    <span className="text-sm font-bold text-leaf-ink">{planName}</span>
+                    <span className="text-base font-bold text-emerald-dark dark:text-emerald font-mono">{planPrice} / mo</span>
                   </div>
 
-                  <div className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300">
+                  <div className="space-y-2 text-xs text-leaf-ink">
                     {plan === "premium" ? (
                       <>
                         <div className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-emerald-dark dark:text-emerald shrink-0" />
                           <span>ElevenLabs studio voices & neural synthesis</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-emerald-dark dark:text-emerald shrink-0" />
                           <span>Unlimited PDF & document imports</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-emerald-dark dark:text-emerald shrink-0" />
                           <span>Unlimited offline downloads</span>
                         </div>
                       </>
                     ) : (
                       <>
                         <div className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-emerald-dark dark:text-emerald shrink-0" />
                           <span>Unlimited PDF & document imports</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-emerald-dark dark:text-emerald shrink-0" />
                           <span>Unlimited offline downloads</span>
                         </div>
                       </>
@@ -142,16 +142,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </div>
 
                 {/* Account row */}
-                <div className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-zinc-50 dark:bg-[#12151B] p-3 mb-5 text-xs flex items-center justify-between">
-                  <span className="text-zinc-500 dark:text-zinc-400">Account:</span>
-                  <span className="font-mono text-zinc-900 dark:text-white font-medium">
+                <div className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-leaf-surface p-3 mb-5 text-xs flex items-center justify-between">
+                  <span className="text-leaf-muted">Account:</span>
+                  <span className="font-mono text-leaf-ink font-medium">
                     {user ? user.email : "Not signed in"}
                   </span>
                 </div>
 
                 {/* iOS sync badge note */}
-                <div className="flex items-start gap-2 text-[11px] text-zinc-500 dark:text-zinc-400 mb-6 bg-black/[0.02] dark:bg-[#07080A] p-2.5 rounded-lg border border-black/[0.06] dark:border-white/[0.06]">
-                  <Smartphone className="h-4 w-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 text-[11px] text-leaf-muted mb-6 bg-black/[0.02] dark:bg-leaf-field p-2.5 rounded-lg border border-black/[0.06] dark:border-white/[0.06]">
+                  <Smartphone className="h-4 w-4 text-emerald-dark dark:text-emerald shrink-0 mt-0.5" />
                   <span>
                     Your purchase immediately unlocks access on your iPhone. Sign into the iOS app with this same email.
                   </span>
@@ -161,7 +161,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <button
                   onClick={handleProceed}
                   disabled={loading}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] py-3 text-xs font-semibold text-black transition-colors disabled:opacity-50 shadow-sm"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-emerald hover:bg-emerald-dark dark:hover:bg-emerald py-3 text-xs font-semibold text-emerald-ink transition-colors disabled:opacity-50 shadow-sm"
                 >
                   {loading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -175,11 +175,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
             ) : (
               <div className="text-center py-6">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#10B981]/20 text-[#059669] dark:text-[#10B981]">
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald/20 text-emerald-dark dark:text-emerald">
                   <ShieldCheck className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold text-zinc-950 dark:text-white">Subscription Active</h3>
-                <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400 max-w-xs mx-auto leading-relaxed">
+                <h3 className="text-lg font-bold text-leaf-ink">Subscription Active</h3>
+                <p className="mt-1 text-xs text-leaf-muted max-w-xs mx-auto leading-relaxed">
                   Your {planName} tier is now active and attached to {user?.email}.
                 </p>
                 <div className="mt-6 flex flex-col gap-2">
@@ -187,7 +187,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     href="https://apps.apple.com/app/audioby/id6807599877"
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-center gap-1.5 rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] py-2.5 text-xs font-semibold text-black transition-colors"
+                    className="flex items-center justify-center gap-1.5 rounded-xl bg-emerald hover:bg-emerald-dark dark:hover:bg-emerald py-2.5 text-xs font-semibold text-emerald-ink transition-colors"
                   >
                     <span>Open in iOS App</span>
                     <ArrowRight className="h-3.5 w-3.5" />
@@ -197,7 +197,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       setSuccess(false);
                       onClose();
                     }}
-                    className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] py-2 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] py-2 text-xs text-leaf-muted hover:text-leaf-ink transition-colors"
                   >
                     Close
                   </button>
