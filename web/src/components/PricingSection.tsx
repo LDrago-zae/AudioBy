@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
-import { pulseTap, useScrollReveal } from "@/lib/anime-motion";
+import { pulseTap, useScrollReveal, useSplitHeading, useSpringHover } from "@/lib/anime-motion";
 
 interface PricingSectionProps {
   onSelectPlan: (plan: "plus" | "premium") => void;
@@ -10,7 +10,15 @@ interface PricingSectionProps {
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) => {
   const [isAnnual, setIsAnnual] = useState(false);
-  const ref = useScrollReveal<HTMLElement>();
+  const revealRef = useScrollReveal<HTMLElement>();
+  const springRef = useSpringHover<HTMLElement>();
+  const splitRef = useSplitHeading<HTMLElement>();
+
+  const setSectionRef = (node: HTMLElement | null) => {
+    (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
+    (springRef as React.MutableRefObject<HTMLElement | null>).current = node;
+    (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
+  };
 
   const plusPrice = isAnnual ? "$10" : "$14";
   const plusPeriod = isAnnual ? "/ month, billed annually" : "/ month";
@@ -20,20 +28,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
   return (
     <section
       id="pricing"
-      ref={ref}
+      ref={setSectionRef}
       className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)]"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <h2
-            data-reveal
+            data-split
             className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-tight"
           >
             Public classics are free.
-            <span className="block mt-2 text-leaf-muted font-semibold text-xl sm:text-3xl">
-              PDF imports & ElevenLabs studio voices are subscription.
-            </span>
           </h2>
+          <p
+            data-reveal
+            className="mt-3 text-leaf-muted font-semibold text-xl sm:text-3xl font-display"
+          >
+            PDF imports & ElevenLabs studio voices are subscription.
+          </p>
           <p data-reveal className="mt-4 text-sm sm:text-base text-leaf-muted">
             Activate once on the web. Entitlements sync across web and the native iOS app.
           </p>
@@ -73,6 +84,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
           {/* Free */}
           <div
             data-reveal
+            data-spring-hover
             className="flex flex-col justify-between rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-6 sm:p-7 shadow-soft"
           >
             <div>
@@ -116,6 +128,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
           {/* Plus */}
           <div
             data-reveal
+            data-spring-hover
             className="flex flex-col justify-between rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-6 sm:p-7 shadow-soft"
           >
             <div>
@@ -162,6 +175,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
           {/* Premium */}
           <div
             data-reveal
+            data-spring-hover
             className="relative flex flex-col justify-between rounded-2xl border-2 border-emerald-dark dark:border-emerald bg-leaf-raised p-6 sm:p-7 shadow-lift"
           >
             <div className="absolute -top-3 left-6 rounded-full bg-emerald px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-ink">

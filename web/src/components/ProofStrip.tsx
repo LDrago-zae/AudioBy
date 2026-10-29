@@ -1,58 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useScrollReveal } from "@/lib/anime-motion";
+import React from "react";
+import { AnimeWavePath } from "@/components/AnimeWavePath";
+import { useAnimeCounter, useScrollReveal, useSplitHeading } from "@/lib/anime-motion";
 
-interface CounterProps {
-  target: number;
-  suffix?: string;
-  prefix?: string;
-}
-
-const AnimatedCounter: React.FC<CounterProps> = ({ target, suffix = "", prefix = "" }) => {
-  const [count, setCount] = useState(0);
-  const ref = React.useRef<HTMLSpanElement>(null);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setStarted(true);
-      },
-      { threshold: 0.4 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    let startTime: number;
-    const duration = 1600;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      setCount(Math.floor(ease * target));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [started, target]);
-
+const Counter: React.FC<{ target: number; suffix?: string }> = ({ target, suffix = "" }) => {
+  const ref = useAnimeCounter(target, suffix);
   return (
     <span ref={ref} className="tabular-nums">
-      {prefix}
-      {count.toLocaleString()}
-      {suffix}
+      0{suffix}
     </span>
   );
 };
 
 const STATS = [
   {
-    value: <AnimatedCounter target={70000} suffix="+" />,
+    value: <Counter target={70000} suffix="+" />,
     label: "Curated public classics",
     detail: "Available instantly via Gutenberg & LibriVox",
   },
@@ -74,16 +37,22 @@ const STATS = [
 ];
 
 export const ProofStrip: React.FC = () => {
-  const ref = useScrollReveal<HTMLElement>();
+  const revealRef = useScrollReveal<HTMLElement>();
+  const splitRef = useSplitHeading<HTMLElement>();
 
   return (
     <section
-      ref={ref}
+      ref={(node) => {
+        (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
       className="border-y border-[var(--border-subtle)] bg-leaf-surface paper-grain relative overflow-hidden"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
+      <AnimeWavePath className="absolute inset-x-0 top-0 opacity-70" />
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
         <h2
-          data-reveal
+          data-split
           className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-leaf-ink max-w-xl"
         >
           Built for long listening, not ten-minute demos.

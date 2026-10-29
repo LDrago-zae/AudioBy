@@ -5,7 +5,7 @@ import { LogOut, ArrowUpRight, Menu, X, Sun, Moon } from "lucide-react";
 import { AudioByMark } from "@/components/AudioByMark";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
-import { pulseTap } from "@/lib/anime-motion";
+import { pulseTap, useNavEntrance, useScrambleHover } from "@/lib/anime-motion";
 
 interface NavbarProps {
   onOpenAuth: () => void;
@@ -15,6 +15,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
   const { user, signOutUser, loading } = useAuth();
   const { toggleTheme, isDark } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navRef = useNavEntrance<HTMLElement>();
+  const scrambleRef = useScrambleHover<HTMLElement>();
 
   const navLinks = [
     { label: "Why AudioBy", href: "#problem" },
@@ -26,18 +28,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
 
   const handleMobileNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    const el = document.getElementById(href.replace("#", ""));
-    el?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(href.replace("#", ""))?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--border-subtle)] bg-[var(--background)]/90 backdrop-blur-md transition-colors duration-200">
+    <header
+      ref={(node) => {
+        (navRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (scrambleRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
+      className="sticky top-0 z-50 w-full border-b border-[var(--border-subtle)] bg-[var(--background)]/90 backdrop-blur-md transition-colors duration-200"
+    >
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#" className="flex items-center gap-2.5 group">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald text-emerald-ink">
+        <a href="#" data-nav-brand className="flex items-center gap-2.5 group opacity-0">
+          <span
+            data-nav-mark
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald text-emerald-ink"
+          >
             <AudioByMark className="h-4 w-4" />
           </span>
-          <span className="font-display text-base font-bold tracking-tight text-leaf-ink">
+          <span
+            data-scramble
+            className="font-display text-base font-bold tracking-tight text-leaf-ink"
+          >
             AudioBy
           </span>
         </a>
@@ -47,7 +60,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
             <a
               key={link.href}
               href={link.href}
-              className="hover:text-leaf-ink transition-colors"
+              data-nav-link
+              className="opacity-0 hover:text-leaf-ink transition-colors"
             >
               {link.label}
             </a>
@@ -57,18 +71,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            data-nav-action
             onClick={(e) => {
               pulseTap(e.currentTarget);
               toggleTheme();
             }}
             aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-leaf-raised text-leaf-ink hover:border-emerald/40 transition-colors"
+            className="opacity-0 flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-leaf-raised text-leaf-ink hover:border-emerald/40 transition-colors"
           >
             {isDark ? <Sun className="h-3.5 w-3.5 text-amber-300" /> : <Moon className="h-3.5 w-3.5" />}
           </button>
 
           {!loading && user ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" data-nav-action>
               <span className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-leaf-raised px-2.5 py-1 text-xs text-leaf-ink max-w-[140px] truncate">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald shrink-0" />
                 {user.displayName || user.email}
@@ -87,14 +102,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
             <div className="flex items-center gap-2">
               <button
                 type="button"
+                data-nav-action
                 onClick={onOpenAuth}
-                className="rounded-lg border border-[var(--border-subtle)] bg-leaf-raised px-3 py-1.5 text-xs font-semibold text-leaf-ink hover:border-emerald/40 transition-colors"
+                className="opacity-0 rounded-lg border border-[var(--border-subtle)] bg-leaf-raised px-3 py-1.5 text-xs font-semibold text-leaf-ink hover:border-emerald/40 transition-colors"
               >
                 Sign In
               </button>
               <a
                 href="#pricing"
-                className="inline-flex items-center gap-1 rounded-lg bg-emerald px-3 py-1.5 text-xs font-bold text-emerald-ink hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
+                data-nav-action
+                className="opacity-0 inline-flex items-center gap-1 rounded-lg bg-emerald px-3 py-1.5 text-xs font-bold text-emerald-ink hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
               >
                 <span>Plans</span>
                 <ArrowUpRight className="h-3 w-3" />

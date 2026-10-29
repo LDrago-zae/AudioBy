@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { useScrollReveal } from "@/lib/anime-motion";
+import { AnimeWavePath } from "@/components/AnimeWavePath";
+import { useScrollReveal, useSplitHeading } from "@/lib/anime-motion";
 
 const PROBLEMS = [
   {
@@ -25,25 +26,31 @@ const PROBLEMS = [
 ];
 
 export const ProblemSection: React.FC = () => {
-  const ref = useScrollReveal<HTMLElement>();
+  const revealRef = useScrollReveal<HTMLElement>();
+  const splitRef = useSplitHeading<HTMLElement>();
 
   return (
     <section
       id="problem"
-      ref={ref}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)]"
+      ref={(node) => {
+        (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
+      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)] relative overflow-hidden"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <AnimeWavePath className="absolute inset-x-0 bottom-8 opacity-40" />
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-3xl mb-12 sm:mb-16">
           <h2
-            data-reveal
+            data-split
             className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-[1.1]"
           >
             You didn’t lose focus.
-            <span className="block text-leaf-muted font-semibold mt-2">
-              The tools were designed for screens, not ears.
-            </span>
           </h2>
+          <p data-reveal className="mt-3 text-xl sm:text-2xl text-leaf-muted font-semibold font-display">
+            The tools were designed for screens, not ears.
+          </p>
         </div>
 
         <div className="grid gap-8 sm:gap-10">
