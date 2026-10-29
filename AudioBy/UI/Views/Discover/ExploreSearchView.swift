@@ -11,11 +11,6 @@ public struct ExploreSearchView: View {
 
     public init() {}
 
-    private let columns = [
-        GridItem(.flexible(), spacing: 14),
-        GridItem(.flexible(), spacing: 14)
-    ]
-
     public var body: some View {
         ZStack {
             Theme.appBackground.ignoresSafeArea()
@@ -218,50 +213,22 @@ public struct ExploreSearchView: View {
                         .padding(.vertical, 24)
                     }
 
-                    LazyVGrid(columns: columns, spacing: 16) {
+                    LazyVStack(spacing: 12) {
                         ForEach(repository.exploreBooks) { book in
                             NavigationLink(destination: AudiobookDetailView(book: book)) {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    CoverArtView(
-                                        title: book.title,
-                                        author: book.author,
-                                        gradientHexes: book.coverGradientColors,
-                                        coverImageURL: book.coverImageURL,
-                                        cornerRadius: 16,
-                                        shadowRadius: 8
-                                    )
-
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(book.title)
-                                            .font(.system(size: 14, weight: .bold))
-                                            .foregroundColor(Theme.textDark)
-                                            .lineLimit(1)
-
-                                        Text(book.author)
-                                            .font(.system(size: 12))
-                                            .foregroundColor(Theme.textMuted)
-                                            .lineLimit(1)
-
-                                        HStack(spacing: 4) {
-                                            Image(systemName: "clock")
-                                                .font(.system(size: 10))
-                                                .foregroundColor(Theme.textMuted)
-                                            Text(book.formattedTotalDuration)
-                                                .font(.system(size: 11, weight: .bold))
-                                                .foregroundColor(Theme.textDark)
-                                            Spacer()
-                                        }
-                                        .padding(.top, 2)
+                                CatalogListRow(book: book) {
+                                    Button {
+                                        repository.toggleFavorite(for: book.id)
+                                    } label: {
+                                        Image(systemName: book.isFavorite ? "bookmark.fill" : "bookmark")
+                                            .font(.system(size: 16, weight: .semibold))
+                                            .foregroundStyle(book.isFavorite ? Theme.ember : Theme.textMuted)
+                                            .frame(width: 36, height: 36)
                                     }
+                                    .buttonStyle(.plain)
                                 }
-                                .padding(10)
-                                .background(Theme.surfaceWhite)
-                                .cornerRadius(18)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                )
                             }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.horizontal, 20)
@@ -272,7 +239,7 @@ public struct ExploreSearchView: View {
                         } label: {
                             HStack(spacing: 8) {
                                 if repository.isLoadingMore {
-                                    ProgressView().tint(.black)
+                                    ProgressView().tint(Theme.ember)
                                 }
                                 Text(repository.isLoadingMore ? "Loading more..." : "Load more")
                                     .font(.system(size: 15, weight: .bold))

@@ -82,7 +82,7 @@ public final class UserImportService: @unchecked Sendable {
             author: (author?.isEmpty == false ? author! : "Imported PDF"),
             narrator: "On-device voice",
             summary: "Imported PDF. Listen with on-device narration. You confirmed you have the right to use this file.",
-            coverGradientColors: ["#0d150f", "#10c76b"],
+            coverGradientColors: Theme.coverHexes(seed: displayTitle),
             category: .fiction,
             chapters: chapters.map { $0.ensuringTranscript() },
             catalogSource: CatalogSourceKind.userPDF.rawValue,

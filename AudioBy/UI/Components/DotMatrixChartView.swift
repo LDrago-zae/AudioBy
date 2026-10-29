@@ -141,10 +141,10 @@ public struct DotMatrixChartView: View {
                 Button(action: onSeeDetails) {
                     Text("See Details")
                         .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.onAccent)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
-                        .background(Color.black)
+                        .background(Theme.ember)
                         .clipShape(Capsule())
                 }
             }

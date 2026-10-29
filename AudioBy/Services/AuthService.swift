@@ -172,6 +172,14 @@ public final class AuthService: NSObject {
         lastError = Self.appleFailureMessage(error)
     }
 
+    private static func friendlyMessage(_ error: Error) -> String {
+        let text = error.localizedDescription
+        if text.localizedCaseInsensitiveContains("keychain") {
+            return "Sign-in could not save the session in the keychain. Try again, or sign in with email."
+        }
+        return text
+    }
+
     public static func appleFailureMessage(_ error: Error) -> String? {
         let nsError = error as NSError
         if nsError.domain == ASAuthorizationError.errorDomain {
@@ -204,7 +212,7 @@ public final class AuthService: NSObject {
             try await work()
         } catch {
             await MainActor.run {
-                self.lastError = error.localizedDescription
+                self.lastError = Self.friendlyMessage(error)
             }
         }
         await MainActor.run {
