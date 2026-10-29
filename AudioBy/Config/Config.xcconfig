@@ -1,5 +1,7 @@
 // Shared build settings. Override secrets locally with Secrets.xcconfig (gitignored).
 ELEVENLABS_API_KEY =
+EDGE_SPEECH_TOKEN =
+EDGE_SPEECH_CHROME_VERSION =
 CATALOG_SQLITE_URL =
 GID_CLIENT_ID = 989283339311-9hfij0ep2ng5913r8h3re85su50kl05j.apps.googleusercontent.com
 GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.989283339311-9hfij0ep2ng5913r8h3re85su50kl05j

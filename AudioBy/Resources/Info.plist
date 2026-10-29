@@ -35,6 +35,10 @@
 	<string>1</string>
 	<key>ELEVENLABS_API_KEY</key>
 	<string>$(ELEVENLABS_API_KEY)</string>
+	<key>EDGE_SPEECH_TOKEN</key>
+	<string>$(EDGE_SPEECH_TOKEN)</string>
+	<key>EDGE_SPEECH_CHROME_VERSION</key>
+	<string>$(EDGE_SPEECH_CHROME_VERSION)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>GIDClientID</key>

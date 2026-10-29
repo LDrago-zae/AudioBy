@@ -2,11 +2,13 @@ import Foundation
 
 public enum EdgeSpeechError: Error, LocalizedError {
     case emptyAudio
+    case missingToken
     case socket(String)
 
     public var errorDescription: String? {
         switch self {
         case .emptyAudio: return "The neural voice returned no audio."
+        case .missingToken: return "Neural voice is not configured. Set EDGE_SPEECH_TOKEN in Secrets.xcconfig or the scheme environment."
         case .socket(let message): return message
         }
     }
@@ -16,10 +18,19 @@ public enum EdgeSpeechError: Error, LocalizedError {
 public final class EdgeSpeechService: @unchecked Sendable {
     public static let shared = EdgeSpeechService()
 
-    private let token = "6A5AA1D4EAFF4E9FB37E23D68491D6F4"
-    private let chrome = "143.0.3650.75"
     private let session: URLSession
     private let cacheDirectory: URL
+
+    /// Reads from process environment first, then Info.plist (`$(EDGE_SPEECH_TOKEN)` from xcconfig).
+    private var token: String {
+        Self.secret(named: "EDGE_SPEECH_TOKEN")
+    }
+
+    /// Chrome/Edge build used for Sec-MS-GEC-Version and User-Agent.
+    private var chrome: String {
+        let value = Self.secret(named: "EDGE_SPEECH_CHROME_VERSION")
+        return value.isEmpty ? "143.0.3650.75" : value
+    }
 
     public init() {
         let config = URLSessionConfiguration.default
@@ -32,12 +43,24 @@ public final class EdgeSpeechService: @unchecked Sendable {
         self.cacheDirectory = dir
     }
 
+    private static func secret(named key: String) -> String {
+        let env = ProcessInfo.processInfo.environment[key]?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !env.isEmpty { return env }
+
+        let plist = (Bundle.main.object(forInfoDictionaryKey: key) as? String)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if plist.isEmpty || plist.hasPrefix("$(") { return "" }
+        return plist
+    }
+
     public static func rate(for speed: Float) -> String {
         let percent = Int((speed - 1) * 100)
         return String(format: "%+d%%", percent)
     }
 
     public func synthesize(text: String, voice: String, rate: String = "+0%", cacheKey: String) async throws -> URL {
+        guard !token.isEmpty else { throw EdgeSpeechError.missingToken }
         let voiceName = voice.contains("Neural") ? voice : "en-US-AriaNeural"
         let file = cacheDirectory.appendingPathComponent("\(cacheKey.replacingOccurrences(of: "/", with: "-")).mp3")
         if FileManager.default.fileExists(atPath: file.path),
@@ -54,6 +77,10 @@ public final class EdgeSpeechService: @unchecked Sendable {
     }
 
     private func speak(_ text: String, voice: String, rate: String, pitch: String) async throws -> Data {
+        let token = self.token
+        guard !token.isEmpty else { throw EdgeSpeechError.missingToken }
+        let chrome = self.chrome
+        let chromeMajor = chrome.split(separator: ".").first.map(String.init) ?? "143"
         let connection = Self.hex(UInt32.random(in: .min ... .max))
             + Self.hex(UInt32.random(in: .min ... .max))
             + Self.hex(UInt32.random(in: .min ... .max))
@@ -66,12 +93,15 @@ public final class EdgeSpeechService: @unchecked Sendable {
         components.queryItems = [
             URLQueryItem(name: "TrustedClientToken", value: token),
             URLQueryItem(name: "ConnectionId", value: connection),
-            URLQueryItem(name: "Sec-MS-GEC", value: secMsGec()),
+            URLQueryItem(name: "Sec-MS-GEC", value: secMsGec(token: token)),
             URLQueryItem(name: "Sec-MS-GEC-Version", value: "2-\(chrome)")
         ]
         guard let url = components.url else { throw EdgeSpeechError.socket("Could not open the voice service.") }
         var request = URLRequest(url: url)
-        request.setValue("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0", forHTTPHeaderField: "User-Agent")
+        request.setValue(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/\(chromeMajor).0.0.0 Safari/537.36 Edg/\(chromeMajor).0.0.0",
+            forHTTPHeaderField: "User-Agent"
+        )
         request.setValue("no-cache", forHTTPHeaderField: "Pragma")
         request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
         request.setValue("chrome-extension://jdiccldimpdaibmpdkjnbmckianbfold", forHTTPHeaderField: "Origin")
@@ -111,11 +141,12 @@ public final class EdgeSpeechService: @unchecked Sendable {
         }
     }
 
-    func secMsGec(unixSeconds: Double = Date().timeIntervalSince1970) -> String {
+    func secMsGec(token: String? = nil, unixSeconds: Double = Date().timeIntervalSince1970) -> String {
+        let resolved = token ?? self.token
         var ticks = unixSeconds + 11_644_473_600
         ticks -= ticks.truncatingRemainder(dividingBy: 300)
         let scaled = Int64((ticks * 10_000_000).rounded())
-        let material = "\(scaled)\(token)"
+        let material = "\(scaled)\(resolved)"
         return EdgeSpeechDigest.tokenHash(Array(material.utf8))
     }
 
