@@ -83,10 +83,44 @@ public final class AudiobookRepository: @unchecked Sendable {
                 limit: pageSize,
                 offset: offset
             )
-            await MainActor.run {
-                self.applyFetchedPage(page, reset: reset, offset: offset)
+            if !query.isEmpty && page.isEmpty {
+                let remote = try await AudiobookAPIService.shared.fetchAudiobooks(
+                    query: query,
+                    category: cat,
+                    limit: pageSize,
+                    offset: offset
+                )
+                await MainActor.run {
+                    self.applyFetchedPage(remote, reset: reset, offset: offset)
+                }
+            } else {
+                await MainActor.run {
+                    self.applyFetchedPage(page, reset: reset, offset: offset)
+                }
             }
         } catch {
+            if !query.isEmpty {
+                do {
+                    let remote = try await AudiobookAPIService.shared.fetchAudiobooks(
+                        query: query,
+                        category: cat,
+                        limit: pageSize,
+                        offset: offset
+                    )
+                    await MainActor.run {
+                        self.applyFetchedPage(remote, reset: reset, offset: offset)
+                    }
+                    return
+                } catch {
+                    await MainActor.run {
+                        self.isLoadingRemote = false
+                        self.isLoadingMore = false
+                        self.catalogError = error.localizedDescription
+                        self.isShowingCachedCatalog = !self.catalogBooks.isEmpty
+                    }
+                    return
+                }
+            }
             await MainActor.run {
                 self.isLoadingRemote = false
                 self.isLoadingMore = false
