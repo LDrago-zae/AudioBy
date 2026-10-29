@@ -8,7 +8,7 @@ public struct CarModeView: View {
 
     public var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Theme.ink.ignoresSafeArea()
 
             VStack(spacing: 28) {
                 // Top Bar: Exit Car Mode & Chapter Indicator

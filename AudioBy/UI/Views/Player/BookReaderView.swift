@@ -21,7 +21,7 @@ public struct BookReaderView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                SceneBackdrop(scene: scenes.active, scrim: 0.55)
+                Theme.paper.ignoresSafeArea()
 
                 VStack(spacing: 0) {
                     // Top Bar with Voice Selector & Font Size
@@ -64,9 +64,9 @@ public struct BookReaderView: View {
                         } label: {
                             Image(systemName: "photo")
                                 .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(.white)
+                                .foregroundColor(Theme.ink)
                                 .frame(width: 40, height: 40)
-                                .background(Color.black.opacity(0.35))
+                                .background(Theme.surfaceWhite)
                                 .clipShape(Circle())
                         }
 
@@ -94,11 +94,11 @@ public struct BookReaderView: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(chapter.title)
                                     .font(.system(size: 24, weight: .bold, design: .serif))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Theme.ink)
 
                                 Text("By \(book.author)")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(.white.opacity(0.75))
+                                    .foregroundColor(Theme.charcoal)
                             }
                             .padding(.top, 10)
 
@@ -254,10 +254,10 @@ public struct BookReaderView: View {
 
     private func attributedParagraph(_ paragraph: String, spoken: String?) -> AttributedString {
         var text = AttributedString(paragraph)
-        text.foregroundColor = .white
+        text.foregroundColor = Theme.ink
         if let spoken, let range = text.range(of: spoken) {
-            text[range].backgroundColor = Theme.brandGreen
-            text[range].foregroundColor = .black
+            text[range].backgroundColor = Theme.ember
+            text[range].foregroundColor = Theme.ink
         }
         return text
     }

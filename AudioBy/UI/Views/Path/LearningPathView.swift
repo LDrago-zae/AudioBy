@@ -12,21 +12,21 @@ public struct LearningPathView: View {
             number: "01.",
             subtitle: "First path",
             title: "Visual Design",
-            gradientColors: [Color(hexString: "#27AE60"), Color(hexString: "#2ECC71")],
+            gradientColors: [Theme.ink, Theme.ember],
             hasCutout: true
         ),
         PathCardItem(
             number: "02.",
             subtitle: "Second path",
             title: "UIUX Element",
-            gradientColors: [Color(hexString: "#F39C12"), Color(hexString: "#E74C3C")],
+            gradientColors: [Theme.charcoal, Theme.emberDeep],
             hasCutout: false
         ),
         PathCardItem(
             number: "03.",
             subtitle: "Third path",
             title: "User Research",
-            gradientColors: [Color(hexString: "#3498DB"), Color(hexString: "#2980B9")],
+            gradientColors: [Theme.ink, Theme.charcoal],
             hasCutout: true
         )
     ]
@@ -36,21 +36,21 @@ public struct LearningPathView: View {
             number: "01.",
             subtitle: "First path",
             title: "Interaction Design",
-            gradientColors: [Color(hexString: "#8E44AD"), Color(hexString: "#C0392B")],
+            gradientColors: [Theme.ember, Theme.ink],
             hasCutout: true
         ),
         PathCardItem(
             number: "02.",
             subtitle: "Second path",
             title: "Product Strategy",
-            gradientColors: [Color(hexString: "#1A252F"), Color(hexString: "#2C3E50")],
+            gradientColors: [Theme.charcoal, Theme.ink],
             hasCutout: false
         ),
         PathCardItem(
             number: "03.",
             subtitle: "Third path",
             title: "Design System",
-            gradientColors: [Color(hexString: "#1ABC9C"), Color(hexString: "#16A085")],
+            gradientColors: [Theme.charcoal, Theme.ink],
             hasCutout: false
         )
     ]
@@ -60,21 +60,21 @@ public struct LearningPathView: View {
             number: "01.",
             subtitle: "First path",
             title: "Case Study",
-            gradientColors: [Color(hexString: "#7F8C8D"), Color(hexString: "#95A5A6")],
+            gradientColors: [Theme.ink, Theme.charcoal],
             hasCutout: true
         ),
         PathCardItem(
             number: "02.",
             subtitle: "Second path",
             title: "Portfolio Design",
-            gradientColors: [Color(hexString: "#2980B9"), Color(hexString: "#34495E")],
+            gradientColors: [Theme.emberDeep, Theme.charcoal],
             hasCutout: false
         ),
         PathCardItem(
             number: "03.",
             subtitle: "Third path",
             title: "Interview",
-            gradientColors: [Color(hexString: "#2C3E50"), Color(hexString: "#111111")],
+            gradientColors: [Theme.ink, Theme.emberDeep],
             hasCutout: false
         )
     ]

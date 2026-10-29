@@ -13,7 +13,7 @@ public struct FullScreenPlayerView: View {
     @State private var showingCarMode = false
     @State private var showingVoicePicker = false
     @State private var showingReader = false
-    @State private var isTranscriptionMode = true
+    @State private var isTranscriptionMode = false
     @Bindable var scenes = ReaderSceneStore.shared
 
     public init() {}
@@ -23,7 +23,7 @@ public struct FullScreenPlayerView: View {
             if isTranscriptionMode {
                 SceneBackdrop(scene: scenes.active, scrim: 0.62)
             } else {
-                Theme.appBackground.ignoresSafeArea()
+                Theme.ember.ignoresSafeArea()
             }
 
             VStack(spacing: 16) {
@@ -34,7 +34,7 @@ public struct FullScreenPlayerView: View {
                     } label: {
                         Image(systemName: "chevron.down")
                             .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(Theme.textDark)
+                            .foregroundColor(isTranscriptionMode ? Theme.textDark : Theme.ink)
                             .frame(width: 44, height: 44)
                     }
                     .accessibilityLabel("Close player")
@@ -61,7 +61,7 @@ public struct FullScreenPlayerView: View {
                     } label: {
                         Image(systemName: "ellipsis")
                             .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(Theme.textDark)
+                            .foregroundColor(isTranscriptionMode ? Theme.textDark : Theme.ink)
                             .frame(width: 44, height: 44)
                     }
                     .accessibilityLabel("More")
@@ -110,31 +110,50 @@ public struct FullScreenPlayerView: View {
                     .padding(.horizontal, 20)
                     .transition(.asymmetric(insertion: .scale.combined(with: .opacity), removal: .opacity))
                 } else if let book = playerService.currentBook {
+                    let fraction = playerService.duration > 0 ? playerService.currentTime / playerService.duration : book.progress
                     VStack(spacing: 18) {
-                        CoverArtView(
-                            title: book.title,
-                            author: book.author,
-                            gradientHexes: book.coverGradientColors,
-                            coverImageURL: book.coverImageURL,
-                            cornerRadius: 12,
-                            shadowRadius: 16
-                        )
-                        .frame(width: 280, height: 280)
-                        .shadow(color: Color.black.opacity(0.35), radius: 24, x: 0, y: 16)
+                        ZStack {
+                            Circle()
+                                .stroke(Theme.ink.opacity(0.18), lineWidth: 3)
+                                .frame(width: 250, height: 250)
+                            Circle()
+                                .trim(from: 0, to: min(max(fraction, 0), 1))
+                                .stroke(Theme.ink, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                                .rotationEffect(.degrees(-90))
+                                .frame(width: 250, height: 250)
+                            CoverArtView(
+                                title: book.title,
+                                author: book.author,
+                                gradientHexes: book.coverGradientColors,
+                                coverImageURL: book.coverImageURL,
+                                cornerRadius: 8,
+                                shadowRadius: 10,
+                                ratio: 0.72
+                            )
+                            .frame(width: 140)
+                        }
+                        .overlay(alignment: .leading) {
+                            Text("Ch. \(playerService.currentChapterIndex + 1)")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(Theme.ink)
+                                .offset(x: -8)
+                        }
+                        .overlay(alignment: .trailing) {
+                            Text("\(Int(min(max(fraction, 0), 1) * 100))%")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(Theme.ink)
+                                .offset(x: 8)
+                        }
 
                         VStack(spacing: 6) {
                             Text(book.title)
-                                .font(.system(size: 22, weight: .bold))
-                                .foregroundColor(Theme.textDark)
+                                .font(.system(size: 26, weight: .bold))
+                                .foregroundColor(Theme.ink)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
                             Text(book.author)
                                 .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(Theme.textMuted)
-                                .lineLimit(1)
-                            Text(playerService.currentChapter?.title ?? "Chapter 1")
-                                .font(.system(size: 14))
-                                .foregroundColor(Theme.textMuted)
+                                .foregroundColor(Theme.ink.opacity(0.75))
                                 .lineLimit(1)
                         }
                         .padding(.horizontal, 28)
@@ -148,6 +167,7 @@ public struct FullScreenPlayerView: View {
                 PlaybackSlider(
                     currentTime: playerService.currentTime,
                     duration: playerService.duration,
+                    onEmber: !isTranscriptionMode,
                     onSeek: { time in
                         playerService.seek(to: time)
                     }
@@ -162,7 +182,7 @@ public struct FullScreenPlayerView: View {
                     } label: {
                         Image(systemName: "gobackward.15")
                             .font(.system(size: 28, weight: .medium))
-                            .foregroundColor(Theme.textDark)
+                            .foregroundColor(isTranscriptionMode ? Theme.textDark : Theme.ink)
                             .frame(width: 56, height: 56)
                     }
                     .accessibilityLabel("Back 15 seconds")
@@ -172,9 +192,9 @@ public struct FullScreenPlayerView: View {
                     } label: {
                         Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
                             .font(.system(size: 34, weight: .bold))
-                            .foregroundColor(Theme.appBackground)
+                            .foregroundColor(isTranscriptionMode ? Theme.appBackground : Theme.paper)
                             .frame(width: 76, height: 76)
-                            .background(Theme.textDark)
+                            .background(isTranscriptionMode ? Theme.textDark : Theme.ink)
                             .clipShape(Circle())
                             .offset(x: playerService.isPlaying ? 0 : 2)
                     }
@@ -186,7 +206,7 @@ public struct FullScreenPlayerView: View {
                     } label: {
                         Image(systemName: "goforward.15")
                             .font(.system(size: 28, weight: .medium))
-                            .foregroundColor(Theme.textDark)
+                            .foregroundColor(isTranscriptionMode ? Theme.textDark : Theme.ink)
                             .frame(width: 56, height: 56)
                     }
                     .accessibilityLabel("Forward 15 seconds")

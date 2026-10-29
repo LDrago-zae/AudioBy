@@ -22,7 +22,12 @@ public struct ProfileDetailsView: View {
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        // Profile Header Card
+                        Text("Settings")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundStyle(Theme.textDark)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 8)
+
                         HStack(spacing: 16) {
                             Image(systemName: "person.crop.circle.fill")
                                 .resizable()
@@ -30,10 +35,6 @@ public struct ProfileDetailsView: View {
                                 .frame(width: 60, height: 60)
                                 .foregroundColor(Theme.stone)
                                 .clipShape(Circle())
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color.white.opacity(0.2), lineWidth: 2)
-                                )
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(AuthService.shared.displayName)
@@ -54,9 +55,9 @@ public struct ProfileDetailsView: View {
                                     Circle()
                                         .fill(Theme.brandGreen)
                                         .frame(width: 8, height: 8)
-                                    Text("Online & Synced")
+                                    Text(entitlements.tier == .free ? "Free" : entitlements.tier.rawValue.capitalized)
                                         .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(Theme.brandGreen)
+                                        .foregroundColor(Theme.ember)
                                 }
                                 .padding(.top, 2)
                             }
@@ -121,10 +122,10 @@ public struct ProfileDetailsView: View {
                                         entitlements.setDebugTier(tier)
                                     }
                                     .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(entitlements.tier == tier ? .black : Theme.textDark)
+                                    .foregroundColor(entitlements.tier == tier ? Theme.onAccent : Theme.textDark)
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 8)
-                                    .background(entitlements.tier == tier ? Theme.brandGreen : Theme.surfaceWhite)
+                                    .background(entitlements.tier == tier ? Theme.ember : Theme.surfaceWhite)
                                     .clipShape(Capsule())
                                     .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
                                 }
@@ -143,16 +144,16 @@ public struct ProfileDetailsView: View {
                                 HStack(spacing: 12) {
                                     Image(systemName: isDarkMode ? "moon.stars.fill" : "sun.max.fill")
                                         .font(.system(size: 20))
-                                        .foregroundColor(isDarkMode ? Theme.brandGreen : .orange)
+                                        .foregroundColor(Theme.ember)
                                         .frame(width: 36, height: 36)
-                                        .background(isDarkMode ? Theme.brandGreen.opacity(0.15) : Color.orange.opacity(0.15))
+                                        .background(Theme.ember.opacity(0.15))
                                         .clipShape(Circle())
 
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(isDarkMode ? "Dark Theme" : "Light Theme")
                                             .font(.system(size: 15, weight: .semibold))
                                             .foregroundColor(Theme.textDark)
-                                        Text(isDarkMode ? "Obsidian black with emerald accents" : "Clean light interface with crisp contrast")
+                                        Text(isDarkMode ? "Ink ground, ember marks" : "Paper ground, ember marks")
                                             .font(.system(size: 12))
                                             .foregroundColor(Theme.textMuted)
                                     }
@@ -329,7 +330,7 @@ public struct ProfileDetailsView: View {
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationBarHidden(true)
             .onAppear {
                 cacheLimitChoice = Int(ContentCache.currentLimitBytes())
             }

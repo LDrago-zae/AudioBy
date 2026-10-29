@@ -5,87 +5,45 @@ public struct MiniPlayerView: View {
 
     public init() {}
 
-    private var progressRatio: Double {
-        guard playerService.duration > 0 else { return 0 }
-        return min(max(playerService.currentTime / playerService.duration, 0), 1)
-    }
-
     public var body: some View {
         if let book = playerService.currentBook, playerService.isMiniPlayerVisible {
-            VStack(spacing: 0) {
-                // Mini progress line
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Rectangle()
-                            .fill(Color.white.opacity(0.1))
-                        Rectangle()
-                            .fill(Theme.brandGreen)
-                            .frame(width: geo.size.width * CGFloat(progressRatio))
-                    }
+            HStack(spacing: 12) {
+                Button {
+                    playerService.togglePlayPause()
+                } label: {
+                    Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(Theme.onAccent)
+                        .frame(width: 36, height: 36)
+                        .background(Theme.ink)
+                        .clipShape(Circle())
                 }
-                .frame(height: 2)
+                .buttonStyle(.plain)
 
-                HStack(spacing: 12) {
-                    // Real cover artwork thumbnail
-                    CoverArtView(
-                        title: book.title,
-                        author: book.author,
-                        gradientHexes: book.coverGradientColors,
-                        coverImageURL: book.coverImageURL,
-                        cornerRadius: 8,
-                        shadowRadius: 2
-                    )
-                    .frame(width: 40, height: 40)
-
-                    // Titles
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(book.title)
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundColor(Theme.textDark)
-                            .lineLimit(1)
-
-                        Text(playerService.currentChapter?.title ?? book.author)
-                            .font(.system(size: 11))
-                            .foregroundColor(Theme.textMuted)
-                            .lineLimit(1)
-                    }
-
-                    Spacer()
-
-                    // Quick Jump 15s
-                    Button {
-                        playerService.jump(by: -15)
-                    } label: {
-                        Image(systemName: "gobackward.15")
-                            .font(.system(size: 16))
-                            .foregroundColor(Theme.textMuted)
-                            .frame(width: 32, height: 32)
-                    }
-
-                    // Play / Pause
-                    Button {
-                        playerService.togglePlayPause()
-                    } label: {
-                        Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
-                            .font(.system(size: 15, weight: .bold))
-                            .foregroundColor(.black)
-                            .frame(width: 34, height: 34)
-                            .background(Theme.brandGreen)
-                            .clipShape(Circle())
-                    }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(book.title)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(Theme.ink)
+                        .lineLimit(1)
+                    Text(book.author)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(Theme.ink.opacity(0.75))
+                        .lineLimit(1)
                 }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(Theme.surfaceWhite)
-                        .shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .stroke(Theme.cardBorder, lineWidth: 1)
-                        )
-                )
+
+                Spacer(minLength: 8)
+
+                Image(systemName: "waveform")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(Theme.ink)
             }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .fill(Theme.ember)
+                    .shadow(color: Theme.ember.opacity(0.35), radius: 12, y: 6)
+            )
             .contentShape(Rectangle())
             .onTapGesture {
                 playerService.isFullScreenPlayerPresented = true
