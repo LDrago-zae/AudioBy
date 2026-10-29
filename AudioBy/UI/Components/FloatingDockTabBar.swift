@@ -19,58 +19,103 @@ public enum DockTab: Int, CaseIterable {
 
     public var iconName: String {
         switch self {
+        case .home: return "house"
+        case .explore: return "magnifyingglass"
+        case .library: return "book"
+        case .activity: return "heart"
+        case .profile: return "person"
+        }
+    }
+
+    public var selectedIconName: String {
+        switch self {
         case .home: return "house.fill"
         case .explore: return "magnifyingglass"
-        case .library: return "books.vertical.fill"
-        case .activity: return "flame.fill"
-        case .profile: return "gearshape.fill"
+        case .library: return "book.fill"
+        case .activity: return "heart.fill"
+        case .profile: return "person.fill"
         }
     }
 }
 
 public struct FloatingDockTabBar: View {
     @Binding public var selectedTab: DockTab
+    @Namespace private var glass
+
+    private let iconSize: CGFloat = 46
+    private let gap: CGFloat = 10
 
     public init(selectedTab: Binding<DockTab>) {
         self._selectedTab = selectedTab
     }
 
     public var body: some View {
-        HStack(spacing: 4) {
+        if #available(iOS 26.0, *) {
+            GlassEffectContainer(spacing: 12) {
+                icons
+                    .padding(6)
+                    .glassEffect(.regular, in: Capsule())
+            }
+            .animation(.smooth(duration: 0.45), value: selectedTab)
+            .fixedSize()
+        } else {
+            icons
+                .padding(6)
+                .background(.ultraThinMaterial, in: Capsule())
+                .animation(.smooth(duration: 0.45), value: selectedTab)
+                .fixedSize()
+        }
+    }
+
+    private var icons: some View {
+        HStack(spacing: gap) {
             ForEach(DockTab.allCases, id: \.self) { tab in
+                let selected = selectedTab == tab
                 Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
-                        selectedTab = tab
-                    }
+                    selectedTab = tab
                 } label: {
-                    if selectedTab == tab {
-                        // Active Pill: Vibrant Green with Icon + Label
-                        HStack(spacing: 5) {
-                            Image(systemName: tab.iconName)
-                                .font(.system(size: 13, weight: .bold))
-                            Text(tab.title)
-                                .font(.system(size: 12, weight: .bold))
+                    ZStack {
+                        Circle()
+                            .fill(Color.white.opacity(0.16))
+                        if selected {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            Color(red: 1.0, green: 0.64, blue: 0.28),
+                                            Theme.ember
+                                        ],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
+                                .modifier(FocusGlass(namespace: glass))
                         }
-                        .foregroundColor(.black)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 9)
-                        .background(Capsule().fill(Theme.brandGreen))
-                    } else {
-                        Image(systemName: tab.iconName)
-                            .font(.system(size: 16))
-                            .foregroundColor(Theme.textMuted)
-                            .frame(width: 36, height: 36)
+                        Image(systemName: selected ? tab.selectedIconName : tab.iconName)
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundStyle(Color.white)
                     }
+                    .frame(width: iconSize, height: iconSize)
+                    .contentShape(Circle())
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel(tab.title)
+                .accessibilityAddTraits(selected ? .isSelected : [])
             }
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 5)
-        .background(
-            Capsule()
-                .fill(Theme.surfaceWhite)
-                .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 4)
-                .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
-        )
+    }
+}
+
+private struct FocusGlass: ViewModifier {
+    let namespace: Namespace.ID
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content
+                .glassEffect(.regular.tint(Theme.ember).interactive(), in: Circle())
+                .glassEffectID("focus", in: namespace)
+        } else {
+            content
+        }
     }
 }

@@ -48,7 +48,7 @@ public struct CatalogBook: Codable, FetchableRecord, TableRecord, Sendable, Hash
             author: author ?? "Unknown",
             narrator: hasLibriVoxAudio ? "LibriVox volunteers" : "On-device voice",
             summary: subjects ?? "",
-            coverGradientColors: ["#0d150f", "#10c76b"],
+            coverGradientColors: Theme.coverHexes(seed: title),
             coverImageURL: coverUrl.flatMap(URL.init(string:)),
             category: AudiobookAPIService.categoryFromSubjects(subjects ?? ""),
             gutenbergId: gutenbergId,

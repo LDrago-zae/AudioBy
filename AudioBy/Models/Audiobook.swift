@@ -51,7 +51,7 @@ public struct Audiobook: Identifiable, Codable, Hashable, Sendable {
         author: String,
         narrator: String,
         summary: String,
-        coverGradientColors: [String] = ["#0d150f", "#10c76b"],
+        coverGradientColors: [String] = ["#252422", "#403d39"],
         coverImageURL: URL? = nil,
         category: AudiobookCategory = .fiction,
         rating: Double = 0,
