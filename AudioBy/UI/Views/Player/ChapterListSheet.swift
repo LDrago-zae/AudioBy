@@ -54,9 +54,10 @@ public struct ChapterListSheet: View {
                                             .foregroundColor(currentChapterIndex == index ? Theme.brandGreen : Theme.textDark)
                                             .lineLimit(1)
 
-                                        Text("Duration: \(chapter.formattedDuration)")
+                                        Text(chapterExcerpt(chapter))
                                             .font(.system(size: 12))
                                             .foregroundColor(Theme.textMuted)
+                                            .lineLimit(2)
                                     }
 
                                     Spacer()
@@ -100,5 +101,14 @@ public struct ChapterListSheet: View {
                 }
             }
         }
+    }
+
+    private func chapterExcerpt(_ chapter: Chapter) -> String {
+        let text = chapter.fullText
+            .replacingOccurrences(of: "\n", with: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        if text.isEmpty { return "Duration: \(chapter.formattedDuration)" }
+        if text.count <= 140 { return text }
+        return String(text.prefix(140)) + "…"
     }
 }

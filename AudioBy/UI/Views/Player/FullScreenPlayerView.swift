@@ -13,13 +13,18 @@ public struct FullScreenPlayerView: View {
     @State private var showingCarMode = false
     @State private var showingVoicePicker = false
     @State private var showingReader = false
-    @State private var isTranscriptionMode = false
+    @State private var isTranscriptionMode = true
+    @Bindable var scenes = ReaderSceneStore.shared
 
     public init() {}
 
     public var body: some View {
         ZStack {
-            Theme.appBackground.ignoresSafeArea()
+            if isTranscriptionMode {
+                SceneBackdrop(scene: scenes.active, scrim: 0.62)
+            } else {
+                Theme.appBackground.ignoresSafeArea()
+            }
 
             VStack(spacing: 16) {
                 // Top Nav Bar
@@ -28,102 +33,41 @@ public struct FullScreenPlayerView: View {
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.down")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(Theme.textDark)
                             .frame(width: 44, height: 44)
-                            .background(Theme.surfaceWhite)
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .stroke(Theme.cardBorder, lineWidth: 1)
-                            )
                     }
+                    .accessibilityLabel("Close player")
 
                     Spacer()
 
-                    VStack(spacing: 2) {
-                        Text(isTranscriptionMode ? "LIVE TRANSCRIPT" : "NOW PLAYING")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(Theme.brandGreen)
-                            .tracking(1.2)
-                        Text(playerService.currentBook?.title ?? "Audiobook")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(Theme.textDark)
-                            .lineLimit(1)
-                    }
-
-                    Spacer()
-
-                    HStack(spacing: 8) {
-                        // Toggle Live Transcription Mode
+                    Menu {
                         Button {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                                 isTranscriptionMode.toggle()
                             }
                         } label: {
-                            Image(systemName: isTranscriptionMode ? "text.quote" : "quote.bubble")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(isTranscriptionMode ? .black : Theme.textDark)
-                                .frame(width: 40, height: 40)
-                                .background(isTranscriptionMode ? Theme.brandGreen : Theme.surfaceWhite)
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                )
+                            Label(isTranscriptionMode ? "Show cover" : "Show text", systemImage: "text.quote")
                         }
-
-                        // Voice Selector Button
-                        Button {
-                            showingVoicePicker = true
-                        } label: {
-                            Image(systemName: "waveform.and.person.filled")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(Theme.brandGreen)
-                                .frame(width: 40, height: 40)
-                                .background(Theme.surfaceWhite)
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                )
+                        Button { showingVoicePicker = true } label: {
+                            Label("Voice", systemImage: "waveform")
                         }
-
-                        // Car Mode Launch Button
-                        Button {
-                            showingCarMode = true
-                        } label: {
-                            Image(systemName: "car.fill")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(Theme.textDark)
-                                .frame(width: 40, height: 40)
-                                .background(Theme.surfaceWhite)
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                )
+                        Button { showingCarMode = true } label: {
+                            Label("Car mode", systemImage: "car.fill")
                         }
-
-                        // Bookmark Button
-                        Button {
-                            showingBookmarkSheet = true
-                        } label: {
-                            Image(systemName: "bookmark")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(Theme.textDark)
-                                .frame(width: 40, height: 40)
-                                .background(Theme.surfaceWhite)
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                )
+                        Button { showingBookmarkSheet = true } label: {
+                            Label("Bookmark", systemImage: "bookmark")
                         }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(Theme.textDark)
+                            .frame(width: 44, height: 44)
                     }
+                    .accessibilityLabel("More")
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 10)
+                .padding(.horizontal, 12)
+                .padding(.top, 4)
 
                 if let error = playerService.playbackError {
                     Text(error)
@@ -165,73 +109,37 @@ public struct FullScreenPlayerView: View {
                     .frame(maxWidth: 360, maxHeight: 310)
                     .padding(.horizontal, 20)
                     .transition(.asymmetric(insertion: .scale.combined(with: .opacity), removal: .opacity))
-                } else {
-                    // Large Ambient Artwork Card
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24, style: .continuous)
-                            .fill(Theme.surfaceWhite)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                    .stroke(Theme.cardBorder, lineWidth: 1)
-                            )
+                } else if let book = playerService.currentBook {
+                    VStack(spacing: 18) {
+                        CoverArtView(
+                            title: book.title,
+                            author: book.author,
+                            gradientHexes: book.coverGradientColors,
+                            coverImageURL: book.coverImageURL,
+                            cornerRadius: 12,
+                            shadowRadius: 16
+                        )
+                        .frame(width: 280, height: 280)
+                        .shadow(color: Color.black.opacity(0.35), radius: 24, x: 0, y: 16)
 
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack(alignment: .top) {
-                                if let book = playerService.currentBook {
-                                    CoverArtView(
-                                        title: book.title,
-                                        author: book.author,
-                                        gradientHexes: book.coverGradientColors,
-                                        coverImageURL: book.coverImageURL,
-                                        cornerRadius: 14,
-                                        shadowRadius: 6
-                                    )
-                                    .frame(width: 80, height: 80)
-                                }
-
-                                Spacer()
-
-                                // Voice Clarity Boost Chip
-                                Button {
-                                    playerService.isVocalClarityBoosted.toggle()
-                                    let gen = UIImpactFeedbackGenerator(style: .light)
-                                    gen.impactOccurred()
-                                } label: {
-                                    HStack(spacing: 4) {
-                                        Image(systemName: playerService.isVocalClarityBoosted ? "waveform.badge.magnifyingglass" : "waveform")
-                                            .font(.system(size: 11))
-                                        Text(playerService.isVocalClarityBoosted ? "Voice Boost ON" : "Voice Boost")
-                                            .font(.system(size: 11, weight: .bold))
-                                    }
-                                    .foregroundColor(playerService.isVocalClarityBoosted ? .black : Theme.textDark)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
-                                    .background(playerService.isVocalClarityBoosted ? Theme.brandGreen : Theme.surfaceSubtle)
-                                    .clipShape(Capsule())
-                                }
-                            }
-
-                            Spacer()
-
-                            Text(playerService.currentChapter?.title ?? "Chapter 1")
-                                .font(.system(size: 21, weight: .heavy, design: .rounded))
+                        VStack(spacing: 6) {
+                            Text(book.title)
+                                .font(.system(size: 22, weight: .bold))
                                 .foregroundColor(Theme.textDark)
+                                .multilineTextAlignment(.center)
                                 .lineLimit(2)
-
-                            Text("Narrated by \(playerService.currentBook?.narrator ?? "Classic Narrator")")
-                                .font(.system(size: 13, weight: .medium))
+                            Text(book.author)
+                                .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(Theme.textMuted)
-
-                            // Waveform visualizer
-                            WaveformVisualizer(isPlaying: playerService.isPlaying, barCount: 26, activeColor: Theme.brandGreen)
-                                .padding(.top, 4)
+                                .lineLimit(1)
+                            Text(playerService.currentChapter?.title ?? "Chapter 1")
+                                .font(.system(size: 14))
+                                .foregroundColor(Theme.textMuted)
+                                .lineLimit(1)
                         }
-                        .padding(18)
+                        .padding(.horizontal, 28)
                     }
-                    .frame(maxWidth: 340, maxHeight: 290)
-                    .shadow(color: Color.black.opacity(0.4), radius: 18, x: 0, y: 8)
-                    .padding(.horizontal, 20)
-                    .transition(.asymmetric(insertion: .scale.combined(with: .opacity), removal: .opacity))
+                    .transition(.opacity)
                 }
 
                 Spacer(minLength: 6)
@@ -247,153 +155,82 @@ public struct FullScreenPlayerView: View {
                 .padding(.horizontal, 24)
 
                 // Playback Controls
-                HStack(spacing: 22) {
-                    // 15s Jump Back
+                HStack(spacing: 36) {
                     Button {
                         playerService.jump(by: -15)
-                        let gen = UIImpactFeedbackGenerator(style: .medium)
-                        gen.impactOccurred()
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     } label: {
                         Image(systemName: "gobackward.15")
-                            .font(.system(size: 22))
+                            .font(.system(size: 28, weight: .medium))
                             .foregroundColor(Theme.textDark)
-                            .frame(width: 46, height: 46)
-                            .background(Theme.surfaceWhite)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Theme.cardBorder, lineWidth: 1))
+                            .frame(width: 56, height: 56)
                     }
+                    .accessibilityLabel("Back 15 seconds")
 
-                    // Previous Chapter
-                    Button {
-                        playerService.previousChapter()
-                    } label: {
-                        Image(systemName: "backward.end.fill")
-                            .font(.system(size: 19))
-                            .foregroundColor(Theme.textDark)
-                    }
-
-                    // Big Play / Pause Button
                     Button {
                         playerService.togglePlayPause()
                     } label: {
-                        ZStack {
-                            Circle()
-                                .fill(Theme.activeGreenGradient)
-                                .frame(width: 72, height: 72)
-                                .shadow(color: Theme.brandGreen.opacity(0.45), radius: 16, x: 0, y: 6)
-
-                            Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
-                                .font(.system(size: 28, weight: .bold))
-                                .foregroundColor(.black)
-                                .offset(x: playerService.isPlaying ? 0 : 2)
-                        }
-                    }
-
-                    // Next Chapter
-                    Button {
-                        playerService.nextChapter()
-                    } label: {
-                        Image(systemName: "forward.end.fill")
-                            .font(.system(size: 19))
-                            .foregroundColor(Theme.textDark)
-                    }
-
-                    // 30s Jump Forward
-                    Button {
-                        playerService.jump(by: 30)
-                        let gen = UIImpactFeedbackGenerator(style: .medium)
-                        gen.impactOccurred()
-                    } label: {
-                        Image(systemName: "goforward.30")
-                            .font(.system(size: 22))
-                            .foregroundColor(Theme.textDark)
-                            .frame(width: 46, height: 46)
-                            .background(Theme.surfaceWhite)
+                        Image(systemName: playerService.isPlaying ? "pause.fill" : "play.fill")
+                            .font(.system(size: 34, weight: .bold))
+                            .foregroundColor(Theme.appBackground)
+                            .frame(width: 76, height: 76)
+                            .background(Theme.textDark)
                             .clipShape(Circle())
-                            .overlay(Circle().stroke(Theme.cardBorder, lineWidth: 1))
+                            .offset(x: playerService.isPlaying ? 0 : 2)
                     }
+                    .accessibilityLabel(playerService.isPlaying ? "Pause" : "Play")
+
+                    Button {
+                        playerService.jump(by: 15)
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    } label: {
+                        Image(systemName: "goforward.15")
+                            .font(.system(size: 28, weight: .medium))
+                            .foregroundColor(Theme.textDark)
+                            .frame(width: 56, height: 56)
+                    }
+                    .accessibilityLabel("Forward 15 seconds")
                 }
-                .padding(.vertical, 6)
+                .padding(.vertical, 4)
 
-                // Bottom Tool Bar (Speed, Sleep, Chapters, Reader)
-                HStack(spacing: 10) {
+                VStack(spacing: 10) {
                     Button {
-                        showingSpeedSheet = true
+                        showingVoicePicker = true
                     } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "gauge.with.dots.needle.bottom.50percent")
-                                .font(.system(size: 12))
-                            Text(playerService.playbackSpeed.shortTitle)
-                                .font(.system(size: 12, weight: .bold))
-                        }
-                        .foregroundColor(Theme.textDark)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 9)
-                        .background(Theme.surfaceWhite)
-                        .clipShape(Capsule())
-                        .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
-                    }
-
-                    Button {
-                        showingSleepTimerSheet = true
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: playerService.sleepTimerService.isActive ? "moon.stars.fill" : "moon")
-                                .font(.system(size: 12))
-                                .foregroundColor(playerService.sleepTimerService.isActive ? Theme.brandGreen : Theme.textDark)
-                            Text(playerService.sleepTimerService.isActive ? playerService.sleepTimerService.formattedRemainingTime : "Sleep")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(playerService.sleepTimerService.isActive ? Theme.brandGreen : Theme.textDark)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 9)
-                        .background(playerService.sleepTimerService.isActive ? Theme.brandGreen.opacity(0.18) : Theme.surfaceWhite)
-                        .clipShape(Capsule())
-                        .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
-                    }
-
-                    Spacer()
-
-                    if let book = playerService.currentBook, let currentCh = playerService.currentChapter {
-                        Button {
-                            showingReader = true
-                        } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "book.pages")
-                                    .font(.system(size: 12))
-                                Text("Read")
-                                    .font(.system(size: 12, weight: .semibold))
-                            }
-                            .foregroundColor(Theme.brandCyan)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 9)
-                            .background(Theme.surfaceWhite)
+                        Text(playerService.useStudioVoice
+                             ? "Read by \(ElevenLabsService.shared.selectedVoiceName)"
+                             : "Read by \(ttsService.selectedVoiceName)")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(Theme.textDark)
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Theme.surfaceSubtle)
                             .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Theme.brandCyan.opacity(0.3), lineWidth: 1))
-                        }
-                        .sheet(isPresented: $showingReader) {
-                            BookReaderView(book: book, chapter: currentCh)
-                        }
                     }
 
-                    Button {
-                        showingChapterSheet = true
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "list.bullet")
-                                .font(.system(size: 12))
-                            Text("Chapters")
-                                .font(.system(size: 12, weight: .semibold))
+                    HStack(spacing: 8) {
+                        playerPill(title: playerService.playbackSpeed.shortTitle, systemImage: "gauge.with.dots.needle.bottom.50percent") {
+                            showingSpeedSheet = true
                         }
-                        .foregroundColor(Theme.textDark)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 9)
-                        .background(Theme.surfaceWhite)
-                        .clipShape(Capsule())
-                        .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
+                        playerPill(
+                            title: playerService.sleepTimerService.isActive ? playerService.sleepTimerService.formattedRemainingTime : "Sleep",
+                            systemImage: playerService.sleepTimerService.isActive ? "moon.stars.fill" : "moon",
+                            tint: playerService.sleepTimerService.isActive ? Theme.brandGreen : Theme.textDark
+                        ) {
+                            showingSleepTimerSheet = true
+                        }
+                        if playerService.currentBook != nil, playerService.currentChapter != nil {
+                            playerPill(title: "Read", systemImage: "book.pages", tint: Theme.brandCyan) {
+                                showingReader = true
+                            }
+                        }
+                        playerPill(title: "Chapters", systemImage: "list.bullet") {
+                            showingChapterSheet = true
+                        }
                     }
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 20)
                 .padding(.bottom, 16)
             }
         }
@@ -431,6 +268,11 @@ public struct FullScreenPlayerView: View {
                 }
             }
         }
+        .sheet(isPresented: $showingReader) {
+            if let book = playerService.currentBook, let currentCh = playerService.currentChapter {
+                BookReaderView(book: book, chapter: currentCh)
+            }
+        }
         .sheet(isPresented: $showingBookmarkSheet) {
             AddBookmarkSheet(
                 timestamp: playerService.currentTime,
@@ -439,5 +281,25 @@ public struct FullScreenPlayerView: View {
                 playerService.addBookmark(note: note)
             }
         }
+    }
+
+    private func playerPill(title: String, systemImage: String, tint: Color = Theme.textDark, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 5) {
+                Image(systemName: systemImage)
+                    .font(.system(size: 13, weight: .semibold))
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+            .foregroundColor(tint)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(Theme.surfaceWhite)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
+        }
+        .buttonStyle(.plain)
     }
 }

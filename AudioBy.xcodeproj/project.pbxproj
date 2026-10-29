@@ -51,6 +51,16 @@
 		8D528C6D99AF632B6E31B5AE /* CarModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B87A4E3E87EC63F70EBDD94 /* CarModeView.swift */; };
 		9155E9FDFABB1FDD419BF30F /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65BA940DDFA9C2311536F25 /* SplashView.swift */; };
 		995E6F91CC704E40E390085F /* TTSEngineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7305619826254C94DFAAE5B1 /* TTSEngineService.swift */; };
+		A1B2000000000000000000A1 /* AudioByMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2000000000000000000A2 /* AudioByMark.swift */; };
+		A1B2000000000000000000B1 /* Manga.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2000000000000000000B2 /* Manga.swift */; };
+		A1B2000000000000000000C1 /* CBZImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2000000000000000000C2 /* CBZImporter.swift */; };
+		A1B2000000000000000000D1 /* MangaDexService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2000000000000000000D2 /* MangaDexService.swift */; };
+		A1B2000000000000000000E1 /* MangaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2000000000000000000E2 /* MangaLibrary.swift */; };
+		A1B2000000000000000000F1 /* MangaShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2000000000000000000F2 /* MangaShelfView.swift */; };
+		A1B200000000000000000101 /* MangaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B200000000000000000102 /* MangaDetailView.swift */; };
+		A1B200000000000000000111 /* MangaReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B200000000000000000112 /* MangaReaderView.swift */; };
+		A1B200000000000000000121 /* zip_inflate.c in Sources */ = {isa = PBXBuildFile; fileRef = A1B200000000000000000122 /* zip_inflate.c */; };
+		E0D6E5EE11A4B2C3D4E5F601 /* EdgeSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D6E5EE11A4B2C3D4E5F602 /* EdgeSpeechService.swift */; };
 		9A04E01626E616D92B49BCEC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9E0009C70DA1E8F120DF59 /* RootView.swift */; };
 		9BA03E9821BEFB442F56AF42 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF276A66E57C25946163ED71 /* StorageService.swift */; };
 		9FC24101649820AF3815DED1 /* NowPlayingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F3B8B3AF37DEF561998E52 /* NowPlayingManager.swift */; };
@@ -122,6 +132,16 @@
 		6D944E971C0539961B296C31 /* AudioByTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AudioByTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DE8A38DCED0EAAEA57D7C09 /* AcrylicShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrylicShelfView.swift; sourceTree = "<group>"; };
 		7305619826254C94DFAAE5B1 /* TTSEngineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSEngineService.swift; sourceTree = "<group>"; };
+		A1B2000000000000000000A2 /* AudioByMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioByMark.swift; sourceTree = "<group>"; };
+		A1B2000000000000000000B2 /* Manga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manga.swift; sourceTree = "<group>"; };
+		A1B2000000000000000000C2 /* CBZImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBZImporter.swift; sourceTree = "<group>"; };
+		A1B2000000000000000000D2 /* MangaDexService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDexService.swift; sourceTree = "<group>"; };
+		A1B2000000000000000000E2 /* MangaLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaLibrary.swift; sourceTree = "<group>"; };
+		A1B2000000000000000000F2 /* MangaShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaShelfView.swift; sourceTree = "<group>"; };
+		A1B200000000000000000102 /* MangaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaDetailView.swift; sourceTree = "<group>"; };
+		A1B200000000000000000112 /* MangaReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaReaderView.swift; sourceTree = "<group>"; };
+		A1B200000000000000000122 /* zip_inflate.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; path = zip_inflate.c; sourceTree = "<group>"; };
+		E0D6E5EE11A4B2C3D4E5F602 /* EdgeSpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeSpeechService.swift; sourceTree = "<group>"; };
 		765B65F8F5B26FD17D84A376 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		790C19B21CE7A6C871E9FEB9 /* BookReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderView.swift; sourceTree = "<group>"; };
 		7E9E0009C70DA1E8F120DF59 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -129,14 +149,14 @@
 		87E2E6AE7036BE1687FDDCF1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		8F92E7F37ADE569D00E6274D /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		961BED6C46425AAC4EADD22C /* ProgressComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressComparisonView.swift; sourceTree = "<group>"; };
-		96CA9A6897B271411338B688 /* sample_chapter1.m4a */ = {isa = PBXFileReference; path = sample_chapter1.m4a; sourceTree = "<group>"; };
-		99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */ = {isa = PBXFileReference; path = sample_chapter3.m4a; sourceTree = "<group>"; };
+		96CA9A6897B271411338B688 /* sample_chapter1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter1.m4a; sourceTree = "<group>"; };
+		99DEDAEEC462088879A9FEDF /* sample_chapter3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter3.m4a; sourceTree = "<group>"; };
 		9DD032AD2953255FD27D3091 /* ActivityStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityStatsView.swift; sourceTree = "<group>"; };
 		A24326B5FD946AA4544D8EDE /* ContentCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCache.swift; sourceTree = "<group>"; };
 		A26EC5A9384BA6A5484B482A /* InteractiveLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveLessonView.swift; sourceTree = "<group>"; };
 		A2FE093090D11862B88ACB45 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		A3123503837042FADFF44A4E /* AudioByApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioByApp.swift; sourceTree = "<group>"; };
-		A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */ = {isa = PBXFileReference; path = sample_chapter2.m4a; sourceTree = "<group>"; };
+		A383D7BBE7BE8E6D75A1F962 /* sample_chapter2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_chapter2.m4a; sourceTree = "<group>"; };
 		A65A197F4BBF16C2E6970A73 /* SleepTimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTimerService.swift; sourceTree = "<group>"; };
 		AC83C292025AD02AF1C6ACB7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ACC60BE3276CDEC74AB92D39 /* SpeedPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedPickerSheet.swift; sourceTree = "<group>"; };
@@ -158,7 +178,7 @@
 		CBD674C2255EB44F91709DE3 /* FullScreenPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPlayerView.swift; sourceTree = "<group>"; };
 		CF68A84BC26A60F87CBC63F3 /* KaraokeTranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokeTranscriptionView.swift; sourceTree = "<group>"; };
 		D24E688E7FE340335AA6F139 /* BookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReview.swift; sourceTree = "<group>"; };
-		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8536A0987DB1F1DC4AC9D1D /* AddBookmarkSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookmarkSheet.swift; sourceTree = "<group>"; };
 		D8C077F2787C1846A0F36CD5 /* AudioPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTests.swift; sourceTree = "<group>"; };
 		DA2476BC64F9F668BA8365CA /* AudiobookRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudiobookRepositoryTests.swift; sourceTree = "<group>"; };
@@ -224,6 +244,7 @@
 				96EF8985B7C5FCEB3415678B /* App */,
 				8684AA28D10F216D714C9E2B /* Config */,
 				623E2C08B08DD4C3D426A399 /* Models */,
+				A1B200000000000000000131 /* Support */,
 				DCA8FD27308CD6DA995060C1 /* Resources */,
 				E5A921D662338FA4E8D4480F /* Services */,
 				875D977D317E403C058F6271 /* UI */,
@@ -256,6 +277,7 @@
 				46C6F3196F4BDBD5B65AE780 /* PlaybackSpeed.swift */,
 				1B459C1ECCDABB9EF3D46B2B /* TranscriptSegment.swift */,
 				B1F3F01643ED72A1BEB1BF5B /* TTSVoiceOption.swift */,
+				A1B2000000000000000000B2 /* Manga.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -404,6 +426,10 @@
 				A65A197F4BBF16C2E6970A73 /* SleepTimerService.swift */,
 				DF276A66E57C25946163ED71 /* StorageService.swift */,
 				7305619826254C94DFAAE5B1 /* TTSEngineService.swift */,
+				A1B2000000000000000000C2 /* CBZImporter.swift */,
+				A1B2000000000000000000D2 /* MangaDexService.swift */,
+				A1B2000000000000000000E2 /* MangaLibrary.swift */,
+				E0D6E5EE11A4B2C3D4E5F602 /* EdgeSpeechService.swift */,
 				0B04B7EF23F8CA3BDFE7A279 /* UserImportService.swift */,
 			);
 			path = Services;
@@ -432,14 +458,26 @@
 				BAF6551849C5C7B38C7CA647 /* AudiobookDetailView.swift */,
 				0CDF8EE41C563C35721B8B83 /* HomeDashboardView.swift */,
 				B668E702A47ADD1D98650709 /* LibraryView.swift */,
+				A1B2000000000000000000F2 /* MangaShelfView.swift */,
+				A1B200000000000000000102 /* MangaDetailView.swift */,
+				A1B200000000000000000112 /* MangaReaderView.swift */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		A1B200000000000000000131 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				A1B200000000000000000122 /* zip_inflate.c */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		FDDDB7EB7865AE379E9063BF /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				6DE8A38DCED0EAAEA57D7C09 /* AcrylicShelfView.swift */,
+				A1B2000000000000000000A2 /* AudioByMark.swift */,
 				0EE8F5DBEDBF27E3688D9D82 /* CoverArtView.swift */,
 				C1CADD55D4C6096098507980 /* DotMatrixChartView.swift */,
 				62745E5561D461A55DE9BFE7 /* FloatingDockTabBar.swift */,
@@ -524,7 +562,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				17745140FD50F1CF38AE793D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */,
 				51AFB192DA004D99CA1DC8FC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				F2115626BF0ADD879D46B6D7 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 			);
@@ -618,6 +656,16 @@
 				9155E9FDFABB1FDD419BF30F /* SplashView.swift in Sources */,
 				9BA03E9821BEFB442F56AF42 /* StorageService.swift in Sources */,
 				995E6F91CC704E40E390085F /* TTSEngineService.swift in Sources */,
+				A1B2000000000000000000A1 /* AudioByMark.swift in Sources */,
+				A1B2000000000000000000B1 /* Manga.swift in Sources */,
+				A1B2000000000000000000C1 /* CBZImporter.swift in Sources */,
+				A1B2000000000000000000D1 /* MangaDexService.swift in Sources */,
+				A1B2000000000000000000E1 /* MangaLibrary.swift in Sources */,
+				A1B2000000000000000000F1 /* MangaShelfView.swift in Sources */,
+				A1B200000000000000000101 /* MangaDetailView.swift in Sources */,
+				A1B200000000000000000111 /* MangaReaderView.swift in Sources */,
+				A1B200000000000000000121 /* zip_inflate.c in Sources */,
+				E0D6E5EE11A4B2C3D4E5F601 /* EdgeSpeechService.swift in Sources */,
 				6DEDFD2CDBABDE9FB4BD3CA4 /* TTSVoiceOption.swift in Sources */,
 				5354414A635670B4E32031E3 /* Theme.swift in Sources */,
 				CF9933E46D56BFFD83FFB5DD /* TranscriptSegment.swift in Sources */,
@@ -657,6 +705,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJ3W4C6YYV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AudioBy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -666,11 +715,13 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
+					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.audioby.app;
 				PRODUCT_NAME = AudioBy;
 				SDKROOT = iphonesimulator;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_OBJC_BRIDGING_HEADER = AudioBy/Audioby-Bridging-Header.h;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -685,6 +736,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphonesimulator*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJ3W4C6YYV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AudioBy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -694,11 +746,13 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
+					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.audioby.app;
 				PRODUCT_NAME = AudioBy;
 				SDKROOT = iphonesimulator;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_OBJC_BRIDGING_HEADER = AudioBy/Audioby-Bridging-Header.h;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -915,7 +969,7 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+		B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift";
 			requirement = {
@@ -956,7 +1010,7 @@
 		};
 		E92BF2C4234A277DE154CBF3 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			package = B02F95A17C580FD4E49CC4B9 /* XCRemoteSwiftPackageReference "GRDB" */;
 			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */

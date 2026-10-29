@@ -39,12 +39,12 @@ public struct MiniPlayerView: View {
 
                     // Titles
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(playerService.currentChapter?.title ?? book.title)
-                            .font(.system(size: 13, weight: .bold))
+                        Text(book.title)
+                            .font(.system(size: 13, weight: .semibold))
                             .foregroundColor(Theme.textDark)
                             .lineLimit(1)
 
-                        Text("Narrated by \(book.narrator)")
+                        Text(playerService.currentChapter?.title ?? book.author)
                             .font(.system(size: 11))
                             .foregroundColor(Theme.textMuted)
                             .lineLimit(1)

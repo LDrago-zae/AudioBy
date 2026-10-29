@@ -9,6 +9,9 @@ public struct BookReaderView: View {
     @State private var showingVoicePicker = false
     @State private var currentChapterText: String = ""
     @State private var isLoadingRealText = false
+    @State private var showingScenes = false
+    @State private var showingPaywall = false
+    @Bindable var scenes = ReaderSceneStore.shared
 
     public init(book: Audiobook, chapter: Chapter) {
         self.book = book
@@ -18,7 +21,7 @@ public struct BookReaderView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                Theme.appBackground.ignoresSafeArea()
+                SceneBackdrop(scene: scenes.active, scrim: 0.55)
 
                 VStack(spacing: 0) {
                     // Top Bar with Voice Selector & Font Size
@@ -57,6 +60,17 @@ public struct BookReaderView: View {
 
                         // Font size control
                         Button {
+                            showingScenes = true
+                        } label: {
+                            Image(systemName: "photo")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 40, height: 40)
+                                .background(Color.black.opacity(0.35))
+                                .clipShape(Circle())
+                        }
+
+                        Button {
                             withAnimation {
                                 fontSize = fontSize >= 22 ? 16 : fontSize + 2
                             }
@@ -78,19 +92,13 @@ public struct BookReaderView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             // Header
                             VStack(alignment: .leading, spacing: 6) {
-                                Text(book.title)
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(Theme.brandCyan)
-                                    .textCase(.uppercase)
-                                    .tracking(1.0)
-
                                 Text(chapter.title)
-                                    .font(.system(size: 24, weight: .heavy, design: .rounded))
-                                    .foregroundColor(Theme.textDark)
+                                    .font(.system(size: 24, weight: .bold, design: .serif))
+                                    .foregroundColor(.white)
 
                                 Text("By \(book.author)")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Theme.textMuted)
+                                    .foregroundColor(.white.opacity(0.75))
                             }
                             .padding(.top, 10)
 
@@ -137,11 +145,16 @@ public struct BookReaderView: View {
                             }
 
                             // Highlighted Body Text
-                            Text(currentChapterText.isEmpty ? chapter.fullText : currentChapterText)
-                                .font(.system(size: fontSize, weight: .regular))
-                                .lineSpacing(8)
-                                .foregroundColor(Theme.textDark)
-                                .padding(.bottom, 120)
+                            VStack(alignment: .leading, spacing: 18) {
+                                ForEach(Array(readingParagraphs.enumerated()), id: \.offset) { _, paragraph in
+                                    let spoken = spokenSentence(in: paragraph)
+                                    Text(attributedParagraph(paragraph, spoken: spoken))
+                                        .font(.system(size: fontSize, weight: .regular, design: .serif))
+                                        .lineSpacing(8)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                            .padding(.bottom, 120)
                         }
                         .padding(.horizontal, 22)
                     }
@@ -152,7 +165,7 @@ public struct BookReaderView: View {
                             Text(ttsService.isPlaying ? "Speaking Live..." : "Native Voice Narration")
                                 .font(.system(size: 13, weight: .bold))
                                 .foregroundColor(Theme.brandGreen)
-                            Text("Powered by Apple AVSpeechSynthesizer")
+                            Text("Neural voice")
                                 .font(.system(size: 11))
                                 .foregroundColor(Theme.textMuted)
                         }
@@ -220,7 +233,59 @@ public struct BookReaderView: View {
             .sheet(isPresented: $showingVoicePicker) {
                 VoicePickerSheet()
             }
+            .sheet(isPresented: $showingScenes) {
+                ScenePickerSheet(showingPaywall: $showingPaywall)
+            }
+            .sheet(isPresented: $showingPaywall) {
+                PaywallView()
+            }
         }
+    }
+
+    private func spokenSentence(in paragraph: String) -> String? {
+        guard ttsService.isPlaying || ttsService.isPaused,
+              let range = ttsService.currentWordRange,
+              let swiftRange = Range(range, in: ttsService.currentText) else { return nil }
+        let word = String(ttsService.currentText[swiftRange])
+        guard paragraph.contains(word) else { return nil }
+        let sentences = paragraph.components(separatedBy: ". ")
+        return sentences.first { $0.contains(word) }
+    }
+
+    private func attributedParagraph(_ paragraph: String, spoken: String?) -> AttributedString {
+        var text = AttributedString(paragraph)
+        text.foregroundColor = .white
+        if let spoken, let range = text.range(of: spoken) {
+            text[range].backgroundColor = Theme.brandGreen
+            text[range].foregroundColor = .black
+        }
+        return text
+    }
+
+    private var readingParagraphs: [String] {
+        let raw = (currentChapterText.isEmpty ? chapter.fullText : currentChapterText)
+            .replacingOccurrences(of: "\r\n", with: "\n")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !raw.isEmpty else { return [] }
+        let blocks = raw
+            .components(separatedBy: "\n\n")
+            .map { $0.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        if blocks.count > 1 { return blocks }
+        let sentences = raw.replacingOccurrences(of: "\n", with: " ")
+            .components(separatedBy: ". ")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        if sentences.count < 4 { return [raw] }
+        var groups: [String] = []
+        var index = 0
+        while index < sentences.count {
+            let end = min(index + 3, sentences.count)
+            let piece = sentences[index..<end].joined(separator: ". ")
+            groups.append(piece.hasSuffix(".") ? piece : piece + ".")
+            index = end
+        }
+        return groups
     }
 
     private var selectedVoiceName: String {
