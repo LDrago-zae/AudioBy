@@ -148,7 +148,7 @@ public struct KaraokeTranscriptionView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(Color(red: 0.08, green: 0.09, blue: 0.12))
+                .fill(Theme.ink)
                 .overlay(
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
                         .stroke(Color.white.opacity(0.10), lineWidth: 1)

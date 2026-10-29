@@ -26,13 +26,12 @@ public struct DotMatrixChartView: View {
             ZStack(alignment: .topTrailing) {
                 // Dark background with gradient & ambient dot pattern
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Color(red: 0.05, green: 0.07, blue: 0.09))
+                    .fill(Theme.ink)
                     .overlay(
-                        // Ambient green glow on right side
                         RadialGradient(
                             colors: [
-                                Color(red: 0.0, green: 0.85, blue: 0.45).opacity(0.35),
-                                Color(red: 0.0, green: 0.55, blue: 0.70).opacity(0.15),
+                                Theme.ember.opacity(0.35),
+                                Theme.charcoal.opacity(0.2),
                                 Color.clear
                             ],
                             center: .topTrailing,

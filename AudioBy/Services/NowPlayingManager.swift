@@ -140,8 +140,8 @@ public final class NowPlayingManager: @unchecked Sendable {
         return renderer.image { context in
             // Gradient background
             let colors = [
-                UIColor(red: 0.15, green: 0.12, blue: 0.28, alpha: 1.0).cgColor,
-                UIColor(red: 0.05, green: 0.04, blue: 0.10, alpha: 1.0).cgColor
+                UIColor(red: 0.251, green: 0.239, blue: 0.224, alpha: 1.0).cgColor,
+                UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 1.0).cgColor
             ]
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             if let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: [0.0, 1.0]) {
@@ -155,7 +155,7 @@ public final class NowPlayingManager: @unchecked Sendable {
 
             // Accent bar
             let barRect = CGRect(x: 40, y: 40, width: 8, height: 120)
-            UIColor(red: 0.35, green: 0.55, blue: 0.95, alpha: 1.0).setFill()
+            UIColor(red: 0.922, green: 0.369, blue: 0.157, alpha: 1.0).setFill()
             UIRectFill(barRect)
 
             // Title text
