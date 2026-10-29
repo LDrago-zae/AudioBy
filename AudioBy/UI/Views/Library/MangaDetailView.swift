@@ -38,10 +38,10 @@ public struct MangaDetailView: View {
                                 } label: {
                                     Text("Continue")
                                         .font(.system(size: 14, weight: .semibold))
-                                        .foregroundStyle(.black)
+                                        .foregroundStyle(Theme.onAccent)
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 8)
-                                        .background(Theme.brandGreen)
+                                        .background(Theme.ember)
                                         .clipShape(Capsule())
                                 }
                             }
@@ -66,10 +66,10 @@ public struct MangaDetailView: View {
                                 } label: {
                                     Text(chapter.numberLabel)
                                         .font(.system(size: 14, weight: .semibold))
-                                        .foregroundStyle(library.progress[series.id]?.chapterId == chapter.id ? .black : Theme.textDark)
+                                        .foregroundStyle(library.progress[series.id]?.chapterId == chapter.id ? Theme.onAccent : Theme.textDark)
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, 12)
-                                        .background(library.progress[series.id]?.chapterId == chapter.id ? Theme.brandGreen : Theme.surfaceWhite)
+                                        .background(library.progress[series.id]?.chapterId == chapter.id ? Theme.ember : Theme.surfaceWhite)
                                         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                                 }
                                 .buttonStyle(.plain)

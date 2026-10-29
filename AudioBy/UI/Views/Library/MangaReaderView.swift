@@ -30,7 +30,7 @@ public struct MangaReaderView: View {
 
     public var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Theme.ink.ignoresSafeArea()
             if loading {
                 ProgressView().tint(.white)
             } else if pages.isEmpty {
@@ -97,7 +97,7 @@ public struct MangaReaderView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(Color.black.opacity(0.92))
+        .background(Theme.ink)
     }
 
     private var bottomBar: some View {
@@ -129,7 +129,7 @@ public struct MangaReaderView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(Color.black.opacity(0.92))
+        .background(Theme.ink)
     }
 
     private func barButton(_ title: String, action: @escaping () -> Void) -> some View {

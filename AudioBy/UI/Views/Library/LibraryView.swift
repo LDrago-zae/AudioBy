@@ -135,51 +135,21 @@ public struct LibraryView: View {
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 40)
                         } else {
-                            LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 16) {
+                            LazyVStack(spacing: 12) {
                                 ForEach(currentBooks) { book in
                                     NavigationLink(destination: AudiobookDetailView(book: book)) {
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            CoverArtView(
-                                                title: book.title,
-                                                author: book.author,
-                                                gradientHexes: book.coverGradientColors,
-                                                coverImageURL: book.coverImageURL,
-                                                cornerRadius: 16,
-                                                shadowRadius: 6
+                                        CatalogListRow(book: book, showsProgress: true) {
+                                            AnyView(
+                                                Image(systemName: "play.fill")
+                                                    .font(.system(size: 12, weight: .bold))
+                                                    .foregroundStyle(Theme.onAccent)
+                                                    .frame(width: 36, height: 36)
+                                                    .background(Theme.ember)
+                                                    .clipShape(Circle())
                                             )
-
-                                            VStack(alignment: .leading, spacing: 3) {
-                                                Text(book.title)
-                                                    .font(.system(size: 14, weight: .bold))
-                                                    .foregroundColor(Theme.textDark)
-                                                    .lineLimit(1)
-
-                                                Text(book.author)
-                                                    .font(.system(size: 12))
-                                                    .foregroundColor(Theme.textMuted)
-                                                    .lineLimit(1)
-
-                                                // Progress bar
-                                                if book.progress > 0 {
-                                                    GeometryReader { g in
-                                                        ZStack(alignment: .leading) {
-                                                            Capsule().fill(Theme.surfaceSubtle).frame(height: 3)
-                                                            Capsule().fill(Theme.brandGreen).frame(width: CGFloat(book.progress) * g.size.width, height: 3)
-                                                        }
-                                                    }
-                                                    .frame(height: 3)
-                                                    .padding(.top, 2)
-                                                }
-                                            }
                                         }
-                                        .padding(10)
-                                        .background(Theme.surfaceWhite)
-                                        .cornerRadius(18)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 18)
-                                                .stroke(Theme.cardBorder, lineWidth: 1)
-                                        )
                                     }
+                                    .buttonStyle(.plain)
                                 }
                             }
                             .padding(.horizontal, 20)

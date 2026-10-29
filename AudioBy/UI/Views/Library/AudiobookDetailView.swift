@@ -106,56 +106,17 @@ public struct AudiobookDetailView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
 
-                    // Hero Mockup Cover Art Card (Matching user screenshot)
-                    ZStack {
-                        // Ambient emerald glow
-                        RoundedRectangle(cornerRadius: 28, style: .continuous)
-                            .fill(
-                                RadialGradient(
-                                    colors: [
-                                        Theme.brandGreen.opacity(0.25),
-                                        Color.clear
-                                    ],
-                                    center: .center,
-                                    startRadius: 20,
-                                    endRadius: 180
-                                )
-                            )
-                            .frame(width: 250, height: 250)
-
-                        // Phone Frame Mockup with Cover Artwork
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                .fill(Theme.ink)
-                                .frame(width: 200, height: 230)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                        .stroke(Color.white.opacity(0.15), lineWidth: 1.5)
-                                )
-                                .shadow(color: Color.black.opacity(0.6), radius: 20, x: 0, y: 10)
-
-                            VStack(spacing: 8) {
-                                // Cover thumbnail
-                                CoverArtView(
-                                    title: activeBook.title,
-                                    author: activeBook.author,
-                                    gradientHexes: activeBook.coverGradientColors,
-                                    coverImageURL: activeBook.coverImageURL,
-                                    cornerRadius: 16,
-                                    shadowRadius: 8
-                                )
-                                .frame(width: 145, height: 145)
-
-                                // Mini audio bar inside frame
-                                HStack(spacing: 8) {
-                                    Circle().fill(Color.white.opacity(0.2)).frame(width: 12, height: 12)
-                                    Capsule().fill(Color.white.opacity(0.15)).frame(width: 60, height: 3)
-                                    Circle().fill(Color.white.opacity(0.2)).frame(width: 12, height: 12)
-                                }
-                            }
-                            .padding(14)
-                        }
-                    }
+                    CoverArtView(
+                        title: activeBook.title,
+                        author: activeBook.author,
+                        gradientHexes: activeBook.coverGradientColors,
+                        coverImageURL: activeBook.coverImageURL,
+                        cornerRadius: 16,
+                        shadowRadius: 16,
+                        ratio: 0.72
+                    )
+                    .frame(width: 210)
+                    .shadow(color: Theme.ink.opacity(0.18), radius: 18, y: 10)
                     .padding(.top, 4)
 
                     // Title & Author (Matching reference: Title in Bold White, Author in Cyan)
@@ -293,8 +254,22 @@ public struct AudiobookDetailView: View {
                     }
                     .padding(.horizontal, 20)
 
-                    // Primary CTA Button: ▶ START LISTENING
-                    VStack(spacing: 10) {
+                    HStack(spacing: 12) {
+                        if let firstChapter = displayedChapters.first {
+                            Button {
+                                selectedChapterForReader = firstChapter
+                                showingReader = true
+                            } label: {
+                                Text("Read")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(Theme.paper)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 52)
+                                    .background(Theme.ink)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            }
+                        }
+
                         Button {
                             if playerService.currentBook?.id == activeBook.id {
                                 playerService.togglePlayPause()
@@ -302,45 +277,18 @@ public struct AudiobookDetailView: View {
                                 playerService.playAudiobook(activeBook, chapterIndex: activeBook.currentChapterIndex, autoPlay: true)
                             }
                         } label: {
-                            HStack(spacing: 10) {
-                                Image(systemName: isCurrentlyPlayingThisBook ? "pause.fill" : "play.fill")
-                                    .font(.system(size: 16, weight: .heavy))
-                                Text(isCurrentlyPlayingThisBook ? "Pause" : (playerService.currentBook?.id == activeBook.id ? "Resume" : "Listen"))
-                                    .font(.system(size: 15, weight: .heavy))
-                                    .tracking(0.8)
-                            }
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 54)
-                            .background(Theme.brandGreen)
-                            .cornerRadius(18)
-                            .shadow(color: Theme.brandGreen.opacity(0.4), radius: 10, x: 0, y: 4)
-                        }
-
-                        // Read Chapter Text Button (TTS + Reader)
-                        if let firstChapter = displayedChapters.first {
-                            Button {
-                                selectedChapterForReader = firstChapter
-                                showingReader = true
-                            } label: {
-                                HStack(spacing: 6) {
-                                    Image(systemName: "book.fill")
-                                        .font(.system(size: 13))
-                                    Text("READ CHAPTER TEXT & NATIVE TTS")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .tracking(0.5)
-                                }
-                                .foregroundColor(Theme.brandCyan)
+                            Text(isCurrentlyPlayingThisBook ? "Pause" : "Play")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundStyle(Theme.onAccent)
                                 .frame(maxWidth: .infinity)
-                                .frame(height: 44)
-                                .background(Theme.surfaceWhite)
-                                .cornerRadius(14)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 14)
-                                        .stroke(Theme.brandCyan.opacity(0.3), lineWidth: 1)
-                                )
-                            }
+                                .frame(height: 52)
+                                .background(Theme.ember)
+                                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         }
+                    }
+                    .padding(.horizontal, 20)
+
+                    VStack(spacing: 10) {
                         if let error = playerService.playbackError, playerService.currentBook?.id == activeBook.id {
                             Text(error)
                                 .font(.system(size: 12, weight: .semibold))

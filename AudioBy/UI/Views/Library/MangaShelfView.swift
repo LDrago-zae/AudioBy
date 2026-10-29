@@ -2,7 +2,6 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 public struct MangaShelfView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @Bindable var library = MangaLibrary.shared
     @State private var query = ""
     @State private var results: [MangaSeries] = []
@@ -20,10 +19,10 @@ public struct MangaShelfView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(spacing: 8) {
-                TextField("Search MangaDex", text: $query)
+                TextField("Search manga", text: $query)
                     .font(.system(size: 16))
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
-                    .tint(Theme.brandGreen)
+                    .foregroundStyle(Theme.textDark)
+                    .tint(Theme.ember)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
@@ -37,10 +36,10 @@ public struct MangaShelfView: View {
                     .onSubmit { Task { await search() } }
                 Button("Search") { Task { await search() } }
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Theme.onAccent)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 10)
-                    .background(Theme.brandGreen)
+                    .background(Theme.ember)
                     .clipShape(Capsule())
                 Button {
                     showingImporter = true
