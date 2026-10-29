@@ -84,9 +84,34 @@ body {
     radial-gradient(rgba(232, 245, 238, 0.035) 0.6px, transparent 0.6px);
 }
 
-.hero-char {
+.hero-char,
+.split-word {
   display: inline-block;
   will-change: transform, opacity;
+}
+
+.split-word + .split-word {
+  margin-left: 0.28em;
+}
+
+[data-hero-player] {
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+[data-hero-player]:active {
+  cursor: grabbing;
+}
+
+[data-spring-hover] {
+  will-change: transform;
+}
+
+[data-magnetic] {
+  will-change: transform;
+  display: inline-flex;
 }
 
 .section-rule {

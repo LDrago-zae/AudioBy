@@ -15,6 +15,7 @@ import { Footer } from "@/components/Footer";
 import { AuthModal } from "@/components/AuthModal";
 import { CheckoutModal } from "@/components/CheckoutModal";
 import { FloatingPlayerDock } from "@/components/FloatingPlayerDock";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { useAuth } from "@/lib/auth-context";
 
 export default function HomePage() {
@@ -44,6 +45,7 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen bg-[var(--background)] text-leaf-ink font-body">
+      <ScrollProgress />
       <Navbar onOpenAuth={() => setAuthOpen(true)} />
 
       <main>

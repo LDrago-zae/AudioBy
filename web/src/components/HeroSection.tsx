@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Volume2, ShieldCheck, Download, Smartphone, Play, Pause } from "lucide-react";
 import { WaveformVisualizer } from "./WaveformVisualizer";
-import { pulseTap, useHeroEntrance } from "@/lib/anime-motion";
+import { pulseTap, useHeroEntrance, useMagnetic } from "@/lib/anime-motion";
 
 interface HeroSectionProps {
   onExplorePlans: () => void;
@@ -15,6 +15,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
   const [heroPlaying, setHeroPlaying] = useState(false);
   const [speed, setSpeed] = useState(1.25);
   const rootRef = useHeroEntrance(true);
+  const ctaMagnetic = useMagnetic<HTMLButtonElement>(18);
+  const labMagnetic = useMagnetic<HTMLAnchorElement>(18);
 
   const toggleHeroAudio = (e: React.MouseEvent<HTMLButtonElement>) => {
     pulseTap(e.currentTarget);
@@ -91,7 +93,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
 
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
           <button
+            ref={ctaMagnetic}
             data-hero-cta
+            data-magnetic
             type="button"
             onClick={(e) => {
               pulseTap(e.currentTarget);
@@ -104,7 +108,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
           </button>
 
           <a
+            ref={labMagnetic}
             data-hero-cta
+            data-magnetic
             href="#lab"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors backdrop-blur-[2px]"
           >
