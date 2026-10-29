@@ -1,19 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "motion/react";
-import { ArrowRight, Volume2, ArrowDown, ShieldCheck, Download, Smartphone, Play, Pause } from "lucide-react";
+import { ArrowRight, Volume2, ShieldCheck, Download, Smartphone, Play, Pause } from "lucide-react";
 import { WaveformVisualizer } from "./WaveformVisualizer";
+import { pulseTap, useHeroEntrance } from "@/lib/anime-motion";
 
 interface HeroSectionProps {
   onExplorePlans: () => void;
 }
 
+const HERO_BARS = Array.from({ length: 48 }, (_, i) => i);
+
 export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
   const [heroPlaying, setHeroPlaying] = useState(false);
   const [speed, setSpeed] = useState(1.25);
+  const rootRef = useHeroEntrance(true);
 
-  const toggleHeroAudio = () => {
+  const toggleHeroAudio = (e: React.MouseEvent<HTMLButtonElement>) => {
+    pulseTap(e.currentTarget);
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       setHeroPlaying(!heroPlaying);
       return;
@@ -36,191 +40,163 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
 
   const cycleSpeed = () => {
     const list = [1.0, 1.25, 1.5, 2.0];
-    const next = list[(list.indexOf(speed) + 1) % list.length];
-    setSpeed(next);
+    setSpeed(list[(list.indexOf(speed) + 1) % list.length]);
   };
 
   return (
-    <section className="relative atmosphere-ambient pt-12 pb-16 sm:pt-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
-      <div className="mx-auto max-w-5xl px-3.5 sm:px-6 text-center">
-        {/* Hardware-inspired Eyebrow pill */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] dark:border-white/[0.10] bg-black/[0.02] dark:bg-[#12151B] px-3.5 py-1 text-xs text-zinc-700 dark:text-zinc-300 shadow-sm mb-6 sm:mb-8 max-w-full"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] shrink-0" />
-          <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-            <span className="hidden sm:inline">ElevenLabs Neural Synthesis & Document Engine</span>
-            <span className="sm:hidden">ElevenLabs AI & PDF Reader</span>
-          </span>
-          <span className="text-zinc-400 dark:text-zinc-600">·</span>
-          <span className="font-mono text-[10px] text-[#059669] dark:text-[#10B981] font-semibold">v1.2</span>
-        </motion.div>
+    <section
+      ref={rootRef as React.RefObject<HTMLElement>}
+      className="relative hero-field overflow-hidden min-h-[100svh] flex flex-col"
+    >
+      {/* Animated listening field — Anime.js signature */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-[8%] bottom-[8%] flex items-end justify-center gap-1 sm:gap-1.5 px-3 sm:px-8 z-[1]"
+        aria-hidden
+      >
+        {HERO_BARS.map((i) => (
+          <span
+            key={i}
+            data-hero-bar
+            className="block w-1 sm:w-1.5 origin-bottom rounded-full bg-emerald shadow-[0_0_14px_rgba(16,185,129,0.45)]"
+            style={{
+              height: `${42 + ((i * 41) % 48)}%`,
+              opacity: 0.75,
+              transform: "scaleY(0.55)",
+            }}
+          />
+        ))}
+      </div>
 
-        {/* Main Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-zinc-950 dark:text-white max-w-4xl mx-auto leading-[1.1] sm:leading-[1.05]"
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-24 flex flex-col items-center text-center flex-1 justify-center">
+        <p
+          data-hero-brand
+          className="font-display text-[clamp(3.25rem,14vw,8.5rem)] font-bold tracking-tighter leading-[0.88] text-white"
         >
-          Your books and documents,{" "}
-          <span className="text-[#059669] dark:text-[#10B981] font-serif italic font-normal block sm:inline">
-            spoken with clarity.
-          </span>
-        </motion.h1>
+          AudioBy
+        </p>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-4 sm:mt-6 max-w-2xl mx-auto text-xs sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed px-2 sm:px-0"
+        <h1
+          data-hero-line
+          className="mt-5 sm:mt-7 max-w-2xl font-display text-xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white/95 leading-[1.15]"
         >
-          Import academic papers, books, or lecture notes—or stream over 70,000 public classics. Experience lifelike narration with intelligent chapter tracking and complete offline playback.
-        </motion.p>
+          Your books and documents, spoken with clarity.
+        </h1>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3"
+        <p
+          data-hero-line
+          className="mt-4 sm:mt-5 max-w-xl text-sm sm:text-base text-emerald-100/80 leading-relaxed"
         >
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onExplorePlans}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] px-6 py-3 text-xs sm:text-sm font-semibold text-black transition-all shadow-sm shadow-emerald-500/20"
+          Import papers and notes—or stream 70,000+ public classics. Lifelike narration, chapter tracking, and offline playback on iOS and web.
+        </p>
+
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
+          <button
+            data-hero-cta
+            type="button"
+            onClick={(e) => {
+              pulseTap(e.currentTarget);
+              onExplorePlans();
+            }}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-emerald px-6 py-3.5 text-sm font-bold text-emerald-ink shadow-lift hover:bg-emerald-light transition-colors"
           >
             <span>Upgrade to Plus or Premium</span>
             <ArrowRight className="h-4 w-4" />
-          </motion.button>
+          </button>
 
-          <motion.a
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <a
+            data-hero-cta
             href="#lab"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-black/[0.1] dark:border-white/[0.12] bg-white dark:bg-[#12151B] px-5 py-3 text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-[#181D24] hover:border-black/20 dark:hover:border-white/20 transition-all shadow-sm"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors backdrop-blur-[2px]"
           >
-            <Volume2 className="h-4 w-4 text-[#059669] dark:text-[#10B981]" />
-            <span>Interactive Voice Lab</span>
-            <ArrowDown className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" />
-          </motion.a>
-        </motion.div>
+            <Volume2 className="h-4 w-4 text-emerald" />
+            <span>Try the Voice Lab</span>
+          </a>
+        </div>
 
-        {/* Studio Acoustic Player Mockup */}
-        <motion.div
-          initial={{ opacity: 0, y: 28, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.4, type: "spring", damping: 22 }}
-          whileHover={{ y: -3, transition: { duration: 0.2 } }}
-          className="mt-10 sm:mt-14 mx-auto max-w-xl rounded-2xl border border-black/[0.08] dark:border-white/[0.10] bg-white dark:bg-[#0E1015] p-4 sm:p-6 text-left shadow-lg dark:shadow-console transition-colors"
+        {/* Studio player */}
+        <div
+          data-hero-player
+          className="mt-12 sm:mt-16 w-full max-w-xl rounded-2xl border border-white/10 bg-[var(--surface-raised)]/95 dark:bg-leaf-raised/90 p-4 sm:p-6 text-left shadow-lift text-leaf-ink"
         >
-          {/* Top Player bar */}
-          <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-black/[0.06] dark:border-white/[0.08] mb-4 sm:mb-5 gap-2">
-            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-              <motion.button
-                whileTap={{ scale: 0.92 }}
+          <div className="flex items-center justify-between pb-4 border-b border-[var(--border-subtle)] mb-4 gap-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <button
+                type="button"
                 onClick={toggleHeroAudio}
-                className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] text-black flex items-center justify-center font-bold shadow-sm transition-colors shrink-0"
+                className="h-11 w-11 rounded-xl bg-emerald text-emerald-ink flex items-center justify-center shrink-0 hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
                 aria-label={heroPlaying ? "Pause audio" : "Play audio"}
               >
                 {heroPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
-              </motion.button>
+              </button>
               <div className="min-w-0">
-                <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white tracking-tight truncate">
+                <p className="text-sm font-bold tracking-tight truncate font-display">
                   The Picture of Dorian Gray
                 </p>
-                <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 truncate">
-                  Oscar Wilde · Chapter 1: The Studio
+                <p className="text-xs text-leaf-muted truncate">
+                  Oscar Wilde · Chapter 1
                 </p>
               </div>
             </div>
-
-            <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[9px] sm:text-[10px] font-mono uppercase text-[#059669] dark:text-[#10B981] flex items-center gap-1.5 shrink-0 font-medium">
-              <span className={`h-1.5 w-1.5 rounded-full bg-[#10B981] ${heroPlaying ? "animate-ping" : ""}`} />
-              <span>Studio A · Neural</span>
+            <span className="rounded-md bg-emerald/15 border border-emerald/25 px-2 py-0.5 text-[10px] uppercase text-emerald-dark dark:text-emerald flex items-center gap-1.5 shrink-0 font-semibold tracking-wide">
+              <span className={`h-1.5 w-1.5 rounded-full bg-emerald ${heroPlaying ? "animate-pulse" : ""}`} />
+              Neural
             </span>
           </div>
 
-          {/* Sunken Waveform Console */}
-          <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-zinc-50 dark:bg-[#060709] p-3 my-2 sm:my-3 shadow-inner">
-            <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-zinc-500 dark:text-zinc-500 mb-2">
-              <span className="tracking-wider uppercase">Acoustic Spectrum (44.1 kHz)</span>
-              <span className="text-[#059669] dark:text-[#10B981]">
-                {heroPlaying ? "Streaming Live" : "Ready"}
+          <div className="rounded-xl bg-leaf-surface dark:bg-leaf-field/80 p-3 border border-[var(--border-subtle)]">
+            <div className="flex items-center justify-between text-[10px] text-leaf-faint mb-2 uppercase tracking-wide">
+              <span>Acoustic spectrum</span>
+              <span className="text-emerald-dark dark:text-emerald">
+                {heroPlaying ? "Live" : "Ready"}
               </span>
             </div>
-            <WaveformVisualizer isPlaying={heroPlaying} barCount={32} height={34} />
+            <WaveformVisualizer isPlaying={heroPlaying} barCount={36} height={36} />
           </div>
 
-          {/* Scrub & Timestamps */}
-          <div className="space-y-1.5 sm:space-y-2 mt-3 sm:mt-4">
-            <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center justify-between text-[11px] text-leaf-faint tabular-nums">
               <span>04:18</span>
-              <span className="text-zinc-500 text-[9px] sm:text-[10px] hidden xs:inline sm:inline">
-                Acoustic breath modeling active
-              </span>
               <span>-18:42</span>
             </div>
-
-            <div className="h-1.5 w-full bg-zinc-200 dark:bg-[#1A1D24] rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-[#10B981] rounded-full"
-                animate={{ width: heroPlaying ? "42%" : "28%" }}
-                transition={{ duration: 1 }}
+            <div className="h-1.5 w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-emerald rounded-full transition-[width] duration-700"
+                style={{ width: heroPlaying ? "42%" : "28%" }}
               />
             </div>
           </div>
 
-          {/* Bottom Indicators */}
-          <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-black/[0.04] dark:border-white/[0.06] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={cycleSpeed}
-                title="Click to toggle speed"
-                className="rounded-md bg-zinc-100 dark:bg-[#161920] border border-black/[0.08] dark:border-white/[0.1] px-2 py-0.5 font-mono text-[10px] sm:text-[11px] text-zinc-800 dark:text-zinc-200 hover:border-[#10B981]/50 transition-colors cursor-pointer"
-              >
-                {speed}x Speed
-              </button>
-              <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-500 font-mono">Pitch-locked</span>
-            </div>
-
-            <div className="flex items-center gap-2.5 text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400 self-end xs:self-auto font-mono">
-              <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
-                Auto-sleep: Chapter end
-              </span>
-              <span className="rounded bg-zinc-100 dark:bg-[#161920] px-1.5 sm:px-2 py-0.5 font-mono text-[9px] sm:text-[10px] text-[#059669] dark:text-[#10B981] border border-[#10B981]/25">
-                Offline Ready
-              </span>
-            </div>
+          <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-2 text-xs text-leaf-muted">
+            <button
+              type="button"
+              onClick={cycleSpeed}
+              className="rounded-md bg-leaf-surface dark:bg-white/5 border border-[var(--border-subtle)] px-2 py-1 text-[11px] text-leaf-ink hover:border-emerald/40 transition-colors"
+            >
+              {speed}x speed
+            </button>
+            <span className="text-[11px] text-emerald-dark dark:text-emerald font-medium">
+              Offline ready
+            </span>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Micro guarantees */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-500 font-mono px-2"
+        <div
+          data-hero-line
+          className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-white/55"
         >
           <span className="flex items-center gap-1.5">
-            <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
-            No account required for free books
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald shrink-0" />
+            Free classics, no account
           </span>
           <span className="flex items-center gap-1.5">
-            <Download className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
-            100% Offline player
+            <Download className="h-3.5 w-3.5 text-emerald shrink-0" />
+            Offline player
           </span>
           <span className="flex items-center gap-1.5">
-            <Smartphone className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[#059669] dark:text-[#10B981] shrink-0" />
-            Syncs to iOS App
+            <Smartphone className="h-3.5 w-3.5 text-emerald shrink-0" />
+            Syncs to iOS
           </span>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

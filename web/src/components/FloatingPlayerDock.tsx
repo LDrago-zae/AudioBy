@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Play, Pause, ArrowRight } from "lucide-react";
 import { WaveformVisualizer } from "./WaveformVisualizer";
+import { pulseTap } from "@/lib/anime-motion";
 
 interface FloatingPlayerDockProps {
   onUpgrade: () => void;
@@ -15,14 +15,7 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
   const [speed, setSpeed] = useState(1.0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
-    };
-
+    const handleScroll = () => setVisible(window.scrollY > 400);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -32,7 +25,6 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
       setIsPlaying(!isPlaying);
       return;
     }
-
     if (isPlaying) {
       window.speechSynthesis.cancel();
       setIsPlaying(false);
@@ -51,76 +43,69 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
 
   const cycleSpeed = () => {
     const speeds = [1.0, 1.25, 1.5, 2.0];
-    const next = speeds[(speeds.indexOf(speed) + 1) % speeds.length];
-    setSpeed(next);
+    setSpeed(speeds[(speeds.indexOf(speed) + 1) % speeds.length]);
   };
 
+  if (!visible) return null;
+
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ y: 100, opacity: 0, scale: 0.95 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 100, opacity: 0, scale: 0.95 }}
-          transition={{ type: "spring", damping: 22, stiffness: 260 }}
-          className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] sm:w-[94%] max-w-xl pb-[env(safe-area-inset-bottom)]"
-        >
-          <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-black/10 dark:border-white/[0.1] bg-white/95 dark:bg-[#0E1015]/95 p-2 sm:p-3 shadow-2xl backdrop-blur-xl transition-colors duration-200">
-            {/* Play Button & Title */}
-            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-              <motion.button
-                whileTap={{ scale: 0.92 }}
-                onClick={toggleAudio}
-                className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] text-black shadow-sm transition-colors"
-                aria-label={isPlaying ? "Pause audio" : "Play audio"}
-              >
-                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
-              </motion.button>
+    <div className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] sm:w-[94%] max-w-xl pb-[env(safe-area-inset-bottom)] animate-in">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised/95 p-2 sm:p-3 shadow-lift backdrop-blur-md">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <button
+            type="button"
+            onClick={(e) => {
+              pulseTap(e.currentTarget);
+              toggleAudio();
+            }}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald text-emerald-ink hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
+            aria-label={isPlaying ? "Pause audio" : "Play audio"}
+          >
+            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
+          </button>
 
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <p className="text-[11px] sm:text-xs font-bold text-zinc-950 dark:text-white truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
-                    Dorian Gray · Ch. 1
-                  </p>
-                  <span className="hidden sm:inline-flex items-center gap-1 text-[9px] font-mono text-[#059669] dark:text-[#10B981] px-1.5 py-0.5 rounded bg-[#10B981]/10 border border-[#10B981]/20">
-                    <span className="h-1 w-1 rounded-full bg-[#10B981]" />
-                    ElevenLabs
-                  </span>
-                </div>
-                <p className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400 truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
-                  {isPlaying ? "Rendering acoustic synthesis..." : "Click to test sample voice"}
-                </p>
-              </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <p className="text-xs font-bold text-leaf-ink truncate max-w-[140px] sm:max-w-none font-display">
+                Dorian Gray · Ch. 1
+              </p>
+              <span className="hidden sm:inline-flex items-center gap-1 text-[9px] text-emerald-dark dark:text-emerald px-1.5 py-0.5 rounded-md bg-emerald/10 border border-emerald/20 font-semibold">
+                ElevenLabs
+              </span>
             </div>
-
-            {/* Mini Waveform */}
-            <div className="hidden md:block w-24 shrink-0">
-              <WaveformVisualizer isPlaying={isPlaying} barCount={18} height={22} />
-            </div>
-
-            {/* Speed pill & Upgrade button */}
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              <button
-                onClick={cycleSpeed}
-                title="Playback Speed"
-                className="rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-black/[0.03] dark:bg-[#161922] px-2 py-1 text-[10px] sm:text-[11px] font-mono font-bold text-zinc-800 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors"
-              >
-                {speed}x
-              </button>
-
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={onUpgrade}
-                className="flex items-center gap-1 rounded-xl bg-[#10B981] hover:bg-[#059669] dark:hover:bg-[#34D399] px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-bold text-black transition-colors shadow-sm"
-              >
-                <span>Upgrade</span>
-                <ArrowRight className="h-3 w-3" />
-              </motion.button>
-            </div>
+            <p className="text-[10px] text-leaf-faint truncate">
+              {isPlaying ? "Rendering acoustic synthesis…" : "Click to test sample voice"}
+            </p>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+
+        <div className="hidden md:block w-24 shrink-0">
+          <WaveformVisualizer isPlaying={isPlaying} barCount={18} height={22} />
+        </div>
+
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={cycleSpeed}
+            title="Playback Speed"
+            className="rounded-lg border border-[var(--border-subtle)] bg-leaf-surface px-2 py-1 text-[11px] font-bold text-leaf-ink tabular-nums"
+          >
+            {speed}x
+          </button>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              pulseTap(e.currentTarget);
+              onUpgrade();
+            }}
+            className="flex items-center gap-1 rounded-xl bg-emerald px-3 py-1.5 text-xs font-bold text-emerald-ink hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
+          >
+            Upgrade
+            <ArrowRight className="h-3 w-3" />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
