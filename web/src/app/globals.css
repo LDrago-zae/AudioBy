@@ -3,17 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8FAF8;
-  --foreground: #111813;
-  --card-bg: #FFFFFF;
-  --border-subtle: rgba(0, 0, 0, 0.08);
+  --background: #e7f1eb;
+  --foreground: #0a1f16;
+  --surface: #f4faf6;
+  --surface-raised: #ffffff;
+  --ink-muted: #3d5a4c;
+  --ink-faint: #5f7a6c;
+  --border-subtle: rgba(10, 31, 22, 0.1);
+  --accent: #059669;
+  --accent-bright: #10b981;
+  --accent-ink: #042f1e;
+  --selection: #10b981;
+  --hero-glow: rgba(16, 185, 129, 0.22);
+  --field: #0d2920;
 }
 
 .dark {
-  --background: #08090B;
-  --foreground: #FFFFFF;
-  --card-bg: #0F1115;
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --background: #050a08;
+  --foreground: #e8f5ee;
+  --surface: #0a1410;
+  --surface-raised: #0f1c16;
+  --ink-muted: #9bb5a6;
+  --ink-faint: #6f8a7c;
+  --border-subtle: rgba(232, 245, 238, 0.1);
+  --accent: #10b981;
+  --accent-bright: #34d399;
+  --accent-ink: #042f1e;
+  --selection: #10b981;
+  --hero-glow: rgba(16, 185, 129, 0.18);
+  --field: #06140f;
 }
 
 * {
@@ -27,61 +45,67 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", -system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle architectural atmosphere, no cheesy AI gradient blobs */
-.atmosphere-ambient {
-  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 255, 255, 0.04), transparent 70%);
+::selection {
+  background: var(--selection);
+  color: #042f1e;
 }
 
-.dark .atmosphere-ambient {
-  background: radial-gradient(ellipse 80% 40% at 50% -10%, rgba(255, 255, 255, 0.035), transparent 70%);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
-/* Studio precision hairline grid */
-.grid-studio {
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 48px 48px;
+/* Full-bleed listening field behind the hero */
+.hero-field {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, var(--hero-glow), transparent 58%),
+    linear-gradient(180deg, var(--field) 0%, var(--background) 78%);
 }
 
-.dark .grid-studio {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+.dark .hero-field {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -5%, var(--hero-glow), transparent 55%),
+    linear-gradient(180deg, #020605 0%, var(--background) 72%);
 }
 
-/* Custom scrollbars */
+.paper-grain {
+  background-image:
+    radial-gradient(rgba(10, 31, 22, 0.04) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+
+.dark .paper-grain {
+  background-image:
+    radial-gradient(rgba(232, 245, 238, 0.035) 0.6px, transparent 0.6px);
+}
+
+.hero-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.section-rule {
+  border-color: var(--border-subtle);
+}
+
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8FAF8;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D5DDD6;
-  border-radius: 2px;
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B5BFB6;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #08090B;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #22262E;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #323842;
+  background: var(--accent);
 }
