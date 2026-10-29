@@ -29,7 +29,7 @@ public struct PaywallView: View {
                             if let status = entitlements.refreshStatusMessage {
                                 Text(status)
                                     .font(.system(size: 13, weight: .semibold))
-                                    .foregroundColor(entitlements.isPlus ? Theme.brandGreen : .orange)
+                                    .foregroundColor(Theme.ember)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
                             } else if let error = entitlements.lastPurchaseError {

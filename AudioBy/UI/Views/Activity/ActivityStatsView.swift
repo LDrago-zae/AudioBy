@@ -15,127 +15,86 @@ public struct ActivityStatsView: View {
                 Theme.appBackground.ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 20) {
-                        // Streak Hero Card
-                        HStack(spacing: 16) {
-                            ZStack {
-                                Circle()
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [Color.orange, Color.red],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .frame(width: 60, height: 60)
-                                    .shadow(color: Color.orange.opacity(0.4), radius: 8, x: 0, y: 4)
+                    VStack(alignment: .leading, spacing: 18) {
+                        Text("Activity")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundStyle(Theme.textDark)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 8)
 
+                        paperCard {
+                            HStack(spacing: 16) {
                                 Image(systemName: "flame.fill")
-                                    .font(.system(size: 30))
-                                    .foregroundColor(.white)
-                            }
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundStyle(Theme.onAccent)
+                                    .frame(width: 52, height: 52)
+                                    .background(Theme.ember)
+                                    .clipShape(Circle())
 
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text("\(stats.streakDays) Days")
-                                        .font(.system(size: 24, weight: .black, design: .rounded))
-                                        .foregroundColor(Theme.textDark)
-                                    Text("STREAK")
-                                        .font(.system(size: 11, weight: .bold))
-                                        .foregroundColor(.orange)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 2)
-                                        .background(Color.orange.opacity(0.15))
-                                        .clipShape(Capsule())
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(stats.streakDays) day streak")
+                                        .font(.system(size: 22, weight: .bold))
+                                        .foregroundStyle(Theme.textDark)
+                                    Text(stats.streakDays == 0 ? "Listen today to start your streak." : "You've listened on consecutive days.")
+                                        .font(.system(size: 13))
+                                        .foregroundStyle(Theme.textMuted)
+                                        .lineLimit(2)
                                 }
-
-                                Text(stats.streakDays == 0 ? "Listen today to start your streak." : "You've listened on consecutive days. Keep it going.")
-                                    .font(.system(size: 13))
-                                    .foregroundColor(Theme.textMuted)
-                                    .lineLimit(2)
                             }
                         }
-                        .padding(18)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Theme.surfaceWhite)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Theme.cardBorder, lineWidth: 1)
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 8)
 
-                        // Daily Target Goal Card
-                        VStack(alignment: .leading, spacing: 14) {
+                        paperCard {
                             HStack {
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text("Today's Listening Goal")
+                                    Text("Today")
                                         .font(.system(size: 16, weight: .bold))
-                                        .foregroundColor(Theme.textDark)
-                                    Text("Target: \(stats.dailyTargetMinutes) minutes / day")
+                                        .foregroundStyle(Theme.textDark)
+                                    Text("\(stats.dailyTargetMinutes) minutes")
                                         .font(.system(size: 13))
-                                        .foregroundColor(Theme.textMuted)
+                                        .foregroundStyle(Theme.textMuted)
                                 }
-
                                 Spacer()
-
                                 Button {
                                     showingGoalPicker = true
                                 } label: {
-                                    Text("Edit Goal")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(Theme.brandGreen)
-                                        .padding(.horizontal, 10)
-                                        .padding(.vertical, 6)
-                                        .background(Theme.brandGreen.opacity(0.15))
+                                    Text("Edit")
+                                        .font(.system(size: 13, weight: .bold))
+                                        .foregroundStyle(Theme.onAccent)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .background(Theme.ember)
                                         .clipShape(Capsule())
                                 }
                             }
 
-                            // Progress Bar
                             let currentDayMins = todayMinutes
                             let ratio = min(1.0, Double(currentDayMins) / Double(max(1, stats.dailyTargetMinutes)))
 
                             VStack(spacing: 6) {
                                 GeometryReader { geo in
                                     ZStack(alignment: .leading) {
-                                        Capsule()
-                                            .fill(Theme.surfaceSubtle)
-                                            .frame(height: 10)
-
-                                        Capsule()
-                                            .fill(Theme.brandGreen)
-                                            .frame(width: CGFloat(ratio) * geo.size.width, height: 10)
+                                        Capsule().fill(Theme.stone.opacity(0.45)).frame(height: 6)
+                                        Capsule().fill(Theme.ember).frame(width: max(4, CGFloat(ratio) * geo.size.width), height: 6)
                                     }
                                 }
-                                .frame(height: 10)
+                                .frame(height: 6)
 
                                 HStack {
-                                    Text("\(currentDayMins) mins completed")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(Theme.brandGreen)
+                                    Text("\(currentDayMins) min")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(Theme.ember)
                                     Spacer()
-                                    Text("\(max(0, stats.dailyTargetMinutes - currentDayMins)) mins remaining")
+                                    Text("\(max(0, stats.dailyTargetMinutes - currentDayMins)) min left")
                                         .font(.system(size: 12))
-                                        .foregroundColor(Theme.textMuted)
+                                        .foregroundStyle(Theme.textMuted)
                                 }
                             }
                         }
-                        .padding(18)
-                        .background(Theme.surfaceWhite)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Theme.cardBorder, lineWidth: 1)
-                        )
-                        .padding(.horizontal, 20)
 
-                        // Weekly Listening Bar Chart
-                        VStack(alignment: .leading, spacing: 14) {
-                            Text("Weekly Listening Activity")
+                        paperCard {
+                            Text("This week")
                                 .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(Theme.textDark)
+                                .foregroundStyle(Theme.textDark)
 
                             HStack(alignment: .bottom, spacing: 12) {
                                 let minutes = weekMinutes
@@ -146,58 +105,55 @@ public struct ActivityStatsView: View {
                                     let isToday = idx == currentWeekdayIndex
 
                                     VStack(spacing: 6) {
-                                        Text("\(value)m")
-                                            .font(.system(size: 10, weight: .bold))
-                                            .foregroundColor(isToday ? Theme.brandGreen : Theme.textMuted)
+                                        Text("\(value)")
+                                            .font(.system(size: 10, weight: .semibold))
+                                            .foregroundStyle(isToday ? Theme.ember : Theme.textMuted)
 
                                         ZStack(alignment: .bottom) {
                                             Capsule()
-                                                .fill(Theme.surfaceSubtle)
-                                                .frame(width: 22, height: 110)
-
+                                                .fill(Theme.stone.opacity(0.35))
+                                                .frame(width: 18, height: 110)
                                             Capsule()
-                                                .fill(isToday ? AnyShapeStyle(Theme.brandGreen) : AnyShapeStyle(Theme.textMuted.opacity(0.35)))
-                                                .frame(width: 22, height: max(barHeight, value > 0 ? 6 : 0))
+                                                .fill(isToday ? Theme.ember : Theme.charcoal.opacity(0.45))
+                                                .frame(width: 18, height: max(barHeight, value > 0 ? 6 : 0))
                                         }
 
                                         Text(weekDays[idx])
                                             .font(.system(size: 11, weight: isToday ? .bold : .medium))
-                                            .foregroundColor(isToday ? Theme.brandGreen : Theme.textMuted)
+                                            .foregroundStyle(isToday ? Theme.ember : Theme.textMuted)
                                     }
                                     .frame(maxWidth: .infinity)
                                 }
                             }
-                            .padding(.top, 4)
                         }
-                        .padding(18)
-                        .background(Theme.surfaceWhite)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Theme.cardBorder, lineWidth: 1)
-                        )
-                        .padding(.horizontal, 20)
 
-                        // Milestone Achievements
-                        VStack(alignment: .leading, spacing: 14) {
-                            Text("Milestones & Badges")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(Theme.textDark)
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Milestones")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundStyle(Theme.textDark)
+                                .padding(.horizontal, 20)
 
-                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                                BadgeItem(title: "Night Owl", subtitle: "Listened past 10 PM", icon: "moon.stars.fill", color: Color.purple, isUnlocked: stats.totalMinutesListened > 0)
-                                BadgeItem(title: "10-Hour Club", subtitle: "Total 600 mins", icon: "crown.fill", color: Color.orange, isUnlocked: stats.totalMinutesListened >= 600)
-                                BadgeItem(title: "Polymath", subtitle: "3 different genres", icon: "brain.head.profile", color: Theme.brandGreen, isUnlocked: false)
-                                BadgeItem(title: "Marathoner", subtitle: "60 mins in one day", icon: "figure.run", color: Color.blue, isUnlocked: (stats.dailyHistory.values.max() ?? 0) >= 60)
+                            VStack(spacing: 10) {
+                                BadgeItem(title: "Night Owl", subtitle: "Listened past 10 PM", icon: "moon.stars.fill", color: Theme.charcoal, isUnlocked: stats.totalMinutesListened > 0)
+                                BadgeItem(title: "10-Hour Club", subtitle: "600 minutes listened", icon: "crown.fill", color: Theme.ember, isUnlocked: stats.totalMinutesListened >= 600)
+                                BadgeItem(title: "Polymath", subtitle: "3 different genres", icon: "books.vertical.fill", color: Theme.ink, isUnlocked: false)
+                                BadgeItem(title: "Marathoner", subtitle: "60 minutes in one day", icon: "figure.run", color: Theme.emberDeep, isUnlocked: (stats.dailyHistory.values.max() ?? 0) >= 60)
                             }
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 160)
+
+                        if !playerService.bookmarks.isEmpty {
+                            Text("\(playerService.bookmarks.count) bookmarks saved")
+                                .font(.system(size: 13))
+                                .foregroundStyle(Theme.textMuted)
+                                .padding(.horizontal, 20)
+                        }
+
+                        Spacer(minLength: 150)
                     }
                 }
             }
-            .navigationTitle("Activity & Habits")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarHidden(true)
             .onAppear {
                 stats = StorageService.shared.loadStats()
             }
@@ -209,6 +165,18 @@ public struct ActivityStatsView: View {
                 Button("Cancel", role: .cancel) {}
             }
         }
+    }
+
+    private func paperCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            content()
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Theme.surfaceWhite)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .shadow(color: Theme.ink.opacity(0.06), radius: 10, x: 0, y: 4)
+        .padding(.horizontal, 20)
     }
 
     private var todayMinutes: Int {
@@ -251,35 +219,33 @@ private struct BadgeItem: View {
     let isUnlocked: Bool
 
     var body: some View {
-        HStack(spacing: 10) {
-            ZStack {
-                Circle()
-                    .fill(isUnlocked ? color.opacity(0.18) : Theme.surfaceSubtle)
-                    .frame(width: 40, height: 40)
-
-                Image(systemName: icon)
-                    .font(.system(size: 18))
-                    .foregroundColor(isUnlocked ? color : Theme.textMuted)
-            }
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(isUnlocked ? Theme.onAccent : Theme.textMuted)
+                .frame(width: 40, height: 40)
+                .background(isUnlocked ? color : Theme.surfaceSubtle)
+                .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(isUnlocked ? Theme.textDark : Theme.textMuted)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(isUnlocked ? Theme.textDark : Theme.textMuted)
                 Text(subtitle)
-                    .font(.system(size: 11))
-                    .foregroundColor(Theme.textMuted)
+                    .font(.system(size: 12))
+                    .foregroundStyle(Theme.textMuted)
                     .lineLimit(1)
+            }
+            Spacer()
+            if isUnlocked {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(Theme.ember)
             }
         }
         .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Theme.surfaceWhite)
-        .cornerRadius(16)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Theme.cardBorder, lineWidth: 1)
-        )
-        .opacity(isUnlocked ? 1.0 : 0.6)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .shadow(color: Theme.ink.opacity(0.06), radius: 10, x: 0, y: 4)
     }
 }

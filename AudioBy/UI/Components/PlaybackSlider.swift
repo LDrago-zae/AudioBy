@@ -3,6 +3,7 @@ import SwiftUI
 public struct PlaybackSlider: View {
     public let currentTime: TimeInterval
     public let duration: TimeInterval
+    public var onEmber: Bool
     public let onSeek: (TimeInterval) -> Void
 
     @State private var isDragging: Bool = false
@@ -12,10 +13,12 @@ public struct PlaybackSlider: View {
     public init(
         currentTime: TimeInterval,
         duration: TimeInterval,
+        onEmber: Bool = false,
         onSeek: @escaping (TimeInterval) -> Void
     ) {
         self.currentTime = currentTime
         self.duration = duration
+        self.onEmber = onEmber
         self.onSeek = onSeek
     }
 
@@ -62,23 +65,15 @@ public struct PlaybackSlider: View {
                 ZStack(alignment: .leading) {
                     // Track background
                     Capsule()
-                        .fill(Color(white: 0.88))
+                        .fill(onEmber ? Theme.ink.opacity(0.22) : Theme.stone.opacity(0.55))
                         .frame(height: isDragging ? 7 : 4)
 
-                    // Filled track
                     Capsule()
-                        .fill(
-                            LinearGradient(
-                                colors: [Theme.brandGreen, Theme.brandGreenLight],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
+                        .fill(onEmber ? Theme.ink : Theme.ember)
                         .frame(width: max(0, CGFloat(progress) * geometry.size.width), height: isDragging ? 7 : 4)
 
-                    // Scrubber thumb
                     Circle()
-                        .fill(Color.white)
+                        .fill(onEmber ? Theme.paper : Theme.ink)
                         .frame(width: isDragging ? 16 : 12, height: isDragging ? 16 : 12)
                         .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 2)
                         .offset(x: max(0, min(CGFloat(progress) * geometry.size.width - (isDragging ? 8 : 6), geometry.size.width - (isDragging ? 16 : 12))))
@@ -121,13 +116,13 @@ public struct PlaybackSlider: View {
             HStack {
                 Text(formatTime(displayTime))
                     .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                    .foregroundColor(Theme.textMuted)
+                    .foregroundColor(onEmber ? Theme.ink : Theme.textMuted)
 
                 Spacer()
 
                 Text("-" + formatTime(max(0, duration - displayTime)))
                     .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                    .foregroundColor(Theme.textMuted)
+                    .foregroundColor(onEmber ? Theme.ink : Theme.textMuted)
             }
         }
     }

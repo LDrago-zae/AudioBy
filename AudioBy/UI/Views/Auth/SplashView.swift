@@ -8,11 +8,11 @@ public struct SplashView: View {
             VStack(spacing: 20) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 28, style: .continuous)
-                        .fill(Theme.brandGreen)
+                        .fill(Theme.ember)
                         .frame(width: 88, height: 88)
                     AudioByMark()
                         .fill(style: FillStyle(eoFill: true))
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.white)
                         .frame(width: 46, height: 46)
                 }
 

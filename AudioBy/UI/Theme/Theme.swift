@@ -11,12 +11,38 @@ public enum Theme {
     public static let ink = Color(red: 0.145, green: 0.141, blue: 0.133)
     public static let ember = Color(red: 0.922, green: 0.369, blue: 0.157)
     public static let emberDeep = Color(red: 0.729, green: 0.314, blue: 0.149)
+    /// Ink on ember. Cream on ember fails body contrast.
+    public static let onAccent = ink
+
+    /// Fallback covers stay inside the palette. Cached catalog rows still store the old green pair.
+    public static func coverHexes(seed: String, stored: [String] = []) -> [String] {
+        let allowed: Set<String> = ["fffcf2", "ccc5b9", "403d39", "252422", "eb5e28", "ba5026"]
+        let normalized = stored.map { hex in
+            hex.trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "#", with: "")
+                .lowercased()
+        }
+        if normalized.count >= 2, normalized.allSatisfy({ allowed.contains($0) }) {
+            return stored
+        }
+        let pairs = [
+            ["#252422", "#403d39"],
+            ["#403d39", "#252422"],
+            ["#252422", "#eb5e28"],
+            ["#403d39", "#ba5026"]
+        ]
+        var hash = 5381
+        for byte in seed.utf8 {
+            hash = hash &* 33 &+ Int(byte)
+        }
+        return pairs[abs(hash) % pairs.count]
+    }
 
     public static var appBackground: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
                 ? UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 1.0)
-                : UIColor(red: 1.0, green: 0.988, blue: 0.949, alpha: 1.0)
+                : UIColor(red: 0.945, green: 0.929, blue: 0.886, alpha: 1.0)
         })
     }
 
@@ -123,6 +149,15 @@ public enum Theme {
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
+    }
+
+    /// Ink on paper, charcoal on ink, so the tab bar stays visible in both appearances.
+    public static var dockBar: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.251, green: 0.239, blue: 0.224, alpha: 1.0)
+                : UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 1.0)
+        })
     }
 
     public static var dockBackground: Color {

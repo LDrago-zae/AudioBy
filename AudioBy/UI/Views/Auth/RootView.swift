@@ -45,6 +45,7 @@ public struct RootView: View {
             }
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
+        .tint(Theme.ember)
         .task {
             try? await Task.sleep(for: .milliseconds(1200))
             withAnimation(.easeOut(duration: 0.25)) {
