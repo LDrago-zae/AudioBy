@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { useScrollReveal } from "@/lib/anime-motion";
+import { animateAccordion, useScrollReveal, useSplitHeading } from "@/lib/anime-motion";
 
 interface FAQItem {
   q: string;
@@ -34,17 +34,37 @@ const FAQS: FAQItem[] = [
 
 export const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const ref = useScrollReveal<HTMLElement>();
+  const revealRef = useScrollReveal<HTMLElement>();
+  const splitRef = useSplitHeading<HTMLElement>();
+  const panelsRef = useRef<Array<HTMLDivElement | null>>([]);
+
+  useEffect(() => {
+    panelsRef.current.forEach((panel, idx) => {
+      if (!panel) return;
+      const shouldOpen = openIndex === idx;
+      if (idx === 0 && openIndex === 0 && panel.dataset.primed !== "1") {
+        panel.style.height = "auto";
+        panel.style.opacity = "1";
+        panel.dataset.primed = "1";
+        return;
+      }
+      animateAccordion(panel, shouldOpen);
+      panel.dataset.primed = "1";
+    });
+  }, [openIndex]);
 
   return (
     <section
       id="faq"
-      ref={ref}
+      ref={(node) => {
+        (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
       className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-leaf-surface"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <h2
-          data-reveal
+          data-split
           className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-leaf-ink text-center mb-10 sm:mb-14"
         >
           Questions, answered plainly.
@@ -69,14 +89,23 @@ export const FAQSection: React.FC = () => {
                     {item.q}
                   </span>
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 text-leaf-muted transition-transform ${open ? "rotate-180" : ""}`}
+                    className={`h-4 w-4 shrink-0 text-leaf-muted transition-transform duration-300 ${open ? "rotate-180" : ""}`}
                   />
                 </button>
-                {open && (
-                  <div className="px-4 sm:px-5 pb-4 text-sm text-leaf-muted leading-relaxed border-t border-[var(--border-subtle)] pt-3">
+                <div
+                  ref={(el) => {
+                    panelsRef.current[idx] = el;
+                  }}
+                  className="overflow-hidden border-t border-[var(--border-subtle)]"
+                  style={{
+                    height: idx === 0 ? "auto" : "0px",
+                    opacity: idx === 0 ? 1 : 0,
+                  }}
+                >
+                  <div className="px-4 sm:px-5 pb-4 pt-3 text-sm text-leaf-muted leading-relaxed">
                     {item.a}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

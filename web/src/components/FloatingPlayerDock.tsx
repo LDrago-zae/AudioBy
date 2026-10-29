@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Play, Pause, ArrowRight } from "lucide-react";
 import { WaveformVisualizer } from "./WaveformVisualizer";
-import { pulseTap } from "@/lib/anime-motion";
+import { pulseTap, useDockMotion } from "@/lib/anime-motion";
 
 interface FloatingPlayerDockProps {
   onUpgrade: () => void;
@@ -13,9 +13,11 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
   const [visible, setVisible] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(1.0);
+  const dockRef = useDockMotion(visible);
 
   useEffect(() => {
     const handleScroll = () => setVisible(window.scrollY > 400);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -46,10 +48,12 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
     setSpeed(speeds[(speeds.indexOf(speed) + 1) % speeds.length]);
   };
 
-  if (!visible) return null;
-
   return (
-    <div className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] sm:w-[94%] max-w-xl pb-[env(safe-area-inset-bottom)] animate-in">
+    <div
+      ref={dockRef}
+      className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] sm:w-[94%] max-w-xl pb-[env(safe-area-inset-bottom)] opacity-0 pointer-events-none"
+      style={{ willChange: "transform, opacity" }}
+    >
       <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised/95 p-2 sm:p-3 shadow-lift backdrop-blur-md">
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <button

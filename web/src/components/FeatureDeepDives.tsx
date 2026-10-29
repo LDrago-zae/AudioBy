@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { useScrollReveal } from "@/lib/anime-motion";
+import { useScrollReveal, useSplitHeading, useSpringHover } from "@/lib/anime-motion";
 
 const DEEP_DIVES = [
   {
@@ -64,12 +64,18 @@ const DEEP_DIVES = [
 ];
 
 export const FeatureDeepDives: React.FC = () => {
-  const ref = useScrollReveal<HTMLElement>();
+  const revealRef = useScrollReveal<HTMLElement>();
+  const splitRef = useSplitHeading<HTMLElement>();
+  const springRef = useSpringHover<HTMLElement>();
 
   return (
     <section
       id="engine"
-      ref={ref}
+      ref={(node) => {
+        (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (springRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
       className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)]"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-16 sm:space-y-24">
@@ -83,7 +89,10 @@ export const FeatureDeepDives: React.FC = () => {
               <p className="text-sm font-semibold text-emerald-dark dark:text-emerald mb-3">
                 {item.tag}
               </p>
-              <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink leading-tight">
+              <h2
+                data-split
+                className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink leading-tight"
+              >
                 {item.title}
               </h2>
               <p className="mt-4 max-w-measure text-sm sm:text-base text-leaf-muted leading-relaxed">
@@ -98,7 +107,10 @@ export const FeatureDeepDives: React.FC = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-6 sm:p-8 shadow-soft">
+            <div
+              data-spring-hover
+              className="rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-6 sm:p-8 shadow-soft"
+            >
               <p className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-leaf-ink">
                 {item.metric}
               </p>

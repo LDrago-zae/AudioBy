@@ -2,19 +2,23 @@
 
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
-import { useScrollReveal } from "@/lib/anime-motion";
+import { useScrollReveal, useSplitHeading } from "@/lib/anime-motion";
 
 export const CraftManifesto: React.FC = () => {
-  const ref = useScrollReveal<HTMLElement>();
+  const revealRef = useScrollReveal<HTMLElement>();
+  const splitRef = useSplitHeading<HTMLElement>();
 
   return (
     <section
-      ref={ref}
+      ref={(node) => {
+        (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
       className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-leaf-surface paper-grain"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <h2
-          data-reveal
+          data-split
           className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink leading-tight"
         >
           Books are meant to be understood, not abandoned to fatigue.
