@@ -47,7 +47,7 @@ public struct HomeDashboardView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 44, height: 44)
-                                    .foregroundColor(Color(red: 0.85, green: 0.70, blue: 0.60))
+                                    .foregroundColor(Theme.stone)
                                     .clipShape(Circle())
                                     .overlay(
                                         Circle()

@@ -2,38 +2,45 @@ import SwiftUI
 import UIKit
 
 public enum Theme {
-    // MARK: - Obsidian Emerald Design System Tokens
-    
-    // Canvas & Surfaces
+    // Cream paper, stone, charcoal, and burnt orange.
+    // #fffcf2  #ccc5b9  #403d39  #252422  #eb5e28
+
+    public static let paper = Color(red: 1.0, green: 0.988, blue: 0.949)
+    public static let stone = Color(red: 0.800, green: 0.773, blue: 0.725)
+    public static let charcoal = Color(red: 0.251, green: 0.239, blue: 0.224)
+    public static let ink = Color(red: 0.145, green: 0.141, blue: 0.133)
+    public static let ember = Color(red: 0.922, green: 0.369, blue: 0.157)
+    public static let emberDeep = Color(red: 0.729, green: 0.314, blue: 0.149)
+
     public static var appBackground: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.11, green: 0.09, blue: 0.07, alpha: 1.0)
-                : UIColor(red: 0.98, green: 0.96, blue: 0.92, alpha: 1.0)
+                ? UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 1.0)
+                : UIColor(red: 1.0, green: 0.988, blue: 0.949, alpha: 1.0)
         })
     }
 
     public static var surfaceWhite: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.10, green: 0.13, blue: 0.11, alpha: 1.0)
-                : UIColor.white
+                ? UIColor(red: 0.251, green: 0.239, blue: 0.224, alpha: 1.0)
+                : UIColor(red: 1.0, green: 0.988, blue: 0.949, alpha: 1.0)
         })
     }
 
     public static var surfaceSubtle: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.09, green: 0.11, blue: 0.09, alpha: 1.0)
-                : UIColor(red: 0.94, green: 0.90, blue: 0.84, alpha: 1.0)
+                ? UIColor(red: 0.196, green: 0.188, blue: 0.176, alpha: 1.0)
+                : UIColor(red: 0.929, green: 0.914, blue: 0.871, alpha: 1.0)
         })
     }
 
     public static var surfaceDark: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.14, green: 0.17, blue: 0.15, alpha: 1.0) // #242C25 Surface Container High
-                : UIColor(red: 0.88, green: 0.91, blue: 0.94, alpha: 1.0)
+                ? UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 1.0)
+                : UIColor(red: 0.251, green: 0.239, blue: 0.224, alpha: 1.0)
         })
     }
 
@@ -49,16 +56,15 @@ public enum Theme {
         })
     }
 
-    public static let brandGreen = Color(red: 0.27, green: 0.89, blue: 0.52)
-    public static let brandGreenContainer = Color(red: 0.06, green: 0.78, blue: 0.42)
-    public static let brandGreenLight = Color(red: 0.39, green: 1.00, blue: 0.61)
-    public static let brandGreenDark = Color(red: 0.00, green: 0.43, blue: 0.22)
+    public static let brandGreen = ember
+    public static let brandGreenContainer = emberDeep
+    public static let brandGreenLight = ember
+    public static let brandGreenDark = emberDeep
 
-    public static let brandCyan = Color(red: 0.27, green: 0.85, blue: 0.93)
-    public static let brandCyanContainer = Color(red: 0.00, green: 0.73, blue: 0.80)
+    public static let brandCyan = ember
+    public static let brandCyanContainer = emberDeep
 
-    // MARK: - Tertiary Warm Gold (Ratings & Stars)
-    public static let brandGold = Color(red: 1.00, green: 0.74, blue: 0.20)        // #FFBD33 Gold
+    public static let brandGold = ember
 
     // Aliases
     public static let accent = brandGreen
@@ -68,8 +74,8 @@ public enum Theme {
     public static var textDark: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.86, green: 0.90, blue: 0.85, alpha: 1.0)
-                : UIColor(red: 0.08, green: 0.10, blue: 0.12, alpha: 1.0)
+                ? UIColor(red: 1.0, green: 0.988, blue: 0.949, alpha: 1.0)
+                : UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 1.0)
         })
     }
 
@@ -80,16 +86,16 @@ public enum Theme {
     public static var textMuted: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.73, green: 0.80, blue: 0.73, alpha: 1.0)
-                : UIColor(red: 0.42, green: 0.47, blue: 0.53, alpha: 1.0)
+                ? UIColor(red: 0.800, green: 0.773, blue: 0.725, alpha: 1.0)
+                : UIColor(red: 0.251, green: 0.239, blue: 0.224, alpha: 1.0)
         })
     }
 
     public static var textLightMuted: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.53, green: 0.58, blue: 0.53, alpha: 1.0) // #869586 Outline
-                : UIColor(red: 0.60, green: 0.65, blue: 0.70, alpha: 1.0)
+                ? UIColor(red: 0.800, green: 0.773, blue: 0.725, alpha: 1.0)
+                : UIColor(red: 0.251, green: 0.239, blue: 0.224, alpha: 1.0)
         })
     }
 
@@ -122,15 +128,15 @@ public enum Theme {
     public static var dockBackground: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.05, green: 0.08, blue: 0.06, alpha: 0.94) // #0D150F Frosted Glass
-                : UIColor(red: 0.12, green: 0.14, blue: 0.16, alpha: 0.94)
+                ? UIColor(red: 0.145, green: 0.141, blue: 0.133, alpha: 0.94)
+                : UIColor(red: 1.0, green: 0.988, blue: 0.949, alpha: 0.94)
         })
     }
 
     // MARK: - Glass Surfaces & Shelf Tints
-    public static let foundationShelfTint = Color(red: 0.30, green: 0.85, blue: 0.60, opacity: 0.40)
-    public static let buildShelfTint = Color(red: 0.40, green: 0.78, blue: 0.45, opacity: 0.40)
-    public static let proveShelfTint = Color(red: 0.45, green: 0.65, blue: 0.95, opacity: 0.40)
+    public static let foundationShelfTint = Color(red: 0.922, green: 0.369, blue: 0.157, opacity: 0.35)
+    public static let buildShelfTint = Color(red: 0.800, green: 0.773, blue: 0.725, opacity: 0.45)
+    public static let proveShelfTint = Color(red: 0.251, green: 0.239, blue: 0.224, opacity: 0.35)
     
     public static var glassSurface: Color {
         Color(UIColor { trait in
@@ -144,7 +150,7 @@ public enum Theme {
     }
 
     // MARK: - Dark Matrix Palette
-    public static let matrixBackground = Color(red: 0.03, green: 0.05, blue: 0.04)
+    public static let matrixBackground = ink
     public static let matrixCardBorder = Color.white.opacity(0.10)
     public static let matrixDotInactive = Color.white.opacity(0.08)
     public static let matrixDotActive = brandGreenLight

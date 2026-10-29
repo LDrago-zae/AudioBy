@@ -126,7 +126,7 @@ public struct AudiobookDetailView: View {
                         // Phone Frame Mockup with Cover Artwork
                         ZStack {
                             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                .fill(Color(red: 0.08, green: 0.10, blue: 0.12))
+                                .fill(Theme.ink)
                                 .frame(width: 200, height: 230)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 24, style: .continuous)

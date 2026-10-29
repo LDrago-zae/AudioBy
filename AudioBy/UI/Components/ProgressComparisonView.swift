@@ -6,10 +6,10 @@ public struct ProgressComparisonView: View {
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.white)
+                .fill(Theme.paper)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .stroke(Color(red: 0.90, green: 0.92, blue: 0.94), lineWidth: 1)
+                        .stroke(Theme.stone, lineWidth: 1)
                 )
                 .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 4)
 
@@ -48,7 +48,7 @@ public struct ProgressComparisonView: View {
                 }
                 .padding(14)
                 .frame(maxWidth: .infinity)
-                .background(Color(red: 0.97, green: 0.98, blue: 0.99))
+                .background(Theme.paper)
                 .cornerRadius(14)
 
                 // Center Arrow
@@ -105,7 +105,7 @@ public struct ProgressComparisonView: View {
                 }
                 .padding(12)
                 .frame(maxWidth: .infinity)
-                .background(Color(red: 0.97, green: 0.98, blue: 0.99))
+                .background(Theme.paper)
                 .cornerRadius(14)
             }
             .padding(16)
