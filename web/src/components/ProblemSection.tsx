@@ -36,29 +36,29 @@ export const ProblemSection: React.FC = () => {
         (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
         (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
       }}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)] relative overflow-hidden"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-[var(--background)] relative overflow-hidden"
     >
-      <AnimeWavePath className="absolute inset-x-0 bottom-8 opacity-40" />
+      <AnimeWavePath className="absolute inset-x-0 bottom-8 opacity-30" />
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-3xl mb-12 sm:mb-16">
+        <div className="max-w-3xl mb-14 sm:mb-20">
           <h2
             data-split
-            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-[1.1]"
+            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-[1.08]"
           >
             You didn’t lose focus.
           </h2>
-          <p data-reveal className="mt-3 text-xl sm:text-2xl text-leaf-muted font-semibold font-display">
+          <p data-reveal className="mt-4 text-xl sm:text-2xl text-leaf-muted font-semibold font-display leading-snug">
             The tools were designed for screens, not ears.
           </p>
         </div>
 
-        <div className="grid gap-8 sm:gap-10">
+        <div className="grid gap-0">
           {PROBLEMS.map((item) => (
             <article
               key={item.title}
               data-reveal
-              className="grid sm:grid-cols-[1fr_auto] gap-4 sm:gap-8 items-start border-t border-[var(--border-subtle)] pt-8"
+              className="grid sm:grid-cols-[1fr_auto] gap-4 sm:gap-10 items-start border-t border-[var(--border-subtle)] py-9 sm:py-11"
             >
               <div>
                 <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-leaf-ink">

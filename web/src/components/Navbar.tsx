@@ -37,10 +37,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
         (navRef as React.MutableRefObject<HTMLElement | null>).current = node;
         (scrambleRef as React.MutableRefObject<HTMLElement | null>).current = node;
       }}
-      className="sticky top-0 z-50 w-full border-b border-[var(--border-subtle)] bg-[var(--background)]/90 backdrop-blur-md transition-colors duration-200"
+      className="sticky top-0 z-50 w-full border-b border-[var(--border-subtle)] bg-[var(--background)] transition-colors duration-200"
     >
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#" data-nav-brand className="flex items-center gap-2.5 group opacity-0">
+        <a href="#" data-nav-brand className="flex items-center gap-2.5 group">
           <span
             data-nav-mark
             className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald text-emerald-ink"
@@ -55,13 +55,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
           </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-leaf-muted">
+        <nav className="hidden md:flex items-center gap-7 text-[13px] font-medium text-leaf-muted">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               data-nav-link
-              className="opacity-0 hover:text-leaf-ink transition-colors"
+              className="hover:text-leaf-ink transition-colors"
             >
               {link.label}
             </a>
@@ -77,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
               toggleTheme();
             }}
             aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-            className="opacity-0 flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-leaf-raised text-leaf-ink hover:border-emerald/40 transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-leaf-raised text-leaf-ink hover:border-emerald/40 transition-colors"
           >
             {isDark ? <Sun className="h-3.5 w-3.5 text-amber-300" /> : <Moon className="h-3.5 w-3.5" />}
           </button>
@@ -104,14 +104,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
                 type="button"
                 data-nav-action
                 onClick={onOpenAuth}
-                className="opacity-0 rounded-lg border border-[var(--border-subtle)] bg-leaf-raised px-3 py-1.5 text-xs font-semibold text-leaf-ink hover:border-emerald/40 transition-colors"
+                className="rounded-lg border border-[var(--border-subtle)] bg-leaf-raised px-3 py-1.5 text-xs font-semibold text-leaf-ink hover:border-emerald/40 transition-colors"
               >
                 Sign In
               </button>
               <a
                 href="#pricing"
                 data-nav-action
-                className="opacity-0 inline-flex items-center gap-1 rounded-lg bg-emerald px-3 py-1.5 text-xs font-bold text-emerald-ink hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
+                className="inline-flex items-center gap-1 rounded-lg bg-emerald px-3 py-1.5 text-xs font-bold text-emerald-ink hover:bg-emerald-dark dark:hover:bg-emerald-light transition-colors"
               >
                 <span>Plans</span>
                 <ArrowUpRight className="h-3 w-3" />

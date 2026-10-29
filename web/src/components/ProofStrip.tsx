@@ -48,24 +48,30 @@ export const ProofStrip: React.FC = () => {
       }}
       className="border-y border-[var(--border-subtle)] bg-leaf-surface paper-grain relative overflow-hidden"
     >
-      <AnimeWavePath className="absolute inset-x-0 top-0 opacity-70" />
+      <AnimeWavePath className="absolute inset-x-0 top-0 opacity-45" />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
         <h2
           data-split
-          className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-leaf-ink max-w-xl"
+          className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink max-w-2xl leading-[1.12]"
         >
           Built for long listening, not ten-minute demos.
         </h2>
 
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+        <div className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
           {STATS.map((stat) => (
-            <div key={stat.label} data-reveal className="flex flex-col">
-              <span className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-leaf-ink">
+            <div
+              key={stat.label}
+              data-reveal
+              className="flex flex-col border-t border-[var(--border-subtle)] pt-5"
+            >
+              <span className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-leaf-ink">
                 {stat.value}
               </span>
-              <span className="mt-2 text-sm font-semibold text-leaf-ink">{stat.label}</span>
-              <span className="mt-1 text-xs text-leaf-muted leading-relaxed">{stat.detail}</span>
+              <span className="mt-3 text-sm font-semibold text-leaf-ink">{stat.label}</span>
+              <span className="mt-1.5 text-xs text-leaf-muted leading-relaxed max-w-[22ch]">
+                {stat.detail}
+              </span>
             </div>
           ))}
         </div>

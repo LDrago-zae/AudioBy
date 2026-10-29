@@ -364,7 +364,7 @@ export function useHeroEntrance(ready = true) {
     scope.add(() => {
       if (brand) {
         split = splitText(brand, {
-          chars: { wrap: "clip", class: "hero-char" },
+          chars: { class: "hero-char" },
           accessible: true,
         });
       }
@@ -373,12 +373,23 @@ export function useHeroEntrance(ready = true) {
       timeline = createTimeline({ defaults: { ease: EASE_OUT } });
 
       if (chars.length) {
+        chars.forEach((c) => {
+          const node = c as HTMLElement;
+          node.style.color = "#ffffff";
+          node.style.opacity = "0";
+        });
         timeline.add(chars, {
-          y: ["110%", "0%"],
-          rotate: { from: -10, to: 0 },
+          y: [36, 0],
           opacity: [0, 1],
-          duration: 760,
-          delay: stagger(30),
+          duration: 720,
+          delay: stagger(32),
+          ease: createSpring({ stiffness: 140, damping: 16 }),
+        });
+      } else if (brand) {
+        timeline.add(brand, {
+          opacity: [0, 1],
+          y: [24, 0],
+          duration: 700,
         });
       }
 
@@ -474,14 +485,25 @@ export function pulseTap(el: HTMLElement | null) {
 /** Spring the floating dock in / out. */
 export function useDockMotion(visible: boolean) {
   const ref = useRef<HTMLDivElement | null>(null);
+  const primed = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
+    // First paint: stay hidden until the visitor scrolls past the hero.
+    if (!primed.current) {
+      primed.current = true;
+      el.style.opacity = "0";
+      el.style.pointerEvents = "none";
+      el.style.transform = "translateY(64px)";
+      if (!visible) return;
+    }
+
     if (prefersReducedMotion()) {
       el.style.opacity = visible ? "1" : "0";
       el.style.pointerEvents = visible ? "auto" : "none";
+      el.style.transform = visible ? "none" : "translateY(64px)";
       return;
     }
 
@@ -496,9 +518,9 @@ export function useDockMotion(visible: boolean) {
       });
     } else {
       animate(el, {
-        opacity: [1, 0],
-        y: [0, 64],
-        scale: [1, 0.96],
+        opacity: 0,
+        y: 64,
+        scale: 0.96,
         duration: 320,
         ease: "inQuad",
         onComplete: () => {
@@ -527,23 +549,23 @@ export function useNavEntrance<T extends HTMLElement = HTMLElement>() {
     const tl = createTimeline({ defaults: { ease: EASE_OUT } });
 
     if (brand) {
-      tl.add(brand, { opacity: [0, 1], x: [-12, 0], duration: 520 }, 0);
+      tl.add(brand, { x: [-10, 0], duration: 480 }, 0);
     }
     if (mark) {
-      tl.add(mark, { rotate: [-18, 0], scale: [0.7, 1], duration: 640 }, 40);
+      tl.add(mark, { rotate: [-12, 0], scale: [0.86, 1], duration: 560 }, 30);
     }
     if (links.length) {
       tl.add(
         links,
-        { opacity: [0, 1], y: [-8, 0], delay: stagger(40), duration: 420 },
-        120
+        { y: [-6, 0], delay: stagger(36), duration: 380 },
+        90
       );
     }
     if (actions.length) {
       tl.add(
         actions,
-        { opacity: [0, 1], y: [-8, 0], delay: stagger(40), duration: 420 },
-        180
+        { y: [-6, 0], delay: stagger(36), duration: 380 },
+        140
       );
     }
 

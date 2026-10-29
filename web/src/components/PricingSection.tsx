@@ -29,23 +29,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
     <section
       id="pricing"
       ref={setSectionRef}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)]"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-[var(--background)]"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <h2
             data-split
-            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-tight"
+            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-[1.08]"
           >
             Public classics are free.
           </h2>
           <p
             data-reveal
-            className="mt-3 text-leaf-muted font-semibold text-xl sm:text-3xl font-display"
+            className="mt-4 text-leaf-muted font-semibold text-xl sm:text-3xl font-display leading-snug"
           >
             PDF imports & ElevenLabs studio voices are subscription.
           </p>
-          <p data-reveal className="mt-4 text-sm sm:text-base text-leaf-muted">
+          <p data-reveal className="mt-5 text-sm sm:text-base text-leaf-muted max-w-measure mx-auto">
             Activate once on the web. Entitlements sync across web and the native iOS app.
           </p>
         </div>
@@ -176,9 +176,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
           <div
             data-reveal
             data-spring-hover
-            className="relative flex flex-col justify-between rounded-2xl border-2 border-emerald-dark dark:border-emerald bg-leaf-raised p-6 sm:p-7 shadow-lift"
+            className="relative flex flex-col justify-between rounded-2xl border border-emerald-dark/70 dark:border-emerald bg-leaf-raised p-6 sm:p-7 shadow-lift ring-1 ring-emerald/25"
           >
-            <div className="absolute -top-3 left-6 rounded-full bg-emerald px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-ink">
+            <div className="absolute -top-3 left-6 rounded-md bg-emerald px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-ink">
               Preferred
             </div>
             <div>
