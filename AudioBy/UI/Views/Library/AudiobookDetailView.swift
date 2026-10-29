@@ -214,7 +214,7 @@ public struct AudiobookDetailView: View {
                                 Image(systemName: isPreviewingThisBook ? "stop.fill" : "play.circle.fill")
                                     .foregroundColor(Theme.brandGreen)
                                     .font(.system(size: 14))
-                                Text(isPreviewingThisBook ? "STOP" : "30S SAMPLE")
+                                Text(isPreviewingThisBook ? "Stop" : "Preview")
                                     .font(.system(size: 12, weight: .heavy))
                                     .foregroundColor(Theme.textDark)
                                     .tracking(0.5)
@@ -296,7 +296,7 @@ public struct AudiobookDetailView: View {
                     // Primary CTA Button: ▶ START LISTENING
                     VStack(spacing: 10) {
                         Button {
-                            if isCurrentlyPlayingThisBook {
+                            if playerService.currentBook?.id == activeBook.id {
                                 playerService.togglePlayPause()
                             } else {
                                 playerService.playAudiobook(activeBook, chapterIndex: activeBook.currentChapterIndex, autoPlay: true)
@@ -305,7 +305,7 @@ public struct AudiobookDetailView: View {
                             HStack(spacing: 10) {
                                 Image(systemName: isCurrentlyPlayingThisBook ? "pause.fill" : "play.fill")
                                     .font(.system(size: 16, weight: .heavy))
-                                Text(isCurrentlyPlayingThisBook ? "PAUSE LISTENING" : (activeBook.progress > 0 ? "RESUME LISTENING" : "START LISTENING"))
+                                Text(isCurrentlyPlayingThisBook ? "Pause" : (playerService.currentBook?.id == activeBook.id ? "Resume" : "Listen"))
                                     .font(.system(size: 15, weight: .heavy))
                                     .tracking(0.8)
                             }

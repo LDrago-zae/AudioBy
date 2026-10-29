@@ -16,13 +16,13 @@ public struct HomeDashboardView: View {
                         // Top Header Row
                         HStack(alignment: .center) {
                             VStack(alignment: .leading, spacing: 3) {
-                                Text(timeOfDayGreeting)
-                                    .font(.system(size: 14, weight: .regular))
+                                Text("Welcome back")
+                                    .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(Theme.textMuted)
-
-                                Text("Discover Audiobooks")
-                                    .font(.system(size: 24, weight: .bold))
+                                Text("Find your next audiobook")
+                                    .font(.system(size: 28, weight: .bold))
                                     .foregroundColor(Theme.textDark)
+                                    .tracking(-0.6)
                             }
 
                             Spacer()
@@ -57,6 +57,16 @@ public struct HomeDashboardView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
+
+                        Image("SceneLantern")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 168)
+                            .frame(maxWidth: .infinity)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                            .padding(.horizontal, 20)
+                            .accessibilityLabel("A reader under a lantern in a library")
 
                         if repository.isLoadingRemote && repository.audiobooks.isEmpty {
                             HStack(spacing: 10) {
@@ -113,25 +123,59 @@ public struct HomeDashboardView: View {
                             .padding(.vertical, 20)
                         }
 
-                        // Featured Hero Spotlight Carousel
-                        if let hero = repository.featuredHeroBooks.first {
-                            VStack(alignment: .leading, spacing: 10) {
-                                HStack {
-                                    Text("FEATURED SPOTLIGHT")
-                                        .font(.system(size: 11, weight: .bold))
-                                        .foregroundColor(Theme.brandGreen)
-                                        .tracking(1.1)
-                                    Spacer()
-                                    HStack(spacing: 4) {
-                                        Image(systemName: "sparkles")
-                                            .font(.system(size: 11))
-                                            .foregroundColor(.yellow)
-                                        Text("LibriVox")
-                                            .font(.system(size: 11, weight: .semibold))
-                                            .foregroundColor(Theme.textMuted)
+                        if !repository.continueListeningBooks.isEmpty {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Continue")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundColor(Theme.textDark)
+                                    .padding(.horizontal, 20)
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 16) {
+                                        ForEach(repository.continueListeningBooks) { book in
+                                            NavigationLink(destination: AudiobookDetailView(book: book)) {
+                                                VStack(alignment: .leading, spacing: 8) {
+                                                    CoverArtView(
+                                                        title: book.title,
+                                                        author: book.author,
+                                                        gradientHexes: book.coverGradientColors,
+                                                        coverImageURL: book.coverImageURL,
+                                                        cornerRadius: 8,
+                                                        shadowRadius: 6
+                                                    )
+                                                    .frame(width: 132, height: 132)
+
+                                                    Text(book.title)
+                                                        .font(.system(size: 14, weight: .semibold))
+                                                        .foregroundColor(Theme.textDark)
+                                                        .lineLimit(2)
+                                                        .frame(width: 132, alignment: .leading)
+
+                                                    GeometryReader { g in
+                                                        ZStack(alignment: .leading) {
+                                                            Capsule().fill(Theme.surfaceSubtle).frame(height: 3)
+                                                            Capsule()
+                                                                .fill(Theme.textDark)
+                                                                .frame(width: max(4, CGFloat(book.progress) * g.size.width), height: 3)
+                                                        }
+                                                    }
+                                                    .frame(width: 132, height: 3)
+                                                }
+                                            }
+                                            .buttonStyle(.plain)
+                                        }
                                     }
+                                    .padding(.horizontal, 20)
                                 }
-                                .padding(.horizontal, 20)
+                            }
+                        }
+
+                        if let hero = repository.featuredHeroBooks.first {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("A place to start")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundColor(Theme.textDark)
+                                    .padding(.horizontal, 20)
 
                                 NavigationLink(destination: AudiobookDetailView(book: hero)) {
                                     ZStack {
@@ -224,76 +268,6 @@ public struct HomeDashboardView: View {
                                             }
                                         }
                                         .padding(14)
-                                    }
-                                    .padding(.horizontal, 20)
-                                }
-                            }
-                        }
-
-                        // Continue Listening Section
-                        if !repository.continueListeningBooks.isEmpty {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("Continue Listening")
-                                    .font(.system(size: 18, weight: .bold))
-                                    .foregroundColor(Theme.textDark)
-                                    .padding(.horizontal, 20)
-
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 14) {
-                                        ForEach(repository.continueListeningBooks) { book in
-                                            Button {
-                                                playerService.playAudiobook(book, chapterIndex: book.currentChapterIndex, autoPlay: true)
-                                            } label: {
-                                                HStack(spacing: 12) {
-                                                    CoverArtView(
-                                                        title: book.title,
-                                                        author: book.author,
-                                                        gradientHexes: book.coverGradientColors,
-                                                        coverImageURL: book.coverImageURL,
-                                                        cornerRadius: 12,
-                                                        shadowRadius: 4
-                                                    )
-                                                    .frame(width: 52, height: 52)
-
-                                                    VStack(alignment: .leading, spacing: 4) {
-                                                        Text(book.title)
-                                                            .font(.system(size: 14, weight: .bold))
-                                                            .foregroundColor(Theme.textDark)
-                                                            .lineLimit(1)
-
-                                                        Text(book.currentChapter?.title ?? "Chapter 1")
-                                                            .font(.system(size: 12))
-                                                            .foregroundColor(Theme.textMuted)
-                                                            .lineLimit(1)
-
-                                                        // Mini Progress Bar
-                                                        GeometryReader { g in
-                                                            ZStack(alignment: .leading) {
-                                                                Capsule()
-                                                                    .fill(Theme.surfaceSubtle)
-                                                                    .frame(height: 4)
-                                                                Capsule()
-                                                                    .fill(Theme.brandGreen)
-                                                                    .frame(width: max(0, CGFloat(book.progress) * g.size.width), height: 4)
-                                                            }
-                                                        }
-                                                        .frame(height: 4)
-                                                    }
-
-                                                    Image(systemName: "play.circle.fill")
-                                                        .font(.system(size: 26))
-                                                        .foregroundColor(Theme.brandGreen)
-                                                }
-                                                .padding(12)
-                                                .frame(width: 270)
-                                                .background(Theme.surfaceWhite)
-                                                .cornerRadius(16)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 16)
-                                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                                )
-                                            }
-                                        }
                                     }
                                     .padding(.horizontal, 20)
                                 }
@@ -420,12 +394,5 @@ public struct HomeDashboardView: View {
                 await repository.fetchRemoteAudiobooks()
             }
         }
-    }
-
-    private var timeOfDayGreeting: String {
-        let hour = Calendar.current.component(.hour, from: Date())
-        if hour < 12 { return "Good Morning," }
-        if hour < 17 { return "Good Afternoon," }
-        return "Good Evening,"
     }
 }

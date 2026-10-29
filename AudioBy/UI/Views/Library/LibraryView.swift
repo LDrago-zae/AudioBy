@@ -4,6 +4,7 @@ public enum LibraryShelf: String, CaseIterable, Identifiable {
     case inProgress = "Listening"
     case saved = "Saved"
     case imported = "Imported"
+    case manga = "Manga"
     case downloaded = "Downloads"
     case finished = "Finished"
 
@@ -29,6 +30,8 @@ public struct LibraryView: View {
             return repository.favoriteBooks
         case .imported:
             return repository.importedBooks
+        case .manga:
+            return []
         case .downloaded:
             return repository.downloadedBooks
         case .finished:
@@ -110,8 +113,9 @@ public struct LibraryView: View {
                             .padding(.horizontal, 20)
                         }
 
-                        // Book Shelf Grid
-                        if currentBooks.isEmpty {
+                        if selectedShelf == .manga {
+                            MangaShelfView()
+                        } else if currentBooks.isEmpty {
                             VStack(spacing: 12) {
                                 Image(systemName: selectedShelf == .downloaded ? "arrow.down.circle" : "books.vertical")
                                     .font(.system(size: 40))
