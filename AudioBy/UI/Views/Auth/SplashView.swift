@@ -10,16 +10,17 @@ public struct SplashView: View {
                     RoundedRectangle(cornerRadius: 28, style: .continuous)
                         .fill(Theme.brandGreen)
                         .frame(width: 88, height: 88)
-                    Image(systemName: "headphones")
-                        .font(.system(size: 38, weight: .semibold))
-                        .foregroundColor(.black)
+                    AudioByMark()
+                        .fill(style: FillStyle(eoFill: true))
+                        .foregroundStyle(.black)
+                        .frame(width: 46, height: 46)
                 }
 
                 VStack(spacing: 6) {
                     Text("AudioBy")
                         .font(.system(size: 34, weight: .heavy))
                         .foregroundColor(Theme.textDark)
-                    Text("Public-domain listening")
+                    Text("Listen · Read · Manga")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundColor(Theme.textMuted)
                 }

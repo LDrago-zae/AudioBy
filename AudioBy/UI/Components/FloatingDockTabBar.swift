@@ -51,25 +51,14 @@ public struct FloatingDockTabBar: View {
                             Text(tab.title)
                                 .font(.system(size: 12, weight: .bold))
                         }
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 9)
-                        .background(
-                            Capsule()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [Theme.brandGreenLight, Theme.brandGreen],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .shadow(color: Theme.brandGreen.opacity(0.4), radius: 6, x: 0, y: 3)
-                        )
+                        .background(Capsule().fill(Theme.brandGreen))
                     } else {
-                        // Inactive Icon
                         Image(systemName: tab.iconName)
                             .font(.system(size: 16))
-                            .foregroundColor(Color.white.opacity(0.6))
+                            .foregroundColor(Theme.textMuted)
                             .frame(width: 36, height: 36)
                     }
                 }
@@ -79,12 +68,9 @@ public struct FloatingDockTabBar: View {
         .padding(.vertical, 5)
         .background(
             Capsule()
-                .fill(Color(red: 0.08, green: 0.09, blue: 0.11))
-                .shadow(color: Color.black.opacity(0.35), radius: 14, x: 0, y: 6)
-                .overlay(
-                    Capsule()
-                        .stroke(Color.white.opacity(0.12), lineWidth: 1)
-                )
+                .fill(Theme.surfaceWhite)
+                .shadow(color: Color.black.opacity(0.08), radius: 12, x: 0, y: 4)
+                .overlay(Capsule().stroke(Theme.cardBorder, lineWidth: 1))
         )
     }
 }

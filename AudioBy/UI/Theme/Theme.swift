@@ -8,15 +8,15 @@ public enum Theme {
     public static var appBackground: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.05, green: 0.08, blue: 0.06, alpha: 1.0) // #0D150F Obsidian Deep Canvas
-                : UIColor(red: 0.96, green: 0.97, blue: 0.98, alpha: 1.0) // #F5F7FA Light Canvas
+                ? UIColor(red: 0.11, green: 0.09, blue: 0.07, alpha: 1.0)
+                : UIColor(red: 0.98, green: 0.96, blue: 0.92, alpha: 1.0)
         })
     }
 
     public static var surfaceWhite: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.10, green: 0.13, blue: 0.11, alpha: 1.0) // #1A211B Surface Container
+                ? UIColor(red: 0.10, green: 0.13, blue: 0.11, alpha: 1.0)
                 : UIColor.white
         })
     }
@@ -24,8 +24,8 @@ public enum Theme {
     public static var surfaceSubtle: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.09, green: 0.11, blue: 0.09, alpha: 1.0) // #161D17 Surface Container Low
-                : UIColor(red: 0.92, green: 0.94, blue: 0.96, alpha: 1.0)
+                ? UIColor(red: 0.09, green: 0.11, blue: 0.09, alpha: 1.0)
+                : UIColor(red: 0.94, green: 0.90, blue: 0.84, alpha: 1.0)
         })
     }
 
@@ -49,15 +49,13 @@ public enum Theme {
         })
     }
 
-    // MARK: - Primary Emerald Palette
-    public static let brandGreen = Color(red: 0.27, green: 0.89, blue: 0.52)       // #44E484 Primary Emerald
-    public static let brandGreenContainer = Color(red: 0.06, green: 0.78, blue: 0.42) // #10C76B
-    public static let brandGreenLight = Color(red: 0.39, green: 1.00, blue: 0.61)  // #64FF9B Primary Fixed Glow
+    public static let brandGreen = Color(red: 0.27, green: 0.89, blue: 0.52)
+    public static let brandGreenContainer = Color(red: 0.06, green: 0.78, blue: 0.42)
+    public static let brandGreenLight = Color(red: 0.39, green: 1.00, blue: 0.61)
     public static let brandGreenDark = Color(red: 0.00, green: 0.43, blue: 0.22)
 
-    // MARK: - Secondary Cyan Palette
-    public static let brandCyan = Color(red: 0.27, green: 0.85, blue: 0.93)        // #45D8ED Secondary Cyan
-    public static let brandCyanContainer = Color(red: 0.00, green: 0.73, blue: 0.80) // #00BACD
+    public static let brandCyan = Color(red: 0.27, green: 0.85, blue: 0.93)
+    public static let brandCyanContainer = Color(red: 0.00, green: 0.73, blue: 0.80)
 
     // MARK: - Tertiary Warm Gold (Ratings & Stars)
     public static let brandGold = Color(red: 1.00, green: 0.74, blue: 0.20)        // #FFBD33 Gold
@@ -70,7 +68,7 @@ public enum Theme {
     public static var textDark: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.86, green: 0.90, blue: 0.85, alpha: 1.0) // #DCE5DA On-Surface
+                ? UIColor(red: 0.86, green: 0.90, blue: 0.85, alpha: 1.0)
                 : UIColor(red: 0.08, green: 0.10, blue: 0.12, alpha: 1.0)
         })
     }
@@ -82,7 +80,7 @@ public enum Theme {
     public static var textMuted: Color {
         Color(UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.73, green: 0.80, blue: 0.73, alpha: 1.0) // #BBCBBB On-Surface-Variant
+                ? UIColor(red: 0.73, green: 0.80, blue: 0.73, alpha: 1.0)
                 : UIColor(red: 0.42, green: 0.47, blue: 0.53, alpha: 1.0)
         })
     }
@@ -220,5 +218,135 @@ extension Color {
 
     public init(hex: String) {
         self.init(hexString: hex)
+    }
+}
+
+public struct ReaderScene: Identifiable, Hashable, Sendable {
+    public let id: String
+    public let title: String
+    public let assetName: String
+    public let requiresPlus: Bool
+
+    public static let all: [ReaderScene] = [
+        ReaderScene(id: "lantern", title: "Lantern library", assetName: "SceneLantern", requiresPlus: false),
+        ReaderScene(id: "train", title: "Night train", assetName: "SceneTrain", requiresPlus: true),
+        ReaderScene(id: "meadow", title: "Paper bird", assetName: "SceneMeadow", requiresPlus: true)
+    ]
+
+    public static func scene(id: String) -> ReaderScene {
+        all.first { $0.id == id } ?? all[0]
+    }
+}
+
+@Observable
+public final class ReaderSceneStore {
+    public static let shared = ReaderSceneStore()
+    public var selectedId: String {
+        didSet { UserDefaults.standard.set(selectedId, forKey: "AudioBy.ReaderScene") }
+    }
+
+    public var active: ReaderScene {
+        let scene = ReaderScene.scene(id: selectedId)
+        if scene.requiresPlus && !EntitlementService.shared.isPlus {
+            return ReaderScene.all[0]
+        }
+        return scene
+    }
+
+    private init() {
+        selectedId = UserDefaults.standard.string(forKey: "AudioBy.ReaderScene") ?? "lantern"
+    }
+
+    public func choose(_ scene: ReaderScene) -> Bool {
+        if scene.requiresPlus && !EntitlementService.shared.isPlus {
+            return false
+        }
+        selectedId = scene.id
+        return true
+    }
+}
+
+public struct SceneBackdrop: View {
+    public var scene: ReaderScene
+    public var scrim: Double = 0.45
+
+    public init(scene: ReaderScene, scrim: Double = 0.45) {
+        self.scene = scene
+        self.scrim = scrim
+    }
+
+    public var body: some View {
+        ZStack {
+            Image(scene.assetName)
+                .resizable()
+                .scaledToFill()
+            Color.black.opacity(scrim)
+        }
+        .ignoresSafeArea()
+    }
+}
+
+public struct ScenePickerSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @Binding var showingPaywall: Bool
+    @Bindable private var store = ReaderSceneStore.shared
+
+    public init(showingPaywall: Binding<Bool>) {
+        self._showingPaywall = showingPaywall
+    }
+
+    public var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 14) {
+                    ForEach(ReaderScene.all) { scene in
+                        Button {
+                            if store.choose(scene) {
+                                dismiss()
+                            } else {
+                                showingPaywall = true
+                                dismiss()
+                            }
+                        } label: {
+                            ZStack(alignment: .bottomLeading) {
+                                Image(scene.assetName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(height: 140)
+                                    .clipped()
+                                HStack {
+                                    Text(scene.title)
+                                        .font(.system(size: 16, weight: .semibold))
+                                        .foregroundStyle(.white)
+                                    Spacer()
+                                    if scene.requiresPlus && !EntitlementService.shared.isPlus {
+                                        Text("Plus")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundStyle(.black)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 4)
+                                            .background(Theme.brandGreen)
+                                            .clipShape(Capsule())
+                                    }
+                                }
+                                .padding(12)
+                                .background(Color.black.opacity(0.35))
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(20)
+            }
+            .background(Theme.appBackground)
+            .navigationTitle("Scenes")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
     }
 }
