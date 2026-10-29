@@ -39,58 +39,34 @@ export default function HomePage() {
   };
 
   const scrollToPricing = () => {
-    const el = document.getElementById("pricing");
-    el?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className="relative min-h-screen bg-[#F8FAF8] dark:bg-[#08090B] text-zinc-900 dark:text-white font-sans transition-colors duration-200">
-      {/* Sticky Header */}
+    <div className="relative min-h-screen bg-[var(--background)] text-leaf-ink font-body">
       <Navbar onOpenAuth={() => setAuthOpen(true)} />
 
       <main>
-        {/* Editorial Hero */}
         <HeroSection onExplorePlans={scrollToPricing} />
-
-        {/* Proof / Stat Strip */}
         <ProofStrip />
-
-        {/* The Problem: Why screen reading fails */}
         <ProblemSection />
-
-        {/* Interactive Voice & PDF Lab */}
         <InteractivePlayer />
-
-        {/* Interactive Time / Reading Calculator */}
         <TimeCalculator />
-
-        {/* Numbered Feature Deep-Dives 01-04 */}
         <FeatureDeepDives />
-
-        {/* Indie / Craft Manifesto */}
         <CraftManifesto />
-
-        {/* Pricing & Subscription Switcher */}
         <PricingSection onSelectPlan={handleSelectPlan} />
-
-        {/* FAQ */}
         <FAQSection />
       </main>
 
-      {/* Floating Dynamic Island Audio Player */}
       <FloatingPlayerDock onUpgrade={scrollToPricing} />
-
-      {/* Footer */}
       <Footer />
 
-      {/* Auth Dialog */}
       <AuthModal
         isOpen={authOpen}
         onClose={() => setAuthOpen(false)}
         onSuccess={handleAuthSuccess}
       />
 
-      {/* Cross-Platform Checkout Dialog */}
       <CheckoutModal
         isOpen={checkoutOpen}
         plan={selectedPlan}

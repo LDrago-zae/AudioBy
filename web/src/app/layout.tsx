@@ -1,12 +1,26 @@
 import type { Metadata, Viewport } from "next";
+import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { ThemeProvider } from "@/lib/theme-context";
 
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const body = Atkinson_Hyperlegible({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#08090B" },
-    { media: "(prefers-color-scheme: light)", color: "#F8FAF8" },
+    { media: "(prefers-color-scheme: dark)", color: "#050A08" },
+    { media: "(prefers-color-scheme: light)", color: "#E7F1EB" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -31,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className={`dark ${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -53,7 +67,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-[#F8FAF8] dark:bg-[#08090B] text-zinc-900 dark:text-white selection:bg-[#10B981] selection:text-black transition-colors duration-200">
+      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-body antialiased selection:bg-[var(--selection)] selection:text-[#042F1E] transition-colors duration-200">
         <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
