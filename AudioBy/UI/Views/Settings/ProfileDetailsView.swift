@@ -28,7 +28,7 @@ public struct ProfileDetailsView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(Color(red: 0.85, green: 0.70, blue: 0.60))
+                                .foregroundColor(Theme.stone)
                                 .clipShape(Circle())
                                 .overlay(
                                     Circle()

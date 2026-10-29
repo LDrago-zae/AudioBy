@@ -19,8 +19,8 @@ const body = Atkinson_Hyperlegible({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#050A08" },
-    { media: "(prefers-color-scheme: light)", color: "#E4EFE8" },
+    { media: "(prefers-color-scheme: dark)", color: "#252422" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFCF2" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -67,7 +67,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-body antialiased selection:bg-[var(--selection)] selection:text-[#042F1E] transition-colors duration-200">
+      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-body antialiased selection:bg-[var(--selection)] selection:text-[#252422] transition-colors duration-200">
         <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>

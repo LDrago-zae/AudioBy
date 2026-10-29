@@ -23,11 +23,11 @@ const config: Config = {
           field: "var(--field)",
         },
         emerald: {
-          DEFAULT: "#10B981",
-          light: "#34D399",
-          dark: "#059669",
-          faint: "rgba(16, 185, 129, 0.12)",
-          ink: "#042F1E",
+          DEFAULT: "#EB5E28",
+          light: "#EB5E28",
+          dark: "#BA5026",
+          faint: "rgba(235, 94, 40, 0.12)",
+          ink: "#252422",
         },
       },
       fontFamily: {
@@ -40,8 +40,8 @@ const config: Config = {
         tight: "-0.025em",
       },
       boxShadow: {
-        lift: "0 18px 40px -24px rgba(4, 47, 30, 0.45)",
-        soft: "0 8px 24px -16px rgba(4, 47, 30, 0.35)",
+        lift: "0 18px 40px -24px rgba(37, 36, 34, 0.45)",
+        soft: "0 8px 24px -16px rgba(37, 36, 34, 0.35)",
       },
       maxWidth: {
         measure: "70ch",

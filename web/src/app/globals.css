@@ -3,37 +3,42 @@
 @tailwind utilities;
 
 :root {
-  --background: #e4efe8;
-  --foreground: #071912;
-  --surface: #f2f8f4;
-  --surface-raised: #ffffff;
-  --ink-muted: #2f4a3c;
-  --ink-faint: #4d6a5c;
-  --border-subtle: rgba(7, 25, 18, 0.11);
-  --accent: #059669;
-  --accent-bright: #10b981;
-  --accent-ink: #042f1e;
-  --selection: #10b981;
-  --hero-glow: rgba(16, 185, 129, 0.28);
-  --field: #0a221a;
-  --caret: #059669;
+  --paper: #fffcf2;
+  --stone: #ccc5b9;
+  --charcoal: #403d39;
+  --ink: #252422;
+  --ember: #eb5e28;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --surface: color-mix(in srgb, var(--stone) 28%, var(--paper));
+  --surface-raised: var(--paper);
+  --ink-muted: var(--charcoal);
+  --ink-faint: var(--charcoal);
+  --border-subtle: color-mix(in srgb, var(--ink) 14%, transparent);
+  --accent: var(--ember);
+  --accent-bright: var(--ember);
+  --accent-ink: var(--ink);
+  --selection: var(--ember);
+  --hero-glow: color-mix(in srgb, var(--ember) 42%, transparent);
+  --field: var(--ink);
+  --caret: var(--ember);
 }
 
 .dark {
-  --background: #050a08;
-  --foreground: #e8f5ee;
-  --surface: #0a1410;
-  --surface-raised: #0f1c16;
-  --ink-muted: #9bb5a6;
-  --ink-faint: #6f8a7c;
-  --border-subtle: rgba(232, 245, 238, 0.1);
-  --accent: #10b981;
-  --accent-bright: #34d399;
-  --accent-ink: #042f1e;
-  --selection: #10b981;
-  --hero-glow: rgba(16, 185, 129, 0.2);
-  --field: #06140f;
-  --caret: #34d399;
+  --background: var(--ink);
+  --foreground: var(--paper);
+  --surface: var(--charcoal);
+  --surface-raised: color-mix(in srgb, var(--stone) 16%, var(--charcoal));
+  --ink-muted: var(--stone);
+  --ink-faint: var(--stone);
+  --border-subtle: color-mix(in srgb, var(--stone) 28%, transparent);
+  --accent: var(--ember);
+  --accent-bright: var(--ember);
+  --accent-ink: var(--ink);
+  --selection: var(--ember);
+  --hero-glow: color-mix(in srgb, var(--ember) 34%, transparent);
+  --field: var(--ink);
+  --caret: var(--ember);
 }
 
 * {
@@ -56,7 +61,7 @@ body {
 
 ::selection {
   background: var(--selection);
-  color: #042f1e;
+  color: var(--ink);
 }
 
 :focus-visible {
@@ -68,34 +73,58 @@ a {
   text-underline-offset: 0.18em;
 }
 
-/* Full-bleed listening field — stays dark through the brand/CTA plane */
+/* Full-bleed listening field — stays dark through the brand/CTA plane.
+   Copy on this plane must stay light in both themes: --foreground flips to
+   near-black in light mode and would vanish on the field. */
 .hero-field {
+  color: var(--paper);
   background:
     radial-gradient(ellipse 85% 55% at 50% 18%, var(--hero-glow), transparent 62%),
     linear-gradient(
       180deg,
-      #061510 0%,
-      var(--field) 42%,
-      color-mix(in srgb, var(--field) 72%, var(--background)) 78%,
+      var(--ink) 0%,
+      var(--field) 94%,
       var(--background) 100%
     );
+}
+
+.hero-field [data-hero-brand],
+.hero-field [data-hero-line],
+.hero-field a[data-hero-cta] {
+  color: var(--paper);
+}
+
+.hero-field [data-hero-player] {
+  color: var(--foreground);
+}
+
+.site-footer {
+  color: color-mix(in srgb, var(--paper) 82%, transparent);
+}
+
+.site-footer [data-footer-strong] {
+  color: var(--paper);
+}
+
+.site-footer a:hover {
+  color: var(--paper);
 }
 
 .dark .hero-field {
   background:
     radial-gradient(ellipse 75% 50% at 50% 12%, var(--hero-glow), transparent 58%),
-    linear-gradient(180deg, #020605 0%, #06140f 48%, var(--background) 100%);
+    linear-gradient(180deg, var(--ink) 0%, var(--field) 48%, var(--background) 100%);
 }
 
 .paper-grain {
   background-image:
-    radial-gradient(rgba(7, 25, 18, 0.045) 0.65px, transparent 0.65px);
+    radial-gradient(color-mix(in srgb, var(--ink) 7%, transparent) 0.65px, transparent 0.65px);
   background-size: 3.5px 3.5px;
 }
 
 .dark .paper-grain {
   background-image:
-    radial-gradient(rgba(232, 245, 238, 0.04) 0.65px, transparent 0.65px);
+    radial-gradient(color-mix(in srgb, var(--paper) 6%, transparent) 0.65px, transparent 0.65px);
 }
 
 .hero-char,
@@ -106,7 +135,7 @@ a {
 }
 
 .hero-char {
-  color: #ffffff;
+  color: var(--paper);
 }
 
 .split-word + .split-word {
@@ -149,7 +178,7 @@ a {
 }
 
 .hero-bar {
-  box-shadow: 0 10px 22px -10px rgba(16, 185, 129, 0.55);
+  box-shadow: 0 10px 22px -10px color-mix(in srgb, var(--ember) 55%, transparent);
 }
 
 ::-webkit-scrollbar {

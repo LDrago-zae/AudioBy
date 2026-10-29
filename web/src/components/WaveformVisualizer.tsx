@@ -21,8 +21,8 @@ export const WaveformVisualizer: React.FC<WaveformVisualizerProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { isDark } = useTheme();
 
-  const activeColor = accent || (isDark ? "#10B981" : "#059669");
-  const idleColor = isDark ? "rgba(255, 255, 255, 0.14)" : "rgba(0, 0, 0, 0.12)";
+  const activeColor = accent || "#EB5E28";
+  const idleColor = isDark ? "rgba(204, 197, 185, 0.35)" : "rgba(64, 61, 57, 0.28)";
 
   useEffect(() => {
     const canvas = canvasRef.current;
