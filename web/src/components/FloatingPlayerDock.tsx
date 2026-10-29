@@ -16,7 +16,7 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
   const dockRef = useDockMotion(visible);
 
   useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 400);
+    const handleScroll = () => setVisible(window.scrollY > Math.min(window.innerHeight * 0.72, 720));
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -54,7 +54,7 @@ export const FloatingPlayerDock: React.FC<FloatingPlayerDockProps> = ({ onUpgrad
       className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] sm:w-[94%] max-w-xl pb-[env(safe-area-inset-bottom)] opacity-0 pointer-events-none"
       style={{ willChange: "transform, opacity" }}
     >
-      <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised/95 p-2 sm:p-3 shadow-lift backdrop-blur-md">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-2 sm:p-3 shadow-lift">
         <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <button
             type="button"

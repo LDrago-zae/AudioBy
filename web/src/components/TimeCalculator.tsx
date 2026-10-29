@@ -19,17 +19,17 @@ export const TimeCalculator: React.FC = () => {
     <section
       id="calculator"
       ref={ref}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)]"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-[var(--background)]"
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <div className="max-w-2xl mb-12 sm:mb-14">
           <h2
             data-reveal
-            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink"
+            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-[1.08]"
           >
             Calculate hours unlocked.
           </h2>
-          <p data-reveal className="mt-3 text-sm sm:text-base text-leaf-muted">
+          <p data-reveal className="mt-4 text-sm sm:text-base text-leaf-muted max-w-measure leading-relaxed">
             See how screen-locked reading becomes flexible audio on walks, commutes, and rest.
           </p>
         </div>

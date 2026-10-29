@@ -6,16 +6,16 @@ import { AudioByMark } from "@/components/AudioByMark";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-[var(--border-subtle)] bg-leaf-field text-white/70 py-12 sm:py-16 text-sm pb-28 sm:pb-16">
+    <footer className="border-t border-white/10 bg-leaf-field text-white/70 py-14 sm:py-16 text-sm pb-28 sm:pb-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald text-emerald-ink shrink-0">
-              <AudioByMark className="h-4 w-4" />
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald text-emerald-ink shrink-0">
+              <AudioByMark className="h-5 w-5" />
             </div>
             <div>
-              <p className="font-display font-bold text-white text-base">AudioBy</p>
-              <p className="text-xs text-white/55 max-w-xs">
+              <p className="font-display font-bold text-white text-lg tracking-tight">AudioBy</p>
+              <p className="mt-1 text-sm text-white/60 max-w-xs leading-relaxed">
                 Turn any book or PDF into clear, immersive audio.
               </p>
             </div>

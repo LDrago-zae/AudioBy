@@ -50,48 +50,48 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
       ref={rootRef as React.RefObject<HTMLElement>}
       className="relative hero-field overflow-hidden min-h-[100svh] flex flex-col"
     >
-      {/* Animated listening field — Anime.js signature */}
+      {/* Animated listening field — sits under copy, masked so brand stays dominant */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-[8%] bottom-[8%] flex items-end justify-center gap-1 sm:gap-1.5 px-3 sm:px-8 z-[1]"
+        className="hero-bars pointer-events-none absolute inset-x-0 top-[42%] bottom-[4%] flex items-end justify-center gap-1 sm:gap-1.5 px-3 sm:px-8 z-[1]"
         aria-hidden
       >
         {HERO_BARS.map((i) => (
           <span
             key={i}
             data-hero-bar
-            className="block w-1 sm:w-1.5 origin-bottom rounded-full bg-emerald shadow-[0_0_14px_rgba(16,185,129,0.45)]"
+            className="hero-bar block w-1 sm:w-1.5 origin-bottom rounded-full bg-emerald"
             style={{
-              height: `${42 + ((i * 41) % 48)}%`,
-              opacity: 0.75,
+              height: `${36 + ((i * 41) % 44)}%`,
+              opacity: 0.42,
               transform: "scaleY(0.55)",
             }}
           />
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-24 flex flex-col items-center text-center flex-1 justify-center">
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 sm:px-6 pt-20 sm:pt-28 pb-20 sm:pb-28 flex flex-col items-center text-center flex-1 justify-center">
         <p
           data-hero-brand
-          className="font-display text-[clamp(3.25rem,14vw,8.5rem)] font-bold tracking-tighter leading-[0.88] text-white"
+          className="font-display text-[clamp(3.5rem,15vw,8.75rem)] font-bold tracking-tighter leading-[0.86] text-white"
         >
           AudioBy
         </p>
 
         <h1
           data-hero-line
-          className="mt-5 sm:mt-7 max-w-2xl font-display text-xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white/95 leading-[1.15]"
+          className="mt-6 sm:mt-8 max-w-2xl font-display text-xl sm:text-3xl md:text-[2.35rem] font-semibold tracking-tight text-white leading-[1.15]"
         >
           Your books and documents, spoken with clarity.
         </h1>
 
         <p
           data-hero-line
-          className="mt-4 sm:mt-5 max-w-xl text-sm sm:text-base text-emerald-100/80 leading-relaxed"
+          className="mt-4 sm:mt-5 max-w-[36rem] text-sm sm:text-base text-white/82 leading-relaxed"
         >
           Import papers and notes—or stream 70,000+ public classics. Lifelike narration, chapter tracking, and offline playback on iOS and web.
         </p>
 
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
+        <div className="mt-9 sm:mt-11 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
           <button
             ref={ctaMagnetic}
             data-hero-cta
@@ -112,7 +112,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
             data-hero-cta
             data-magnetic
             href="#lab"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors backdrop-blur-[2px]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-transparent px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
           >
             <Volume2 className="h-4 w-4 text-emerald" />
             <span>Try the Voice Lab</span>
@@ -122,7 +122,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
         {/* Studio player */}
         <div
           data-hero-player
-          className="mt-12 sm:mt-16 w-full max-w-xl rounded-2xl border border-white/10 bg-[var(--surface-raised)]/95 dark:bg-leaf-raised/90 p-4 sm:p-6 text-left shadow-lift text-leaf-ink"
+          className="mt-14 sm:mt-16 w-full max-w-xl rounded-2xl border border-white/12 bg-leaf-raised p-4 sm:p-6 text-left shadow-lift text-leaf-ink"
         >
           <div className="flex items-center justify-between pb-4 border-b border-[var(--border-subtle)] mb-4 gap-2">
             <div className="flex items-center gap-3 min-w-0">
@@ -188,7 +188,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplorePlans }) => {
 
         <div
           data-hero-line
-          className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-white/55"
+          className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-white/60"
         >
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald shrink-0" />
