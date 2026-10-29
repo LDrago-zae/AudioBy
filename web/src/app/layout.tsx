@@ -20,7 +20,7 @@ const body = Atkinson_Hyperlegible({
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#050A08" },
-    { media: "(prefers-color-scheme: light)", color: "#E7F1EB" },
+    { media: "(prefers-color-scheme: light)", color: "#E4EFE8" },
   ],
   width: "device-width",
   initialScale: 1,

@@ -14,19 +14,19 @@ export const CraftManifesto: React.FC = () => {
         (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
         (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
       }}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-leaf-surface paper-grain"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-leaf-surface paper-grain"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <h2
           data-split
-          className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink leading-tight"
+          className="font-display text-2xl sm:text-[2.65rem] font-bold tracking-tight text-leaf-ink leading-[1.12]"
         >
           Books are meant to be understood, not abandoned to fatigue.
         </h2>
 
         <div
           data-reveal
-          className="mt-6 sm:mt-8 space-y-4 text-sm sm:text-base text-leaf-muted leading-relaxed max-w-measure"
+          className="mt-8 sm:mt-10 space-y-5 text-sm sm:text-base text-leaf-muted leading-relaxed max-w-measure"
         >
           <p>
             We love books and research, but staring at displays for ten hours makes another fifty pages of dense PDF in the evening almost impossible.

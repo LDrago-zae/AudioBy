@@ -60,29 +60,29 @@ export const FAQSection: React.FC = () => {
         (revealRef as React.MutableRefObject<HTMLElement | null>).current = node;
         (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
       }}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-leaf-surface"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-leaf-surface"
     >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <h2
           data-split
-          className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-leaf-ink text-center mb-10 sm:mb-14"
+          className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-leaf-ink mb-12 sm:mb-16 leading-[1.1]"
         >
           Questions, answered plainly.
         </h2>
 
-        <div className="space-y-2">
+        <div className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
           {FAQS.map((item, idx) => {
             const open = openIndex === idx;
             return (
               <div
                 key={item.q}
                 data-reveal
-                className="rounded-xl border border-[var(--border-subtle)] bg-leaf-raised overflow-hidden"
+                className="overflow-hidden"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(open ? null : idx)}
-                  className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-4 text-left"
+                  className="w-full flex items-center justify-between gap-4 py-5 text-left hover:text-emerald-dark dark:hover:text-emerald transition-colors"
                   aria-expanded={open}
                 >
                   <span className="font-display text-sm sm:text-base font-bold text-leaf-ink pr-2">
@@ -96,13 +96,13 @@ export const FAQSection: React.FC = () => {
                   ref={(el) => {
                     panelsRef.current[idx] = el;
                   }}
-                  className="overflow-hidden border-t border-[var(--border-subtle)]"
+                  className="overflow-hidden"
                   style={{
                     height: idx === 0 ? "auto" : "0px",
                     opacity: idx === 0 ? 1 : 0,
                   }}
                 >
-                  <div className="px-4 sm:px-5 pb-4 pt-3 text-sm text-leaf-muted leading-relaxed">
+                  <div className="pb-5 text-sm text-leaf-muted leading-relaxed max-w-measure">
                     {item.a}
                   </div>
                 </div>

@@ -3,19 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --background: #e7f1eb;
-  --foreground: #0a1f16;
-  --surface: #f4faf6;
+  --background: #e4efe8;
+  --foreground: #071912;
+  --surface: #f2f8f4;
   --surface-raised: #ffffff;
-  --ink-muted: #3d5a4c;
-  --ink-faint: #5f7a6c;
-  --border-subtle: rgba(10, 31, 22, 0.1);
+  --ink-muted: #2f4a3c;
+  --ink-faint: #4d6a5c;
+  --border-subtle: rgba(7, 25, 18, 0.11);
   --accent: #059669;
   --accent-bright: #10b981;
   --accent-ink: #042f1e;
   --selection: #10b981;
-  --hero-glow: rgba(16, 185, 129, 0.22);
-  --field: #0d2920;
+  --hero-glow: rgba(16, 185, 129, 0.28);
+  --field: #0a221a;
+  --caret: #059669;
 }
 
 .dark {
@@ -30,8 +31,9 @@
   --accent-bright: #34d399;
   --accent-ink: #042f1e;
   --selection: #10b981;
-  --hero-glow: rgba(16, 185, 129, 0.18);
+  --hero-glow: rgba(16, 185, 129, 0.2);
   --field: #06140f;
+  --caret: #34d399;
 }
 
 * {
@@ -40,6 +42,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-color: color-mix(in srgb, var(--accent) 40%, transparent) var(--background);
 }
 
 body {
@@ -48,6 +51,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  caret-color: var(--caret);
 }
 
 ::selection {
@@ -60,34 +64,49 @@ body {
   outline-offset: 3px;
 }
 
-/* Full-bleed listening field behind the hero */
+a {
+  text-underline-offset: 0.18em;
+}
+
+/* Full-bleed listening field — stays dark through the brand/CTA plane */
 .hero-field {
   background:
-    radial-gradient(ellipse 90% 70% at 50% 0%, var(--hero-glow), transparent 58%),
-    linear-gradient(180deg, var(--field) 0%, var(--background) 78%);
+    radial-gradient(ellipse 85% 55% at 50% 18%, var(--hero-glow), transparent 62%),
+    linear-gradient(
+      180deg,
+      #061510 0%,
+      var(--field) 42%,
+      color-mix(in srgb, var(--field) 72%, var(--background)) 78%,
+      var(--background) 100%
+    );
 }
 
 .dark .hero-field {
   background:
-    radial-gradient(ellipse 80% 60% at 50% -5%, var(--hero-glow), transparent 55%),
-    linear-gradient(180deg, #020605 0%, var(--background) 72%);
+    radial-gradient(ellipse 75% 50% at 50% 12%, var(--hero-glow), transparent 58%),
+    linear-gradient(180deg, #020605 0%, #06140f 48%, var(--background) 100%);
 }
 
 .paper-grain {
   background-image:
-    radial-gradient(rgba(10, 31, 22, 0.04) 0.6px, transparent 0.6px);
-  background-size: 3px 3px;
+    radial-gradient(rgba(7, 25, 18, 0.045) 0.65px, transparent 0.65px);
+  background-size: 3.5px 3.5px;
 }
 
 .dark .paper-grain {
   background-image:
-    radial-gradient(rgba(232, 245, 238, 0.035) 0.6px, transparent 0.6px);
+    radial-gradient(rgba(232, 245, 238, 0.04) 0.65px, transparent 0.65px);
 }
 
 .hero-char,
 .split-word {
   display: inline-block;
   will-change: transform, opacity;
+  color: inherit;
+}
+
+.hero-char {
+  color: #ffffff;
 }
 
 .split-word + .split-word {
@@ -97,12 +116,17 @@ body {
 [data-hero-player] {
   transform-style: preserve-3d;
   will-change: transform;
-  cursor: grab;
   touch-action: pan-y;
 }
 
-[data-hero-player]:active {
-  cursor: grabbing;
+@media (pointer: fine) {
+  [data-hero-player] {
+    cursor: grab;
+  }
+
+  [data-hero-player]:active {
+    cursor: grabbing;
+  }
 }
 
 [data-spring-hover] {
@@ -116,6 +140,16 @@ body {
 
 .section-rule {
   border-color: var(--border-subtle);
+}
+
+/* Listening-field bars sit under copy; mask keeps them from fighting the brand */
+.hero-bars {
+  mask-image: linear-gradient(180deg, transparent 0%, black 38%, black 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 38%, black 78%, transparent 100%);
+}
+
+.hero-bar {
+  box-shadow: 0 10px 22px -10px rgba(16, 185, 129, 0.55);
 }
 
 ::-webkit-scrollbar {

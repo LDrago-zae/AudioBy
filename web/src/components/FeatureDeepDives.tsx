@@ -6,7 +6,7 @@ import { useScrollReveal, useSplitHeading, useSpringHover } from "@/lib/anime-mo
 
 const DEEP_DIVES = [
   {
-    tag: "Neural player",
+    id: "player",
     title: "A player designed for focus, not advertisements",
     description:
       "AudioBy remembers your exact position across every book and document. Pitch-compensated speed up to 2.5x and sleep timers that pause at chapter boundaries keep progress intact overnight.",
@@ -20,7 +20,7 @@ const DEEP_DIVES = [
     metricLabel: "Pitch-preserved speed",
   },
   {
-    tag: "Document engine",
+    id: "documents",
     title: "Drop any PDF. Listen within three seconds.",
     description:
       "Layout-aware extraction finds the true reading flow, stripping headers, footnotes, and formatting noise so speech flows like a real lecture.",
@@ -34,7 +34,7 @@ const DEEP_DIVES = [
     metricLabel: "PDF to spoken audio",
   },
   {
-    tag: "Studio voices",
+    id: "voices",
     title: "ElevenLabs: emotion, pauses, and breath",
     description:
       "Premium integrates ElevenLabs neural synthesis for novel-grade narration—inflection, breathing pauses, and emotional phrasing that lasts for hours.",
@@ -48,7 +48,7 @@ const DEEP_DIVES = [
     metricLabel: "Vocal fidelity",
   },
   {
-    tag: "Privacy & cache",
+    id: "privacy",
     title: "Nobody should stream what they already downloaded",
     description:
       "Entire books and converted documents live on your device. Airplanes, underground transit, and off-grid locations work with zero cellular connection.",
@@ -76,29 +76,26 @@ export const FeatureDeepDives: React.FC = () => {
         (splitRef as React.MutableRefObject<HTMLElement | null>).current = node;
         (springRef as React.MutableRefObject<HTMLElement | null>).current = node;
       }}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-[var(--background)]"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-[var(--background)]"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-16 sm:space-y-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-20 sm:space-y-28">
         {DEEP_DIVES.map((item) => (
           <article
-            key={item.tag}
+            key={item.id}
             data-reveal
-            className="grid md:grid-cols-[1.4fr_0.8fr] gap-8 md:gap-12 items-start"
+            className="grid md:grid-cols-[1.45fr_0.75fr] gap-8 md:gap-14 items-start"
           >
             <div>
-              <p className="text-sm font-semibold text-emerald-dark dark:text-emerald mb-3">
-                {item.tag}
-              </p>
               <h2
                 data-split
-                className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink leading-tight"
+                className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-leaf-ink leading-[1.12]"
               >
                 {item.title}
               </h2>
               <p className="mt-4 max-w-measure text-sm sm:text-base text-leaf-muted leading-relaxed">
                 {item.description}
               </p>
-              <ul className="mt-6 space-y-2.5">
+              <ul className="mt-7 space-y-2.5">
                 {item.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-2.5 text-sm text-leaf-ink">
                     <Check className="h-4 w-4 text-emerald-dark dark:text-emerald shrink-0 mt-0.5" />
@@ -109,12 +106,12 @@ export const FeatureDeepDives: React.FC = () => {
             </div>
             <div
               data-spring-hover
-              className="rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-6 sm:p-8 shadow-soft"
+              className="md:pt-1 border-t border-[var(--border-subtle)] pt-5 md:border-t-0 md:border-l md:pl-8 md:pt-0"
             >
-              <p className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-leaf-ink">
+              <p className="font-display text-3xl sm:text-[2.75rem] font-bold tracking-tight text-leaf-ink leading-none">
                 {item.metric}
               </p>
-              <p className="mt-2 text-sm text-leaf-muted">{item.metricLabel}</p>
+              <p className="mt-3 text-sm text-leaf-muted leading-snug">{item.metricLabel}</p>
             </div>
           </article>
         ))}

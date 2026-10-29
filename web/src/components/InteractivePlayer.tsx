@@ -148,24 +148,24 @@ export const InteractivePlayer: React.FC = () => {
     <section
       id="lab"
       ref={ref}
-      className="py-16 sm:py-24 border-t border-[var(--border-subtle)] bg-leaf-surface"
+      className="py-20 sm:py-28 border-t border-[var(--border-subtle)] bg-leaf-surface paper-grain"
     >
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="text-center max-w-2xl mx-auto">
+        <div className="max-w-2xl">
           <h2
             data-reveal
-            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink"
+            className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-leaf-ink leading-[1.08]"
           >
             Hear before you sign up.
           </h2>
-          <p data-reveal className="mt-3 text-sm sm:text-base text-leaf-muted">
+          <p data-reveal className="mt-4 text-sm sm:text-base text-leaf-muted max-w-measure leading-relaxed">
             Switch document sources and neural voices to audit cadence, warmth, and latency.
           </p>
         </div>
 
         <div
           data-reveal
-          className="mt-10 sm:mt-12 rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-4 sm:p-8 shadow-soft"
+          className="mt-12 sm:mt-14 rounded-2xl border border-[var(--border-subtle)] bg-leaf-raised p-4 sm:p-8 shadow-soft"
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-5 border-b border-[var(--border-subtle)]">
             <span className="text-xs font-semibold text-leaf-faint uppercase tracking-wide">
