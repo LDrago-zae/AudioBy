@@ -26,7 +26,7 @@ public struct Audiobook: Identifiable, Codable, Hashable, Sendable {
     public let title: String
     public let author: String
     public let narrator: String
-    public let summary: String
+    public var summary: String
     public let coverGradientColors: [String]
     public let coverImageURL: URL?
     public let category: AudiobookCategory

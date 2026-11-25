@@ -28,6 +28,7 @@ settings:
     CODE_SIGNING_ALLOWED: YES
     SDKROOT: iphonesimulator
     SUPPORTED_PLATFORMS: "iphonesimulator iphoneos"
+    SWIFT_OBJC_BRIDGING_HEADER: AudioBy/Audioby-Bridging-Header.h
 
 targets:
   AudioBy:

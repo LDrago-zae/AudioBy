@@ -42,12 +42,13 @@ public struct CatalogBook: Codable, FetchableRecord, TableRecord, Sendable, Hash
         } else {
             source = CatalogSourceKind.gutenberg.rawValue
         }
+        // Subjects are genre tags (e.g. "Fiction"), not a literary synopsis.
         return Audiobook(
             id: audiobookId,
             title: title,
             author: author ?? "Unknown",
             narrator: hasLibriVoxAudio ? "LibriVox volunteers" : "On-device voice",
-            summary: subjects ?? "",
+            summary: "",
             coverGradientColors: Theme.coverHexes(seed: title),
             coverImageURL: coverUrl.flatMap(URL.init(string:)),
             category: AudiobookAPIService.categoryFromSubjects(subjects ?? ""),

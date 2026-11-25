@@ -64,6 +64,7 @@ enum RevenueCatBootstrap {
 @main
 struct AudioByApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = true
 
     init() {
         FirebaseBootstrap.configure()
@@ -79,6 +80,7 @@ struct AudioByApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .preferredColorScheme(isDarkMode ? .dark : .light)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }
