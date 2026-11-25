@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#1a1918]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="mobile_blank" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container": "#f1eee4",
+            "inverse-on-surface": "#f4f1e7",
+            "outline": "#8d7168",
+            "tertiary-fixed-dim": "#cdc6ba",
+            "tertiary-fixed": "#e9e2d5",
+            "on-error": "#ffffff",
+            "surface-container-highest": "#e5e2d9",
+            "on-error-container": "#93000a",
+            "on-surface": "#1c1c16",
+            "on-secondary-fixed": "#1d1b18",
+            "on-primary-fixed": "#390c00",
+            "on-primary": "#ffffff",
+            "on-background": "#1c1c16",
+            "error-container": "#ffdad6",
+            "surface-variant": "#e5e2d9",
+            "on-tertiary-fixed": "#1e1b14",
+            "on-tertiary-container": "#fffbff",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#822700",
+            "surface-container-lowest": "#ffffff",
+            "background": "#fcf9ef",
+            "secondary-container": "#e8e1db",
+            "secondary": "#615e59",
+            "surface-dim": "#dcdad0",
+            "primary-fixed": "#ffdbcf",
+            "surface-container-low": "#f6f4ea",
+            "surface-tint": "#eb5e28",
+            "tertiary-container": "#79746a",
+            "surface": "#fcf9ef",
+            "surface-container-high": "#ebe8de",
+            "inverse-primary": "#ffb59c",
+            "on-primary-container": "#fffbff",
+            "primary-fixed-dim": "#ffb59c",
+            "inverse-surface": "#252422",
+            "on-secondary-fixed-variant": "#494642",
+            "primary": "#eb5e28",
+            "on-surface-variant": "#594139",
+            "tertiary": "#605b52",
+            "on-tertiary-fixed-variant": "#4a463d",
+            "surface-bright": "#fcf9ef",
+            "on-secondary-container": "#68645f",
+            "on-secondary": "#ffffff",
+            "error": "#ba1a1a",
+            "outline-variant": "#e1bfb4",
+            "primary-container": "#cc4811",
+            "secondary-fixed-dim": "#cbc5c0",
+            "secondary-fixed": "#e8e1db",
+            // Komorebi reader tokens
+            "reader-dark": "#1a1918",
+            "reader-card": "#252422",
+            "reader-accent": "#eb5e28",
+            "reader-ivory": "#fcf9ef"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "label-md": ["Inter"],
+            "headline-sm": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "headline-xl": ["Manrope"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-lg": ["Manrope"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #1a1918;
+      }
+      body {
+        overscroll-behavior-y: none;
+      }
+      .pb-safe {
+        padding-bottom: max(env(safe-area-inset-bottom, 0px), 0px);
+      }
+      .pt-safe {
+        padding-top: max(env(safe-area-inset-top, 0px), 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .hud-backdrop {
+      background-color: rgba(37, 36, 34, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-reader-dark text-reader-ivory antialiased flex flex-col min-h-screen select-none overflow-x-hidden">
+<main class="flex-1 flex flex-col relative w-full h-full min-h-screen bg-reader-dark overflow-hidden" id="readerViewport"><div class="flex flex-col w-full relative select-none">
+<!-- Interactive Novel Canvas Stage -->
+<div class="relative w-full transition-colors duration-300 bg-surface-container-low text-on-surface" id="readerStage">
+<!-- Top Running Header -->
+<header class="w-full pt-safe px-margin flex items-center justify-between opacity-60 transition-opacity duration-200">
+<div class="flex items-center gap-space-xs text-secondary">
+<span class="material-symbols-outlined text-[15px]">auto_stories</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest font-semibold">The Memory Police</span>
+</div>
+<div class="font-label-sm text-label-sm text-secondary tracking-widest uppercase">
+        Chapter 4
+      </div>
+</header>
+<!-- Reading Body Area -->
+<article class="px-margin pt-space-lg pb-space-xl flex flex-col gap-space-md transition-all duration-300" id="readingArea">
+<div class="flex items-center justify-center pb-space-xs">
+<span class="inline-block w-8 h-[2px] bg-secondary-container rounded-full"></span>
+</div>
+<h1 class="font-headline-lg text-headline-lg tracking-tight text-on-surface text-center pb-space-xs font-semibold">
+        Chapter IV
+      </h1>
+<p class="font-body-lg text-body-lg text-on-surface leading-[1.75] text-justify indent-6">
+        In the morning, the disappearance was quiet. It was ribbons. Delicate green and vermilion ribbons fluttered from open windows toward the river, carried away into the cold dawn air without a whisper or a protest.
+      </p>
+<p class="font-body-lg text-body-lg text-on-surface leading-[1.75] text-justify indent-6">
+        I had stepped out onto the balcony while the kettle still whistled faintly upon the cast-iron stove. My neighbor, an elderly milliner whose fingers were permanently dyed indigo from thread, leaned against her railing with empty palms upturned to the grey sky. She smiled faintly, not with sorrow, but with the hollow tranquility of someone who has dropped an old coin into very deep water.
+      </p>
+<!-- Ambient Illustration Card -->
+<div class="relative w-full my-space-sm rounded-xl overflow-hidden shadow-sm bg-surface-container">
+<img class="w-full h-44 object-cover object-center mix-blend-multiply opacity-90 transition-all duration-300" data-alt="Minimalist woodblock style ink drawing of vermilion ribbons swirling through morning fog over a quiet river town in Japan, muted tones with vermilion cinnabar accents, calm melancholic literature aesthetic." id="chapterIllo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLhMQHKmiTLnPl-1LS4zIzujid6RJ-OZOL5IS3fAs_MJsAdlw3lGSy45937RTMmywX9gflSSNqudhkqnMGv_aYdVIraxuffhaygTyZUOJwL4fzl1dJEZ7i-qL_EnM2sbLj5dDvY6QmMWlCMF0mLpcKkplwXh7Iog7sGgklSjHuOvJS6b7gj2iqwIhsb9T8Wi1B4fiWwrS04gHAJdOHNsSIjBKzG8vVLE8mTtOPaX0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-high/60 via-transparent to-transparent"></div>
+<div class="absolute bottom-2 right-3 font-label-sm text-label-sm text-on-surface-variant/80 italic">
+          Fig. 4.1 — The River at Dawn
+        </div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface leading-[1.75] text-justify indent-6">
+        “Do you remember what they were for?” she asked as I passed her gate an hour later. Her voice held neither alarm nor curiosity, merely the rhythmic calm of seasonal rain.
+      </p>
+<p class="font-body-lg text-body-lg text-on-surface leading-[1.75] text-justify indent-6">
+        I paused, searching the small wooden chest inside my mind where names, uses, and textures were usually filed. But the compartment was already vacant, scrubbed smooth like driftwood stranded on gravel. “No,” I confessed, wrapping my woolen shawl tighter against the chill. “I only recall they were soft.”
+      </p>
+<p class="font-body-lg text-body-lg text-on-surface leading-[1.75] text-justify indent-6">
+        By noon, the Island was spotless. Children were playing with pebbles near the dry well, and neither of them looked up when a solitary strip of silk caught in the high boughs of the camphor tree and dissolved into ash under the pale winter sun.
+      </p>
+</article>
+<!-- Reading Footer Status Indicator -->
+<footer class="w-full pb-safe px-margin pt-space-xs pb-space-lg flex flex-col items-center justify-center gap-1 opacity-70">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px] text-primary">headphones</span>
+<span>18 mins left in chapter</span>
+<span>•</span>
+<span class="text-secondary/80">Whispersync Audio Synced</span>
+</div>
+<div class="font-label-sm text-label-sm text-secondary-container font-mono">
+        84 / 274
+      </div>
+</footer>
+</div>
+<!-- HUD Floating Overlays (Interactive HUD) -->
+<div class="fixed inset-0 pointer-events-none flex flex-col justify-between z-30 transition-opacity duration-300 opacity-100" id="hudOverlay">
+<!-- Top HUD App Bar -->
+<div class="pointer-events-auto w-full pt-safe px-space-md py-space-sm bg-inverse-surface/90 backdrop-blur-md shadow-md flex items-center justify-between text-inverse-on-surface">
+<div class="flex items-center gap-space-xs">
+<button aria-label="Exit Reader" class="w-11 h-11 rounded-full flex items-center justify-center hover:bg-surface/10 active:scale-95 transition-transform text-inverse-on-surface" id="btnBack">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<button aria-label="Table of Contents" class="w-11 h-11 rounded-full flex items-center justify-center hover:bg-surface/10 active:scale-95 transition-transform text-inverse-on-surface" id="btnToc">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Bookmark page" class="w-11 h-11 rounded-full flex items-center justify-center text-primary active:scale-95 transition-transform" id="btnBookmark">
+<span class="material-symbols-outlined text-2xl" id="bmIcon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+<button aria-label="Typography and Themes" class="w-11 h-11 rounded-full flex items-center justify-center hover:bg-surface/10 active:scale-95 transition-transform text-inverse-on-surface" id="btnAppearance">
+<span class="material-symbols-outlined text-2xl">format_size</span>
+</button>
+<button aria-label="Reader Options" class="w-11 h-11 rounded-full flex items-center justify-center hover:bg-surface/10 active:scale-95 transition-transform text-inverse-on-surface" id="btnMore">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Bottom HUD Controls -->
+<div class="pointer-events-auto w-full pb-safe px-margin pt-space-sm pb-space-md bg-inverse-surface/90 backdrop-blur-md shadow-xl flex flex-col gap-space-sm text-inverse-on-surface">
+<!-- Progress Bar + Meta Details -->
+<div class="flex items-center justify-between font-label-sm text-label-sm text-inverse-on-surface/80 px-space-xs">
+<button class="flex items-center gap-1 hover:text-primary active:scale-95 transition-colors" id="btnPrevChap">
+<span class="material-symbols-outlined text-[16px]">fast_rewind</span>
+<span>Ch. 3</span>
+</button>
+<span class="font-mono text-inverse-on-surface font-semibold" id="scrubProgressText">Page 84 of 274 • 31%</span>
+<button class="flex items-center gap-1 hover:text-primary active:scale-95 transition-colors" id="btnNextChap">
+<span>Ch. 5</span>
+<span class="material-symbols-outlined text-[16px]">fast_forward</span>
+</button>
+</div>
+<!-- Scrubber Track -->
+<div class="relative w-full h-8 flex items-center cursor-pointer touch-none" id="novelScrubber">
+<div class="w-full h-1 bg-surface-variant/30 rounded-full relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 bg-primary rounded-full" id="scrubFill" style="width: 31%;"></div>
+</div>
+<div class="absolute w-5 h-5 rounded-full bg-primary shadow-md top-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center" id="scrubThumb" style="left: 31%;">
+<div class="w-1.5 h-1.5 rounded-full bg-on-primary"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Appearance Sheet Modal (Drawer) -->
+<aside class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-high text-on-surface rounded-t-2xl shadow-2xl p-margin pb-safe transition-transform duration-300 transform translate-y-full flex flex-col gap-space-md" id="appearanceDrawer">
+<!-- Drag indicator / header -->
+<div class="w-full flex flex-col items-center gap-space-xs">
+<div class="w-12 h-1 bg-secondary/30 rounded-full"></div>
+<div class="w-full flex items-center justify-between pt-space-xs">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Reading Customization</h2>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-container active:scale-90 transition-transform" id="btnCloseSheet">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<!-- Theme Palette Selector -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Color Palette</span>
+<div class="grid grid-cols-4 gap-space-xs">
+<button class="theme-choice-btn py-space-sm rounded-xl flex flex-col items-center gap-1 bg-[#fffcf2] text-[#252422] shadow-sm ring-2 ring-primary" data-theme="paper">
+<span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+<span class="font-label-sm text-label-sm font-semibold">Paper</span>
+</button>
+<button class="theme-choice-btn py-space-sm rounded-xl flex flex-col items-center gap-1 bg-[#f4ecd8] text-[#5b4636] shadow-sm" data-theme="sepia">
+<span class="material-symbols-outlined text-[18px]">filter_vintage</span>
+<span class="font-label-sm text-label-sm font-semibold">Sepia</span>
+</button>
+<button class="theme-choice-btn py-space-sm rounded-xl flex flex-col items-center gap-1 bg-[#252422] text-[#fcf9ef] shadow-sm" data-theme="charcoal">
+<span class="material-symbols-outlined text-[18px]">bedtime</span>
+<span class="font-label-sm text-label-sm font-semibold">Charcoal</span>
+</button>
+<button class="theme-choice-btn py-space-sm rounded-xl flex flex-col items-center gap-1 bg-[#0d0d0c] text-[#dcdad0] shadow-sm" data-theme="oled">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+<span class="font-label-sm text-label-sm font-semibold">OLED</span>
+</button>
+</div>
+</div>
+<!-- Font Family -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Typeface</span>
+<div class="grid grid-cols-3 gap-space-xs">
+<button class="font-choice-btn py-space-xs px-space-sm rounded-xl bg-surface-container font-serif text-on-surface text-center font-semibold shadow-sm ring-2 ring-primary" data-font="serif">
+          Mincho Serif
+        </button>
+<button class="font-choice-btn py-space-xs px-space-sm rounded-xl bg-surface-container font-sans text-secondary text-center" data-font="sans">
+          Manrope Sans
+        </button>
+<button class="font-choice-btn py-space-xs px-space-sm rounded-xl bg-surface-container font-mono text-secondary text-center" data-font="dyslexic">
+          OpenDyslexic
+        </button>
+</div>
+</div>
+<!-- Font Size & Margins -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Font Size Step -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Size</span>
+<div class="flex items-center justify-between bg-surface-container rounded-xl p-space-xs shadow-sm">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-headline-sm font-semibold text-secondary hover:text-on-surface active:scale-95" id="btnFontDec">
+            A-
+          </button>
+<span class="font-label-md text-label-md font-bold text-on-surface" id="fontSizeDisplay">17px</span>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-md text-headline-md font-bold text-primary active:scale-95" id="btnFontInc">
+            A+
+          </button>
+</div>
+</div>
+<!-- Margin Step -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Margin Width</span>
+<div class="flex items-center justify-around bg-surface-container rounded-xl p-space-xs shadow-sm h-[48px]">
+<button class="margin-btn p-1 rounded-lg text-secondary active:scale-95" data-margin="compact" title="Compact">
+<span class="material-symbols-outlined text-lg">format_align_justify</span>
+</button>
+<button class="margin-btn p-1 rounded-lg text-primary font-bold active:scale-95" data-margin="balanced" title="Balanced">
+<span class="material-symbols-outlined text-xl">view_column</span>
+</button>
+<button class="margin-btn p-1 rounded-lg text-secondary active:scale-95" data-margin="wide" title="Wide">
+<span class="material-symbols-outlined text-lg">chrome_reader_mode</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Audio Companion Tile -->
+<div class="w-full p-space-sm rounded-xl bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined">volume_up</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Audio Narration</span>
+<span class="font-label-sm text-label-sm text-secondary">Narrated by Joyce Kim (1.1x speed)</span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</aside>
+<!-- Interactive JavaScript logic -->
+<script>
+    (function initNovelReader() {
+      const stage = document.getElementById('readerStage');
+      const readingArea = document.getElementById('readingArea');
+      const hudOverlay = document.getElementById('hudOverlay');
+      const appearanceDrawer = document.getElementById('appearanceDrawer');
+      const btnAppearance = document.getElementById('btnAppearance');
+      const btnCloseSheet = document.getElementById('btnCloseSheet');
+      const btnBookmark = document.getElementById('btnBookmark');
+      const bmIcon = document.getElementById('bmIcon');
+      const themeBtns = document.querySelectorAll('.theme-choice-btn');
+      const fontBtns = document.querySelectorAll('.font-choice-btn');
+      const marginBtns = document.querySelectorAll('.margin-btn');
+      const btnFontInc = document.getElementById('btnFontInc');
+      const btnFontDec = document.getElementById('btnFontDec');
+      const fontSizeDisplay = document.getElementById('fontSizeDisplay');
+      const scrubber = document.getElementById('novelScrubber');
+      const scrubFill = document.getElementById('scrubFill');
+      const scrubThumb = document.getElementById('scrubThumb');
+      const scrubProgressText = document.getElementById('scrubProgressText');
+
+      let hudVisible = true;
+      let bookmarked = true;
+      let currentFontSize = 17;
+
+      // Toggle HUD on reading canvas tap
+      stage.addEventListener('click', function(e) {
+        if (e.target.closest('#hudOverlay') || e.target.closest('#appearanceDrawer')) {
+          return;
+        }
+        if (!appearanceDrawer.classList.contains('translate-y-full')) {
+          appearanceDrawer.classList.add('translate-y-full');
+          return;
+        }
+        hudVisible = !hudVisible;
+        if (hudVisible) {
+          hudOverlay.classList.remove('opacity-0', 'pointer-events-none');
+          hudOverlay.classList.add('opacity-100', 'pointer-events-auto');
+        } else {
+          hudOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+          hudOverlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+      });
+
+      // Open Appearance Sheet
+      btnAppearance.addEventListener('click', function(e) {
+        e.stopPropagation();
+        appearanceDrawer.classList.remove('translate-y-full');
+      });
+
+      btnCloseSheet.addEventListener('click', function(e) {
+        e.stopPropagation();
+        appearanceDrawer.classList.add('translate-y-full');
+      });
+
+      // Toggle Bookmark
+      btnBookmark.addEventListener('click', function(e) {
+        e.stopPropagation();
+        bookmarked = !bookmarked;
+        if (bookmarked) {
+          bmIcon.style.fontVariationSettings = "'FILL' 1";
+          btnBookmark.classList.remove('text-inverse-on-surface/50');
+          btnBookmark.classList.add('text-primary');
+        } else {
+          bmIcon.style.fontVariationSettings = "'FILL' 0";
+          btnBookmark.classList.remove('text-primary');
+          btnBookmark.classList.add('text-inverse-on-surface/50');
+        }
+      });
+
+      // Color Theme Selection
+      const themes = {
+        paper: { bg: 'bg-[#fffcf2]', text: 'text-[#252422]' },
+        sepia: { bg: 'bg-[#f4ecd8]', text: 'text-[#5b4636]' },
+        charcoal: { bg: 'bg-[#252422]', text: 'text-[#fcf9ef]' },
+        oled: { bg: 'bg-[#000000]', text: 'text-[#dcdad0]' }
+      };
+
+      themeBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          themeBtns.forEach(b => b.classList.remove('ring-2', 'ring-primary'));
+          btn.classList.add('ring-2', 'ring-primary');
+
+          const t = btn.getAttribute('data-theme');
+          stage.className = 'relative w-full transition-colors duration-300 ' + themes[t].bg + ' ' + themes[t].text;
+        });
+      });
+
+      // Typography Family Toggle
+      fontBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          fontBtns.forEach(b => {
+            b.classList.remove('ring-2', 'ring-primary', 'font-semibold');
+            b.classList.add('text-secondary');
+          });
+          btn.classList.add('ring-2', 'ring-primary', 'font-semibold');
+          btn.classList.remove('text-secondary');
+
+          const f = btn.getAttribute('data-font');
+          readingArea.classList.remove('font-serif', 'font-sans', 'font-mono');
+          if (f === 'serif') readingArea.classList.add('font-serif');
+          if (f === 'sans') readingArea.classList.add('font-sans');
+          if (f === 'dyslexic') readingArea.classList.add('font-mono');
+        });
+      });
+
+      // Font Size adjustment
+      btnFontInc.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (currentFontSize < 24) {
+          currentFontSize += 1;
+          applyFontSize();
+        }
+      });
+
+      btnFontDec.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (currentFontSize > 13) {
+          currentFontSize -= 1;
+          applyFontSize();
+        }
+      });
+
+      function applyFontSize() {
+        fontSizeDisplay.textContent = currentFontSize + 'px';
+        const paragraphs = readingArea.querySelectorAll('p');
+        paragraphs.forEach(p => {
+          p.style.fontSize = currentFontSize + 'px';
+          p.style.lineHeight = (currentFontSize * 1.7) + 'px';
+        });
+      }
+
+      // Margin controls
+      marginBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          marginBtns.forEach(b => b.classList.remove('text-primary', 'font-bold'));
+          btn.classList.add('text-primary', 'font-bold');
+
+          const m = btn.getAttribute('data-margin');
+          readingArea.classList.remove('px-4', 'px-6', 'px-10');
+          if (m === 'compact') readingArea.classList.add('px-4');
+          if (m === 'balanced') readingArea.classList.add('px-6');
+          if (m === 'wide') readingArea.classList.add('px-10');
+        });
+      });
+
+      // Interactive Scrubber
+      let isDragging = false;
+      function updateScrubPosition(clientX) {
+        const rect = scrubber.getBoundingClientRect();
+        const offsetX = Math.max(0, Math.min(rect.width, clientX - rect.left));
+        const pct = Math.round((offsetX / rect.width) * 100);
+        const page = Math.max(1, Math.round((pct / 100) * 274));
+
+        scrubFill.style.width = pct + '%';
+        scrubThumb.style.left = pct + '%';
+        scrubProgressText.textContent = `Page ${page} of 274 • ${pct}%`;
+      }
+
+      scrubber.addEventListener('pointerdown', function(e) {
+        e.stopPropagation();
+        isDragging = true;
+        updateScrubPosition(e.clientX);
+      });
+
+      window.addEventListener('pointermove', function(e) {
+        if (isDragging) updateScrubPosition(e.clientX);
+      });
+
+      window.addEventListener('pointerup', function() {
+        isDragging = false;
+      });
+    })();
+  </script>
+</div></main>
+<script>
+    (function() {
+      let overlayVisible = true;
+      const topOverlay = document.getElementById('topOverlay');
+      const bottomOverlay = document.getElementById('bottomOverlay');
+      const settingsDrawer = document.getElementById('settingsDrawer');
+      const tapCue = document.getElementById('tapCue');
+      const canvasContainer = document.getElementById('mangaCanvasContainer');
+      const btnQuickSettings = document.getElementById('btnQuickSettings');
+      const btnDrawerPeek = document.getElementById('btnDrawerPeek');
+      const btnCloseSettings = document.getElementById('btnCloseSettings');
+      const btnBookmark = document.getElementById('btnBookmark');
+      const bookmarkPin = document.getElementById('bookmarkPin');
+      const bmIcon = document.getElementById('bmIcon');
+      const toggleCrop = document.getElementById('toggleCrop');
+      const pageArt = document.getElementById('mangaPageArt');
+      const modeChips = document.querySelectorAll('.mode-chip');
+      const fitButtons = document.querySelectorAll('.fit-btn');
+      const fitStatusLabel = document.getElementById('fitStatusLabel');
+      const themeButtons = document.querySelectorAll('.theme-btn');
+      const readerViewport = document.getElementById('readerViewport');
+
+      let isBookmarked = true;
+      let isCropped = true;
+
+      // Toggle HUD overlays on canvas tap
+      canvasContainer.addEventListener('click', function(e) {
+        if (e.target.closest('#topOverlay') || e.target.closest('#bottomOverlay') || e.target.closest('#settingsDrawer')) {
+          return;
+        }
+
+        // If drawer is open, close drawer first
+        if (!settingsDrawer.classList.contains('translate-y-full')) {
+          settingsDrawer.classList.add('translate-y-full');
+          return;
+        }
+
+        overlayVisible = !overlayVisible;
+        if (overlayVisible) {
+          topOverlay.classList.remove('-translate-y-full');
+          bottomOverlay.classList.remove('translate-y-full');
+          if (tapCue) tapCue.style.opacity = '0';
+        } else {
+          topOverlay.classList.add('-translate-y-full');
+          bottomOverlay.classList.add('translate-y-full');
+        }
+      });
+
+      // Quick Settings Drawer Trigger
+      const openSettings = function(e) {
+        e.stopPropagation();
+        settingsDrawer.classList.remove('translate-y-full');
+      };
+
+      btnQuickSettings.addEventListener('click', openSettings);
+      if (btnDrawerPeek) btnDrawerPeek.addEventListener('click', openSettings);
+
+      btnCloseSettings.addEventListener('click', function(e) {
+        e.stopPropagation();
+        settingsDrawer.classList.add('translate-y-full');
+      });
+
+      // Bookmark Toggle
+      btnBookmark.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isBookmarked = !isBookmarked;
+        if (isBookmarked) {
+          bmIcon.style.fontVariationSettings = "'FILL' 1";
+          btnBookmark.classList.remove('text-reader-ivory/50');
+          btnBookmark.classList.add('text-reader-accent');
+          if (bookmarkPin) bookmarkPin.classList.remove('hidden');
+        } else {
+          bmIcon.style.fontVariationSettings = "'FILL' 0";
+          btnBookmark.classList.remove('text-reader-accent');
+          btnBookmark.classList.add('text-reader-ivory/50');
+          if (bookmarkPin) bookmarkPin.classList.add('hidden');
+        }
+      });
+
+      // Crop Toggle
+      toggleCrop.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isCropped = !isCropped;
+        if (isCropped) {
+          toggleCrop.classList.remove('bg-white/20', 'justify-start');
+          toggleCrop.classList.add('bg-reader-accent', 'justify-end');
+          pageArt.classList.add('scale-105');
+        } else {
+          toggleCrop.classList.remove('bg-reader-accent', 'justify-end');
+          toggleCrop.classList.add('bg-white/20', 'justify-start');
+          pageArt.classList.remove('scale-105');
+        }
+      });
+
+      // Reading Mode Selector
+      modeChips.forEach(chip => {
+        chip.addEventListener('click', function(e) {
+          e.stopPropagation();
+          modeChips.forEach(c => {
+            c.classList.remove('bg-reader-accent', 'text-white', 'font-semibold', 'shadow-sm');
+            c.classList.add('text-reader-ivory/70', 'font-medium');
+          });
+          chip.classList.remove('text-reader-ivory/70', 'font-medium');
+          chip.classList.add('bg-reader-accent', 'text-white', 'font-semibold', 'shadow-sm');
+        });
+      });
+
+      // Fit Mode Buttons
+      fitButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          fitButtons.forEach(b => {
+            b.classList.remove('bg-reader-accent', 'text-white', 'font-semibold', 'shadow-sm');
+            b.classList.add('text-reader-ivory/70', 'font-medium');
+          });
+          btn.classList.remove('text-reader-ivory/70', 'font-medium');
+          btn.classList.add('bg-reader-accent', 'text-white', 'font-semibold', 'shadow-sm');
+          
+          const fit = btn.getAttribute('data-fit');
+          if (fit === 'width') {
+            pageArt.style.maxHeight = '92vh';
+            pageArt.style.width = '100%';
+            fitStatusLabel.textContent = 'Fit Width';
+          } else if (fit === 'height') {
+            pageArt.style.maxHeight = '100vh';
+            pageArt.style.width = 'auto';
+            fitStatusLabel.textContent = 'Fit Height';
+          } else {
+            pageArt.style.maxHeight = 'none';
+            pageArt.style.width = '100%';
+            fitStatusLabel.textContent = 'Original Aspect';
+          }
+        });
+      });
+
+      // Theme Buttons
+      themeButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          themeButtons.forEach(b => {
+            b.classList.remove('border-2', 'border-reader-accent', 'bg-reader-accent/20');
+            b.classList.add('border-white/10', 'bg-black/40');
+          });
+          btn.classList.remove('border-white/10', 'bg-black/40');
+          btn.classList.add('border-2', 'border-reader-accent', 'bg-reader-accent/20');
+
+          const bg = btn.getAttribute('data-bg');
+          if (bg === 'invert') {
+            pageArt.style.filter = 'invert(0.92) contrast(1.1)';
+            canvasContainer.style.backgroundColor = '#1a1918';
+          } else {
+            pageArt.style.filter = 'none';
+            canvasContainer.style.backgroundColor = bg;
+          }
+        });
+      });
+
+      // Interactive Scrubber Drag Emulation
+      const scrubberTrack = document.getElementById('scrubberTrack');
+      const scrubberFill = document.getElementById('scrubberFill');
+      const scrubberThumb = document.getElementById('scrubberThumb');
+      const currentPageLabel = document.getElementById('currentPageLabel');
+
+      let isDragging = false;
+      function updateScrub(clientX) {
+        const rect = scrubberTrack.getBoundingClientRect();
+        const offsetX = Math.max(0, Math.min(rect.width, clientX - rect.left));
+        const pct = (offsetX / rect.width);
+        const pageNum = Math.max(1, Math.min(42, Math.round(pct * 41) + 1));
+        const finalPct = ((pageNum - 1) / 41) * 100;
+        
+        scrubberFill.style.width = finalPct + '%';
+        scrubberThumb.style.left = finalPct + '%';
+        currentPageLabel.textContent = pageNum;
+        if (bookmarkPin) {
+          const pinText = bookmarkPin.querySelector('span:nth-child(2)');
+          if (pinText) pinText.textContent = 'PAGE ' + pageNum;
+        }
+      }
+
+      scrubberTrack.addEventListener('pointerdown', function(e) {
+        e.stopPropagation();
+        isDragging = true;
+        updateScrub(e.clientX);
+      });
+      window.addEventListener('pointermove', function(e) {
+        if (isDragging) updateScrub(e.clientX);
+      });
+      window.addEventListener('pointerup', function() {
+        isDragging = false;
+      });
+
+      // Fade out tap prompt after 4 seconds
+      setTimeout(() => {
+        if (tapCue) tapCue.style.opacity = '0';
+      }, 4000);
+    })();
+  </script>
+</body></html>

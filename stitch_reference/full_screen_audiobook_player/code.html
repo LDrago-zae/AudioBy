@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary": "#615e59", "surface-container-highest": "#e5e2d9", "tertiary-container": "#79746a", "error-container": "#ffdad6", "surface-container-high": "#ebe8de", "on-primary-fixed-variant": "#822700", "surface-container-low": "#f6f4ea", "background": "#fcf9ef", "tertiary": "#605b52", "on-tertiary-fixed": "#1e1b14", "on-tertiary-container": "#fffbff", "tertiary-fixed": "#e9e2d5", "primary-fixed": "#ffdbcf", "primary-container": "#cc4811", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#494642", "on-error": "#ffffff", "surface-bright": "#fcf9ef", "surface-tint": "#ab3600", "on-tertiary": "#ffffff", "on-primary-fixed": "#390c00", "outline-variant": "#e1bfb4", "surface-container-lowest": "#ffffff", "surface-dim": "#dcdad0", "surface-variant": "#e5e2d9", "on-primary-container": "#fffbff", "on-background": "#1c1c16", "on-surface": "#1c1c16", "inverse-surface": "#31312a", "on-primary": "#ffffff", "secondary-fixed-dim": "#cbc5c0", "tertiary-fixed-dim": "#cdc6ba", "secondary-container": "#e8e1db", "on-secondary-container": "#68645f", "on-surface-variant": "#594139", "primary-fixed-dim": "#ffb59c", "surface-container": "#f1eee4", "secondary-fixed": "#e8e1db", "surface": "#fcf9ef", "on-error-container": "#93000a", "error": "#ba1a1a", "primary": "#a73400", "on-tertiary-fixed-variant": "#4a463d", "inverse-primary": "#ffb59c", "outline": "#8d7168", "on-secondary-fixed": "#1d1b18", "inverse-on-surface": "#f4f1e7" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1rem", "space-xs": "0.25rem" }, fontFamily: { "label-md": ["Inter"], "headline-sm": ["Manrope"], "headline-md": ["Manrope"], "headline-xl": ["Manrope"], "body-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-xl-mobile": ["Manrope"], "label-lg": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Manrope"] }, fontSize: { "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-sm": ["17px", { lineHeight: "22px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "26px", letterSpacing: "-0.015em", fontWeight: "600" }], "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.03em", fontWeight: "700" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }], "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }], "headline-xl-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.025em", fontWeight: "700" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { margin: 0; padding: 0; min-height: 100%; } body { overscroll-behavior-y: none; } .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px); } .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-space-md flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="Back" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors flex-shrink-0" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="Komorebi App Logo" class="h-7 w-auto object-contain flex-shrink-0 hidden sm:block" src="https://lh3.googleusercontent.com/aida/AEtjO1VOLyooPYdFPd2UHVPpIl5TTAgJ-krkILgVD21j8WAyrV1_1Fh1bWh5RHYiK-6GHXx36woeR51RCBcQESNQBWgLf-CCLH3yNyPN_xROeeeCHmj8vZ7gCOg4DhBv8zXdmXJckzJCvmdLWuJvNiJco8uPRAySGTIpPCOns1BhaLvdWwfFPCdwyc3hBN5pTKSVvQnRbRjlkGulxE6mnM4C3ya_ER1ZB8-Wuwp4s81H4ySa"/><h1 class="font-headline-sm text-headline-sm text-on-surface truncate">Audio Player</h1></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Bookmark or Share" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">bookmark_border</span></button><button aria-label="Profile" class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPjNBRpS2lY4cHXKl7SLPc2fxzWgjIlttqjt4-o7gzOOZByPR-PToEJBx6KYxNUP_IkAGN3qcuaQrikHZaMKu3XpcRt8PMsuoxSDrwDQy5l-CB0YpIUdMoLHTy9SWLGJkdtGDwwULOIxOXgGQ1ZbHcfXsrPVStenfS93wppEGcVu9O6KVkH4TafXq3gfY2RQFlCg9YY0d4pVXCmUGe9BdClY8ru53n_m8SCG9LCDQ"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full">
+<!-- Immersive Player Container -->
+<div class="flex flex-col w-full bg-inverse-surface text-inverse-on-surface px-margin pb-space-lg pt-space-xs rounded-xl shadow-xl overflow-hidden relative">
+<!-- Ambient Glow Backdrop -->
+<div class="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Top Action Bar -->
+<div class="relative z-10 flex items-center justify-between w-full h-12 mb-space-sm">
+<button aria-label="Minimize player" class="w-11 h-11 -ml-space-xs flex items-center justify-center text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" id="minimize-btn">
+<span class="material-symbols-outlined text-[24px]">keyboard_arrow_down</span>
+</button>
+<!-- Category Pill Badge -->
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-on-background/40 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-surface-container-highest tracking-wide uppercase">Light Novel Audiobook • Vol. 3</span>
+</div>
+<button aria-label="More options" class="w-11 h-11 -mr-space-xs flex items-center justify-center text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors">
+<span class="material-symbols-outlined text-[22px]">more_vert</span>
+</button>
+</div>
+<!-- Center Showcase: Artwork & Title Details -->
+<div class="relative z-10 flex flex-col items-center w-full mt-space-xs mb-space-md">
+<!-- Cover Art Frame -->
+<div class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-xl overflow-hidden shadow-2xl bg-surface-variant flex-shrink-0 group">
+<img class="w-full h-full object-cover select-none transition-transform duration-500 ease-out group-hover:scale-105" data-alt="Intricate fantasy light novel illustration cover of two dual-blade swordsmen standing beneath a floating glowing crystalline castle tower at twilight with warm cinnabar vermilion hues and deep twilight ink wash shadows in a cinematic anime art style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDanvK6HfWu3NyBuP0lTtg9vdL7l5h24TDlrSGvANklVxRyXyrea7uECs_7lb7h-0UjMyi8Kqw9xR9c7BSi3VJBxwxKkG4CTbWWtDhucE5Q3m24zVdRRTakJSruOtt7ktK0ERkMeIk71zNBBXMSRxVZYW5Yj80nFXXKXZWK-o19MyoboFGH2qbiPy3P-Uo8as8YAxhzHoF2FRQb4L95_DjCevlZRho7rMdfHZucP3E"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 via-transparent to-transparent pointer-events-none"></div>
+<div class="absolute top-3 right-3 bg-inverse-surface/85 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-primary-container text-[14px]">headphones</span>
+<span class="font-label-sm text-label-sm text-surface-container-highest">DOLBY ATMOS</span>
+</div>
+</div>
+<!-- Title & Cast Metadata -->
+<div class="w-full text-center mt-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-on-background/25 mb-1.5">
+<span class="material-symbols-outlined text-primary-container text-[14px]">auto_stories</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim font-medium">Chapter 4: The Barcarolle of Transience</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-inverse-on-surface font-bold tracking-tight truncate px-2">
+          Sword Art Online: Progressive Vol. 3
+        </h2>
+<p class="font-body-md text-body-md text-surface-container-highest/80 mt-0.5 truncate">
+          Reki Kawahara
+        </p>
+<p class="font-body-sm text-body-sm text-surface-container-highest/60 flex items-center justify-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[15px]">record_voice_over</span>
+<span>Bryce Papenbrook &amp; Cherami Leigh</span>
+</p>
+</div>
+</div>
+<!-- Dynamic Audio Waveform & Scrubber Section -->
+<div class="relative z-10 w-full mt-space-xs mb-space-sm px-1">
+<!-- Stylized Interactive Audio Waveform -->
+<div aria-label="Audio waveform scrubber" class="relative w-full h-12 flex items-center justify-between gap-[3px] py-1 cursor-pointer overflow-hidden select-none" id="waveform-container">
+<!-- Bars dynamically balanced with vermilion progression -->
+<span class="w-1 rounded-full bg-primary-container h-3 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-5 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-8 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-6 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-10 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-7 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-4 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-9 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-11 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-8 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-5 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-10 transition-all"></span>
+<span class="w-1 rounded-full bg-primary-container h-7 transition-all"></span>
+<!-- Scrub Head Anchor Position (approx 36%) -->
+<span class="w-1.5 rounded-full bg-primary h-12 ring-2 ring-primary-fixed-dim/40 relative">
+<span class="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-primary shadow-md"></span>
+</span>
+<!-- Unplayed Bars -->
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-6 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-9 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-5 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-8 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-10 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-7 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-4 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-9 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-6 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-8 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-11 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-5 transition-all"></span>
+<span class="w-1 rounded-full bg-surface-container-highest/20 h-3 transition-all"></span>
+</div>
+<!-- Linear Micro Progress Slider -->
+<div class="relative w-full h-1 bg-surface-container-highest/20 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 36.7%;"></div>
+</div>
+<!-- Precision Timestamps -->
+<div class="flex items-center justify-between w-full mt-2 font-label-md text-label-md text-surface-container-highest/70 tabular-nums">
+<span id="current-time">18:42</span>
+<div class="flex items-center gap-1 text-[11px] text-surface-container-highest/40 uppercase tracking-widest font-label-sm">
+<span>Ch. Total 50:57</span>
+</div>
+<span id="remaining-time">-32:15</span>
+</div>
+</div>
+<!-- Primary Playback Controls -->
+<div class="relative z-10 flex items-center justify-between w-full max-w-sm mx-auto my-space-sm px-2">
+<!-- Skip Back 15s -->
+<button aria-label="Skip back 15 seconds" class="w-11 h-11 flex flex-col items-center justify-center text-surface-container-highest/80 hover:text-inverse-on-surface active:scale-95 transition-all group">
+<span class="material-symbols-outlined text-[26px]">export_notes</span>
+</button>
+<!-- Previous Track / Chapter -->
+<button aria-label="Previous chapter" class="w-11 h-11 flex items-center justify-center text-surface-container-highest/80 hover:text-inverse-on-surface active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[28px]">skip_previous</span>
+</button>
+<!-- Play / Pause Master Vermilion Button -->
+<button aria-label="Play or pause" class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-lg hover:brightness-110 active:scale-95 transition-all" id="master-play-btn">
+<span class="material-symbols-outlined text-[34px]" id="play-icon" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<!-- Next Track / Chapter -->
+<button aria-label="Next chapter" class="w-11 h-11 flex items-center justify-center text-surface-container-highest/80 hover:text-inverse-on-surface active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[28px]">skip_next</span>
+</button>
+<!-- Skip Forward 30s -->
+<button aria-label="Skip forward 30 seconds" class="w-11 h-11 flex flex-col items-center justify-center text-surface-container-highest/80 hover:text-inverse-on-surface active:scale-95 transition-all group">
+<span class="material-symbols-outlined text-[26px]">forward_30</span>
+</button>
+</div>
+<!-- Secondary Contextual Toolbar -->
+<div class="relative z-10 grid grid-cols-4 gap-2 w-full my-space-xs pt-space-xs">
+<!-- Speed Selector (Highlighted) -->
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-primary/20 text-primary-fixed-dim hover:bg-primary/25 transition-all active:scale-95" id="speed-btn">
+<span class="font-headline-sm text-headline-sm font-bold leading-none">1.25x</span>
+<span class="font-label-sm text-label-sm text-surface-container-highest/70 mt-1">Speed</span>
+</button>
+<!-- Sleep Timer (Active Indicator) -->
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-on-background/30 text-primary-fixed-dim hover:bg-on-background/40 transition-all active:scale-95" id="sleep-btn">
+<div class="flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[17px] text-primary-container" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+<span class="font-label-md text-label-md font-semibold leading-none">End Ch.</span>
+</div>
+<span class="font-label-sm text-label-sm text-surface-container-highest/70 mt-1">Timer</span>
+</button>
+<!-- Bookmark Pill -->
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-on-background/20 text-surface-container-highest/80 hover:bg-on-background/30 hover:text-inverse-on-surface transition-all active:scale-95" id="bookmark-btn">
+<span class="material-symbols-outlined text-[20px] leading-none">bookmark_add</span>
+<span class="font-label-sm text-label-sm text-surface-container-highest/70 mt-1">Clip Note</span>
+</button>
+<!-- Chapters / Queue Button -->
+<button class="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-on-background/20 text-surface-container-highest/80 hover:bg-on-background/30 hover:text-inverse-on-surface transition-all active:scale-95" id="chapters-btn">
+<span class="material-symbols-outlined text-[20px] leading-none">format_list_bulleted</span>
+<span class="font-label-sm text-label-sm text-surface-container-highest/70 mt-1">Chapters</span>
+</button>
+</div>
+<!-- Bottom Sheet Up Next Cue Preview -->
+<div class="relative z-10 w-full mt-space-sm pt-space-xs">
+<div class="w-full flex items-center justify-between p-3 rounded-xl bg-on-background/40 hover:bg-on-background/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest/15 flex items-center justify-center text-primary-fixed-dim flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">queue_music</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider">Up Next</span>
+<span class="w-1 h-1 rounded-full bg-surface-container-highest/40"></span>
+<span class="font-label-sm text-label-sm text-surface-container-highest/60">48:12</span>
+</div>
+<p class="font-body-sm text-body-sm text-inverse-on-surface font-medium truncate">
+              Chapter 5: Concerto of Iron and Shadow
+            </p>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full flex items-center justify-center text-surface-container-highest/60 group-hover:text-inverse-on-surface group-hover:translate-x-0.5 transition-all flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification Overlay for interactive bookmark feedback -->
+<div class="opacity-0 pointer-events-none transition-opacity duration-300 fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-on-background/90 text-inverse-on-surface backdrop-blur-md shadow-lg flex items-center gap-2" id="player-toast">
+<span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span>
+<span class="font-label-md text-label-md font-medium" id="toast-message">Bookmark saved at 18:42</span>
+</div>
+</div>
+<script>
+  (function initAudioPlayer() {
+    const playBtn = document.getElementById('master-play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const speedBtn = document.getElementById('speed-btn');
+    const bookmarkBtn = document.getElementById('bookmark-btn');
+    const toast = document.getElementById('player-toast');
+    const toastMsg = document.getElementById('toast-message');
+
+    let isPlaying = true;
+    const speeds = ['1.0x', '1.25x', '1.5x', '1.75x', '2.0x'];
+    let speedIndex = 1;
+
+    // Play / Pause Toggle
+    if (playBtn && playIcon) {
+      playBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        playIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+      });
+    }
+
+    // Speed Cycle Handler
+    if (speedBtn) {
+      speedBtn.addEventListener('click', () => {
+        speedIndex = (speedIndex + 1) % speeds.length;
+        const textSpan = speedBtn.querySelector('span:first-child');
+        if (textSpan) textSpan.textContent = speeds[speedIndex];
+      });
+    }
+
+    // Interactive Toast Notification
+    function showToast(message) {
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = message;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2400);
+    }
+
+    if (bookmarkBtn) {
+      bookmarkBtn.addEventListener('click', () => {
+        showToast('Bookmark added at 18:42 with note stamp');
+      });
+    }
+  })();
+</script></main></body></html>

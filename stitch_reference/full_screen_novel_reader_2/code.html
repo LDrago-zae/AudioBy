@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#1a1918]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="mobile_blank" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,400..600&amp;family=Noto+Serif+JP:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#eb5e28",
+          "primary-container": "#cc4811",
+          "on-primary": "#ffffff",
+          "surface": "#fffcf2",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-low": "#fbf7ed",
+          "surface-container": "#f4ecd8",
+          "surface-container-high": "#eae2ce",
+          "surface-container-highest": "#ded5c0",
+          "on-surface": "#252422",
+          "on-surface-variant": "#594139",
+          "secondary": "#615e59",
+          "secondary-container": "#e8e1db",
+          "outline": "#8d7168",
+          "outline-variant": "#e1bfb4",
+          "reader-paper": "#fffcf2",
+          "reader-ink": "#252422",
+          "reader-sepia": "#f4ecd8",
+          "reader-charcoal": "#252422",
+          "reader-oled": "#0d0d0c"
+        },
+        fontFamily: {
+          serif: ['Newsreader', 'Georgia', 'serif'],
+          sans: ['Inter', 'sans-serif'],
+          headline: ['Manrope', 'sans-serif'],
+          cinzel: ['Cinzel', 'serif'],
+          jp: ['"Noto Serif JP"', 'serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  @layer base {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #1a1918;
+    }
+    body {
+      overscroll-behavior-y: none;
+    }
+    .pb-safe {
+      padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+    }
+    .pt-safe {
+      padding-top: max(env(safe-area-inset-top, 0px), 12px);
+    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  /* Elegant Book Typography Styles */
+  .drop-cap::first-letter {
+    font-family: 'Cinzel', serif;
+    float: left;
+    font-size: 3.5rem;
+    line-height: 0.82;
+    padding-top: 0.28rem;
+    padding-right: 0.55rem;
+    padding-bottom: 0.05rem;
+    color: #eb5e28;
+    font-weight: 700;
+  }
+  .vertical-rl {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+</style>
+<style>
+  body {
+    min-height: max(884px, 100dvh);
+  }
+</style>
+</head>
+<body class="bg-[#1a1918] text-[#252422] antialiased flex flex-col min-h-screen select-none overflow-x-hidden">
+<main class="flex-1 flex flex-col relative w-full h-full min-h-screen bg-[#1a1918] overflow-hidden" id="readerViewport">
+<div class="flex flex-col w-full relative min-h-screen">
+<!-- ============================================== -->
+<!-- READING CANVAS STAGE (Warm Ivory Paper)       -->
+<!-- ============================================== -->
+<div class="relative w-full min-h-screen transition-colors duration-300 bg-[#fffcf2] text-[#252422] pb-64" id="readerStage">
+<!-- Top Running Header / Discreet Editorial Meta -->
+<header class="w-full pt-safe px-6 flex items-center justify-between text-secondary/70 border-b border-[#252422]/5 pb-3">
+<div class="flex items-center gap-2">
+<span class="font-cinzel text-[11px] tracking-[0.22em] uppercase font-semibold text-[#252422]/80">The Memory Police</span>
+<span class="text-xs text-[#252422]/30">•</span>
+<span class="font-sans text-[11px] tracking-wider uppercase text-secondary/70">Yoko Ogawa</span>
+</div>
+<div class="flex items-center gap-1.5 font-sans text-[11px] font-medium tracking-tight text-secondary">
+<span class="material-symbols-outlined text-[13px] text-primary">schedule</span>
+<span>14 min left in chapter</span>
+<span class="text-secondary/40">•</span>
+<span class="font-mono text-[10px] text-primary font-semibold">64%</span>
+</div>
+</header>
+<!-- Literary Book Article Area -->
+<article class="px-6 pt-7 pb-16 flex flex-col transition-all duration-300 max-w-xl mx-auto" id="readingArea">
+<!-- Chapter Header Badge & Title -->
+<header class="text-center mb-8 flex flex-col items-center">
+<div class="flex items-center gap-2 text-[11px] font-sans font-semibold tracking-[0.28em] text-primary uppercase mb-2">
+<span class="w-5 h-[1px] bg-primary/40"></span>
+<span>Part One</span>
+<span class="w-5 h-[1px] bg-primary/40"></span>
+</div>
+<h1 class="font-cinzel text-2xl tracking-wider text-[#252422] font-bold uppercase mb-1">
+            Chapter IV
+          </h1>
+<p class="font-serif italic text-sm text-[#594139]/80 font-normal">
+            The Disappearance of Ribbons
+          </p>
+<div class="mt-4 flex items-center justify-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/50"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/50"></span>
+</div>
+</header>
+<!-- Paragraph 1 with Drop Cap -->
+<p class="font-serif text-[18px] leading-[1.88] text-[#252422] text-justify drop-cap mb-5">
+          In the morning, the disappearance was quiet. It was ribbons. Delicate emerald and vermilion ribbons fluttered from open windows toward the river, carried away into the cold dawn air without a whisper or a protest. They glided between telegraph poles and across cedar gables like unspooling memories, dissolving into the mist.
+        </p>
+<!-- Paragraph 2 with Annotation Highlight & Popover Preview -->
+<div class="relative my-1">
+<p class="font-serif text-[18px] leading-[1.88] text-[#252422] text-justify indent-7 mb-5">
+            I had stepped out onto the balcony while the kettle still whistled faintly upon the cast-iron stove. My neighbor, an elderly milliner whose fingers were permanently dyed indigo from thread, leaned against her wooden railing with 
+            <!-- Community Highlighted Span -->
+<span class="relative inline cursor-pointer border-b-2 border-primary/80 bg-primary/10 rounded-sm px-1 py-0.5 group" id="highlightAnchor">
+<span class="text-[#1c1c16] font-medium">empty palms upturned to the grey sky.</span>
+<!-- Floating Annotation Badge Preview -->
+<span class="absolute -top-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#252422] text-[#fffcf2] text-[10px] font-sans shadow-lg whitespace-nowrap border border-white/10 pointer-events-none">
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">mode_comment</span>
+<span class="font-semibold text-primary">1 note</span>
+<span class="opacity-40">•</span>
+<span class="opacity-80">32 reader highlights</span>
+</span>
+</span>
+            She smiled faintly, not with sorrow, but with the hollow tranquility of someone who has dropped an old coin into very deep water.
+          </p>
+</div>
+<!-- Inline Editorial Illustration with Traditional Japanese Aesthetic Card -->
+<figure class="relative my-4 rounded-xl overflow-hidden bg-[#f4ecd8] border border-[#252422]/10 shadow-md">
+<div class="relative w-full overflow-hidden">
+<img class="w-full h-48 object-cover object-center mix-blend-multiply opacity-95 transition-all duration-300" data-alt="Minimalist woodblock style ink drawing of vermilion ribbons swirling through morning fog over a quiet river town in Japan, muted tones with vermilion cinnabar accents, calm melancholic literature aesthetic." id="chapterIllo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLhMQHKmiTLnPl-1LS4zIzujid6RJ-OZOL5IS3fAs_MJsAdlw3lGSy45937RTMmywX9gflSSNqudhkqnMGv_aYdVIraxuffhaygTyZUOJwL4fzl1dJEZ7i-qL_EnM2sbLj5dDvY6QmMWlCMF0mLpcKkplwXh7Iog7sGgklSjHuOvJS6b7gj2iqwIhsb9T8Wi1B4fiWwrS04gHAJdOHNsSIjBKzG8vVLE8mTtOPaX0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#252422]/60 via-transparent to-transparent"></div>
+<!-- Traditional Japanese Vertical Side Stamp / Seal -->
+<div class="absolute top-2.5 right-2.5 flex items-start gap-1.5 pointer-events-none">
+<div class="vertical-rl font-jp text-[9px] tracking-widest text-white/90 bg-[#252422]/60 backdrop-blur-sm px-1 py-1.5 rounded border border-white/10">
+                朝霧に舞う朱色の記憶
+              </div>
+<div class="w-5 h-5 rounded border border-primary bg-primary/90 text-white flex items-center justify-center text-[9px] font-bold font-serif shadow-sm">
+                印
+              </div>
+</div>
+<!-- Caption Bar -->
+<div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white/90">
+<span class="font-serif italic text-xs tracking-wide">
+                Fig. 4.1 — The River at Dawn
+              </span>
+<span class="text-[10px] font-sans font-medium uppercase tracking-widest text-primary bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full border border-primary/30">
+                Original Woodblock Print
+              </span>
+</div>
+</div>
+</figure>
+<!-- Paragraph 3 & 4 Continuation -->
+<p class="font-serif text-[18px] leading-[1.88] text-[#252422] text-justify indent-7 mb-5">
+          “Do you remember what they were for?” she asked as I passed her gate an hour later. Her voice held neither alarm nor curiosity, merely the rhythmic calm of seasonal rain.
+        </p>
+<p class="font-serif text-[18px] leading-[1.88] text-[#252422] text-justify indent-7 mb-5">
+          I paused, searching the small wooden chest inside my mind where names, uses, and textures were usually filed. But the compartment was already vacant, scrubbed smooth like driftwood stranded on gravel. “No,” I confessed, wrapping my woolen shawl tighter against the chill. “I only recall they were soft.”
+        </p>
+<p class="font-serif text-[18px] leading-[1.88] text-[#252422] text-justify indent-7 mb-4">
+          By noon, the Island was spotless. Children were playing with pebbles near the dry well, and neither of them looked up when a solitary strip of silk caught in the high boughs of the camphor tree and dissolved into ash under the pale winter sun.
+        </p>
+<!-- Subtle Chapter End Vignette Motif -->
+<div class="py-6 flex items-center justify-center gap-3 text-secondary/40">
+<span class="w-8 h-[1px] bg-secondary/30"></span>
+<span class="font-cinzel text-xs tracking-widest">❦</span>
+<span class="w-8 h-[1px] bg-secondary/30"></span>
+</div>
+</article>
+<!-- Page Bottom Subtle Marker -->
+<footer class="w-full text-center pb-24 text-[11px] font-sans text-secondary/60">
+        Page 148 of 230 • The Memory Police
+      </footer>
+</div>
+<!-- ============================================== -->
+<!-- TOP HUD APP BAR (Floating Frosted Overlay)     -->
+<!-- ============================================== -->
+<div class="fixed top-0 left-0 right-0 z-40 transition-transform duration-300" id="topHudBar">
+<div class="w-full pt-safe px-4 pb-2.5 bg-[#252422]/95 backdrop-blur-md border-b border-white/10 shadow-lg flex items-center justify-between text-[#fffcf2]">
+<!-- Left: Back Navigation & Table of Contents -->
+<div class="flex items-center gap-1">
+<button aria-label="Exit Reader" class="w-10 h-10 rounded-full flex items-center justify-center text-white/90 hover:bg-white/10 active:scale-95 transition-transform" id="btnBack">
+<span class="material-symbols-outlined text-[20px]">arrow_back_ios_new</span>
+</button>
+<button aria-label="Table of Contents" class="w-10 h-10 rounded-full flex items-center justify-center text-white/90 hover:bg-white/10 active:scale-95 transition-transform" id="btnToc" title="Table of Contents">
+<span class="material-symbols-outlined text-[22px]">format_list_bulleted</span>
+</button>
+</div>
+<!-- Center: Chapter & Book Info Title -->
+<div class="flex flex-col items-center text-center px-2 max-w-[200px]">
+<span class="font-cinzel text-[11px] tracking-wider text-white font-semibold truncate w-full">The Memory Police</span>
+<span class="font-sans text-[10px] text-white/60 tracking-tight truncate w-full">Ch. 4: Disappearance of Ribbons</span>
+</div>
+<!-- Right: Actions (Bookmark, Typography Aa, More) -->
+<div class="flex items-center gap-1">
+<button aria-label="Bookmark page" class="w-10 h-10 rounded-full flex items-center justify-center text-primary active:scale-95 transition-transform relative" id="btnBookmark" title="Bookmark Page">
+<span class="material-symbols-outlined text-[22px]" id="bmIcon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+<button aria-label="Typography and Themes" class="w-10 h-10 rounded-full flex items-center justify-center text-white/90 hover:bg-white/10 active:scale-95 transition-transform font-serif font-bold text-sm tracking-tight border border-white/10 bg-white/5" id="btnAppearance" title="Appearance Settings">
+            Aa
+          </button>
+<button aria-label="Reader Options" class="w-10 h-10 rounded-full flex items-center justify-center text-white/90 hover:bg-white/10 active:scale-95 transition-transform" id="btnMore" title="More Options">
+<span class="material-symbols-outlined text-[22px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- BOTTOM DOCKED HUD CONTROL DECK & QUICK TOOLS   -->
+<!-- ============================================== -->
+<div class="fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300" id="bottomHudBar">
+<div class="w-full pb-safe pt-3 px-4 bg-[#252422]/95 backdrop-blur-md border-t border-white/10 shadow-2xl flex flex-col gap-2.5 text-[#fffcf2]">
+<!-- Scrubber Progress Info Bar -->
+<div class="flex items-center justify-between font-sans text-xs px-1">
+<button class="flex items-center gap-1 text-white/70 hover:text-primary active:scale-95 transition-colors" id="btnPrevChap">
+<span class="material-symbols-outlined text-[15px]">fast_rewind</span>
+<span class="font-medium text-[11px]">Ch. 3</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-semibold text-white/90" id="scrubProgressText">Page 148 of 230</span>
+<span class="text-white/30">•</span>
+<span class="font-sans text-[11px] text-primary font-bold">Ch. 4 (64%)</span>
+</div>
+<button class="flex items-center gap-1 text-white/70 hover:text-primary active:scale-95 transition-colors" id="btnNextChap">
+<span class="font-medium text-[11px]">Ch. 5</span>
+<span class="material-symbols-outlined text-[15px]">fast_forward</span>
+</button>
+</div>
+<!-- Interactive Scrubber Track Slider -->
+<div class="relative w-full h-6 flex items-center cursor-pointer touch-none px-1" id="novelScrubber">
+<div class="w-full h-1.5 bg-white/15 rounded-full relative overflow-hidden">
+<!-- Scrubber Track Fill -->
+<div class="absolute left-0 top-0 bottom-0 bg-primary rounded-full" id="scrubFill" style="width: 64%;"></div>
+</div>
+<!-- Chapter Marker Dots along track -->
+<div class="absolute left-[20%] w-1 h-2 -top-0.5 bg-white/40 rounded-full pointer-events-none" title="Ch. 2"></div>
+<div class="absolute left-[42%] w-1 h-2 -top-0.5 bg-white/40 rounded-full pointer-events-none" title="Ch. 3"></div>
+<div class="absolute left-[64%] w-1 h-2 -top-0.5 bg-white/40 rounded-full pointer-events-none" title="Ch. 4"></div>
+<div class="absolute left-[85%] w-1 h-2 -top-0.5 bg-white/40 rounded-full pointer-events-none" title="Ch. 5"></div>
+<!-- Interactive Scrubber Thumb -->
+<div class="absolute w-5 h-5 rounded-full bg-primary shadow-lg border-2 border-white top-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center transition-transform active:scale-125" id="scrubThumb" style="left: 64%;">
+<div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+</div>
+</div>
+<!-- Secondary Quick Tool Dock (Audio Drama Sync, Brightness, Layout Mode, Aa) -->
+<div class="flex items-center justify-between pt-1 border-t border-white/10 px-1">
+<!-- Audio Drama Companion Sync Button -->
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 border border-primary/40 text-primary hover:bg-primary/30 active:scale-95 transition-all text-xs font-semibold" id="btnAudioSync">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">headphones</span>
+<span class="font-sans text-[11px] tracking-tight">Audio Drama Sync</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+</button>
+<!-- Right side tool group: Layout Mode & Brightness Quick Toggle -->
+<div class="flex items-center gap-1 text-white/80">
+<!-- Scroll / Page Flip toggle -->
+<button class="p-2 rounded-lg hover:bg-white/10 active:scale-95 transition-colors flex items-center gap-1 text-[11px] font-sans" id="btnPageMode" title="Toggle Scroll / Page Flip">
+<span class="material-symbols-outlined text-[18px]">auto_stories</span>
+<span class="hidden sm:inline">Flip</span>
+</button>
+<!-- Brightness Modal Trigger -->
+<button class="p-2 rounded-lg hover:bg-white/10 active:scale-95 transition-colors" id="btnBrightness" title="Reader Brightness">
+<span class="material-symbols-outlined text-[19px]">brightness_medium</span>
+</button>
+<!-- Quick Font Settings trigger from bottom bar -->
+<button class="p-2 rounded-lg bg-white/10 hover:bg-white/20 active:scale-95 transition-colors text-primary flex items-center justify-center" id="btnBottomAa" title="Typography &amp; Theme Deck">
+<span class="material-symbols-outlined text-[19px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- QUICK TYPOGRAPHY & CUSTOMIZATION DRAWER SHEET -->
+<!-- ============================================== -->
+<aside class="fixed bottom-0 left-0 right-0 z-50 bg-[#252422] text-[#fffcf2] rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.6)] p-5 pb-safe transition-transform duration-300 transform translate-y-full border-t border-white/15 flex flex-col gap-4 max-h-[82vh] overflow-y-auto" id="appearanceDrawer">
+<!-- Drawer Handle & Header -->
+<div class="w-full flex flex-col items-center gap-1">
+<div class="w-12 h-1 bg-white/20 rounded-full"></div>
+<div class="w-full flex items-center justify-between pt-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<h2 class="font-headline text-base font-bold text-white tracking-tight">Display &amp; Typography</h2>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 active:scale-90 transition-transform text-white/80" id="btnCloseSheet">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+</div>
+</div>
+<!-- Brightness Quick Slider within Sheet -->
+<div class="flex items-center gap-3 bg-black/30 rounded-xl px-3.5 py-2.5 border border-white/10">
+<span class="material-symbols-outlined text-white/60 text-[18px]">light_mode</span>
+<input class="w-full accent-primary h-1.5 bg-white/20 rounded-lg cursor-pointer" max="100" min="20" type="range" value="85"/>
+<span class="material-symbols-outlined text-white text-[18px]">brightness_high</span>
+</div>
+<!-- Theme Palette Quick Selector -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-sans text-[11px] uppercase tracking-wider text-white/60 font-semibold">Reading Palette</span>
+<span class="font-sans text-[11px] text-primary font-medium" id="themeActiveLabel">Paper Warm</span>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<!-- Paper (Ivory / Japanese Editorial) -->
+<button class="theme-choice-btn py-2.5 px-1 rounded-xl flex flex-col items-center gap-1 bg-[#fffcf2] text-[#252422] shadow-md ring-2 ring-primary transition-all active:scale-95" data-name="Paper Warm" data-theme="paper">
+<span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+<span class="font-sans text-[11px] font-bold">Paper</span>
+</button>
+<!-- Sepia -->
+<button class="theme-choice-btn py-2.5 px-1 rounded-xl flex flex-col items-center gap-1 bg-[#f4ecd8] text-[#5b4636] shadow-sm border border-transparent transition-all active:scale-95" data-name="Vintage Sepia" data-theme="sepia">
+<span class="material-symbols-outlined text-[18px]">filter_vintage</span>
+<span class="font-sans text-[11px] font-semibold">Sepia</span>
+</button>
+<!-- Warm Dark / Charcoal -->
+<button class="theme-choice-btn py-2.5 px-1 rounded-xl flex flex-col items-center gap-1 bg-[#252422] text-[#fffcf2] border border-white/20 shadow-sm transition-all active:scale-95" data-name="Warm Dark" data-theme="charcoal">
+<span class="material-symbols-outlined text-[18px]">bedtime</span>
+<span class="font-sans text-[11px] font-semibold">Charcoal</span>
+</button>
+<!-- OLED Pure Black -->
+<button class="theme-choice-btn py-2.5 px-1 rounded-xl flex flex-col items-center gap-1 bg-[#000000] text-[#ded5c0] border border-white/10 shadow-sm transition-all active:scale-95" data-name="OLED Deep Black" data-theme="oled">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+<span class="font-sans text-[11px] font-semibold">OLED</span>
+</button>
+</div>
+</div>
+<!-- Typeface Font Family Selection Chips -->
+<div class="flex flex-col gap-1.5">
+<span class="font-sans text-[11px] uppercase tracking-wider text-white/60 font-semibold">Typeface</span>
+<div class="grid grid-cols-3 gap-2">
+<button class="font-choice-btn py-2 px-2 rounded-xl bg-white/10 font-serif text-[#fffcf2] text-center font-bold shadow-sm ring-2 ring-primary transition-all text-xs" data-font="serif">
+            Mincho Serif
+          </button>
+<button class="font-choice-btn py-2 px-2 rounded-xl bg-white/5 font-sans text-white/70 text-center transition-all text-xs hover:text-white" data-font="sans">
+            Modern Sans
+          </button>
+<button class="font-choice-btn py-2 px-2 rounded-xl bg-white/5 font-cinzel text-white/70 text-center transition-all text-xs hover:text-white" data-font="bookman">
+            Classic Book
+          </button>
+</div>
+</div>
+<!-- Font Size & Margins Grid -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Font Size Stepper -->
+<div class="flex flex-col gap-1.5">
+<span class="font-sans text-[11px] uppercase tracking-wider text-white/60 font-semibold">Font Size</span>
+<div class="flex items-center justify-between bg-black/40 border border-white/10 rounded-xl p-1 shadow-inner">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center font-serif text-sm font-semibold text-white/70 hover:text-white active:scale-95 transition-colors" id="btnFontDec" title="Decrease font size">
+              A-
+            </button>
+<span class="font-mono text-xs font-bold text-primary" id="fontSizeDisplay">18px</span>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center font-serif text-lg font-bold text-white hover:text-primary active:scale-95 transition-colors" id="btnFontInc" title="Increase font size">
+              A+
+            </button>
+</div>
+</div>
+<!-- Margins & Spacing Mode -->
+<div class="flex flex-col gap-1.5">
+<span class="font-sans text-[11px] uppercase tracking-wider text-white/60 font-semibold">Margins Width</span>
+<div class="flex items-center justify-around bg-black/40 border border-white/10 rounded-xl p-1 h-[48px]">
+<button class="margin-btn p-1.5 rounded-lg text-white/60 hover:text-white active:scale-95" data-margin="compact" title="Compact Margins">
+<span class="material-symbols-outlined text-[19px]">format_align_justify</span>
+</button>
+<button class="margin-btn p-1.5 rounded-lg text-primary font-bold active:scale-95" data-margin="balanced" title="Balanced Editorial">
+<span class="material-symbols-outlined text-[21px]">view_column</span>
+</button>
+<button class="margin-btn p-1.5 rounded-lg text-white/60 hover:text-white active:scale-95" data-margin="wide" title="Wide Margins">
+<span class="material-symbols-outlined text-[19px]">chrome_reader_mode</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Audio Drama Narration Sync Companion Tile -->
+<div class="w-full p-3 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">headphones</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-sans text-xs font-bold text-white">Audio Drama Sync</span>
+<span class="px-1.5 py-0.5 rounded text-[9px] bg-primary/20 text-primary font-bold uppercase tracking-wider">Hi-Fi</span>
+</div>
+<span class="font-sans text-[11px] text-white/60">Voice: Eriko Tamura • 1.1x speed</span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center shadow-lg active:scale-90 transition-transform hover:brightness-110">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Interactive Logic for Reader HUD, Sheet, Themes, and Font -->
+<script>
+  (function initNovelReader() {
+    const stage = document.getElementById('readerStage');
+    const readingArea = document.getElementById('readingArea');
+    const topHudBar = document.getElementById('topHudBar');
+    const bottomHudBar = document.getElementById('bottomHudBar');
+    const appearanceDrawer = document.getElementById('appearanceDrawer');
+    const btnAppearance = document.getElementById('btnAppearance');
+    const btnBottomAa = document.getElementById('btnBottomAa');
+    const btnCloseSheet = document.getElementById('btnCloseSheet');
+    const btnBookmark = document.getElementById('btnBookmark');
+    const bmIcon = document.getElementById('bmIcon');
+    const themeBtns = document.querySelectorAll('.theme-choice-btn');
+    const themeActiveLabel = document.getElementById('themeActiveLabel');
+    const fontBtns = document.querySelectorAll('.font-choice-btn');
+    const marginBtns = document.querySelectorAll('.margin-btn');
+    const btnFontInc = document.getElementById('btnFontInc');
+    const btnFontDec = document.getElementById('btnFontDec');
+    const fontSizeDisplay = document.getElementById('fontSizeDisplay');
+    const scrubber = document.getElementById('novelScrubber');
+    const scrubFill = document.getElementById('scrubFill');
+    const scrubThumb = document.getElementById('scrubThumb');
+    const scrubProgressText = document.getElementById('scrubProgressText');
+    const btnPageMode = document.getElementById('btnPageMode');
+
+    let hudVisible = true;
+    let bookmarked = true;
+    let currentFontSize = 18;
+
+    // Toggle HUD overlays on canvas tap
+    stage.addEventListener('click', function(e) {
+      if (e.target.closest('#topHudBar') || e.target.closest('#bottomHudBar') || e.target.closest('#appearanceDrawer')) {
+        return;
+      }
+      if (!appearanceDrawer.classList.contains('translate-y-full')) {
+        appearanceDrawer.classList.add('translate-y-full');
+        return;
+      }
+      hudVisible = !hudVisible;
+      if (hudVisible) {
+        topHudBar.classList.remove('-translate-y-full');
+        bottomHudBar.classList.remove('translate-y-full');
+      } else {
+        topHudBar.classList.add('-translate-y-full');
+        bottomHudBar.classList.add('translate-y-full');
+      }
+    });
+
+    // Open/Close Appearance Sheet
+    const openSheet = function(e) {
+      e.stopPropagation();
+      appearanceDrawer.classList.remove('translate-y-full');
+    };
+    btnAppearance.addEventListener('click', openSheet);
+    if (btnBottomAa) btnBottomAa.addEventListener('click', openSheet);
+
+    btnCloseSheet.addEventListener('click', function(e) {
+      e.stopPropagation();
+      appearanceDrawer.classList.add('translate-y-full');
+    });
+
+    // Bookmark Toggle
+    btnBookmark.addEventListener('click', function(e) {
+      e.stopPropagation();
+      bookmarked = !bookmarked;
+      if (bookmarked) {
+        bmIcon.style.fontVariationSettings = "'FILL' 1";
+        btnBookmark.classList.remove('text-white/50');
+        btnBookmark.classList.add('text-primary');
+      } else {
+        bmIcon.style.fontVariationSettings = "'FILL' 0";
+        btnBookmark.classList.remove('text-primary');
+        btnBookmark.classList.add('text-white/50');
+      }
+    });
+
+    // Themes
+    const themes = {
+      paper: { bg: 'bg-[#fffcf2]', text: 'text-[#252422]' },
+      sepia: { bg: 'bg-[#f4ecd8]', text: 'text-[#5b4636]' },
+      charcoal: { bg: 'bg-[#252422]', text: 'text-[#fffcf2]' },
+      oled: { bg: 'bg-[#000000]', text: 'text-[#ded5c0]' }
+    };
+
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        themeBtns.forEach(b => {
+          b.classList.remove('ring-2', 'ring-primary');
+        });
+        btn.classList.add('ring-2', 'ring-primary');
+
+        const t = btn.getAttribute('data-theme');
+        const name = btn.getAttribute('data-name');
+        if (themeActiveLabel) themeActiveLabel.textContent = name;
+        
+        stage.className = 'relative w-full min-h-screen transition-colors duration-300 pb-64 ' + themes[t].bg + ' ' + themes[t].text;
+      });
+    });
+
+    // Typeface Switcher
+    fontBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        fontBtns.forEach(b => {
+          b.classList.remove('ring-2', 'ring-primary', 'font-bold', 'bg-white/10', 'text-[#fffcf2]');
+          b.classList.add('bg-white/5', 'text-white/70');
+        });
+        btn.classList.add('ring-2', 'ring-primary', 'font-bold', 'bg-white/10', 'text-[#fffcf2]');
+        btn.classList.remove('bg-white/5', 'text-white/70');
+
+        const f = btn.getAttribute('data-font');
+        readingArea.classList.remove('font-serif', 'font-sans', 'font-cinzel');
+        if (f === 'serif') readingArea.classList.add('font-serif');
+        if (f === 'sans') readingArea.classList.add('font-sans');
+        if (f === 'bookman') readingArea.classList.add('font-cinzel');
+      });
+    });
+
+    // Font Size Adjustment
+    btnFontInc.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (currentFontSize < 26) {
+        currentFontSize += 1;
+        applyFontSize();
+      }
+    });
+
+    btnFontDec.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (currentFontSize > 13) {
+        currentFontSize -= 1;
+        applyFontSize();
+      }
+    });
+
+    function applyFontSize() {
+      fontSizeDisplay.textContent = currentFontSize + 'px';
+      const paras = readingArea.querySelectorAll('p');
+      paras.forEach(p => {
+        p.style.fontSize = currentFontSize + 'px';
+        p.style.lineHeight = (currentFontSize * 1.88) + 'px';
+      });
+    }
+
+    // Margins Controls
+    marginBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        marginBtns.forEach(b => b.classList.remove('text-primary', 'font-bold'));
+        btn.classList.add('text-primary', 'font-bold');
+
+        const m = btn.getAttribute('data-margin');
+        readingArea.classList.remove('px-4', 'px-6', 'px-10');
+        if (m === 'compact') readingArea.classList.add('px-4');
+        if (m === 'balanced') readingArea.classList.add('px-6');
+        if (m === 'wide') readingArea.classList.add('px-10');
+      });
+    });
+
+    // Scrubber Dragging
+    let isDragging = false;
+    function updateScrub(clientX) {
+      const rect = scrubber.getBoundingClientRect();
+      const offsetX = Math.max(0, Math.min(rect.width, clientX - rect.left));
+      const pct = Math.round((offsetX / rect.width) * 100);
+      const page = Math.max(1, Math.round((pct / 100) * 230));
+
+      scrubFill.style.width = pct + '%';
+      scrubThumb.style.left = pct + '%';
+      scrubProgressText.textContent = `Page ${page} of 230`;
+    }
+
+    scrubber.addEventListener('pointerdown', function(e) {
+      e.stopPropagation();
+      isDragging = true;
+      updateScrub(e.clientX);
+    });
+
+    window.addEventListener('pointermove', function(e) {
+      if (isDragging) updateScrub(e.clientX);
+    });
+
+    window.addEventListener('pointerup', function() {
+      isDragging = false;
+    });
+
+    // Page flip toggle feedback
+    if (btnPageMode) {
+      let isFlip = true;
+      btnPageMode.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isFlip = !isFlip;
+        const icon = btnPageMode.querySelector('.material-symbols-outlined');
+        const text = btnPageMode.querySelector('span:last-child');
+        if (isFlip) {
+          icon.textContent = 'auto_stories';
+          if (text) text.textContent = 'Flip';
+        } else {
+          icon.textContent = 'swap_vert';
+          if (text) text.textContent = 'Scroll';
+        }
+      });
+    }
+  })();
+</script>
+</body></html>

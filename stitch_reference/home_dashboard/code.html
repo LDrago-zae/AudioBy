@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary": "#615e59", "surface-container-highest": "#e5e2d9", "tertiary-container": "#79746a", "error-container": "#ffdad6", "surface-container-high": "#ebe8de", "on-primary-fixed-variant": "#822700", "surface-container-low": "#f6f4ea", "background": "#fcf9ef", "tertiary": "#605b52", "on-tertiary-fixed": "#1e1b14", "on-tertiary-container": "#fffbff", "tertiary-fixed": "#e9e2d5", "primary-fixed": "#ffdbcf", "primary-container": "#cc4811", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#494642", "on-error": "#ffffff", "surface-bright": "#fcf9ef", "surface-tint": "#ab3600", "on-tertiary": "#ffffff", "on-primary-fixed": "#390c00", "outline-variant": "#e1bfb4", "surface-container-lowest": "#ffffff", "surface-dim": "#dcdad0", "surface-variant": "#e5e2d9", "on-primary-container": "#fffbff", "on-background": "#1c1c16", "on-surface": "#1c1c16", "inverse-surface": "#31312a", "on-primary": "#ffffff", "secondary-fixed-dim": "#cbc5c0", "tertiary-fixed-dim": "#cdc6ba", "secondary-container": "#e8e1db", "on-secondary-container": "#68645f", "on-surface-variant": "#594139", "primary-fixed-dim": "#ffb59c", "surface-container": "#f1eee4", "secondary-fixed": "#e8e1db", "surface": "#fcf9ef", "on-error-container": "#93000a", "error": "#ba1a1a", "primary": "#a73400", "on-tertiary-fixed-variant": "#4a463d", "inverse-primary": "#ffb59c", "outline": "#8d7168", "on-secondary-fixed": "#1d1b18", "inverse-on-surface": "#f4f1e7" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1rem", "space-xs": "0.25rem" }, fontFamily: { "label-md": ["Inter"], "headline-sm": ["Manrope"], "headline-md": ["Manrope"], "headline-xl": ["Manrope"], "body-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-xl-mobile": ["Manrope"], "label-lg": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Manrope"] }, fontSize: { "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-sm": ["17px", { lineHeight: "22px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "26px", letterSpacing: "-0.015em", fontWeight: "600" }], "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.03em", fontWeight: "700" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }], "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }], "headline-xl-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.025em", fontWeight: "700" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { margin: 0; padding: 0; min-height: 100%; } body { overscroll-behavior-y: none; } .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px); } .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Komorebi App Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1VOLyooPYdFPd2UHVPpIl5TTAgJ-krkILgVD21j8WAyrV1_1Fh1bWh5RHYiK-6GHXx36woeR51RCBcQESNQBWgLf-CCLH3yNyPN_xROeeeCHmj8vZ7gCOg4DhBv8zXdmXJckzJCvmdLWuJvNiJco8uPRAySGTIpPCOns1BhaLvdWwfFPCdwyc3hBN5pTKSVvQnRbRjlkGulxE6mnM4C3ya_ER1ZB8-Wuwp4s81H4ySa"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-surface truncate">Home</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Komorebi</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary"></span></button><button aria-label="User Profile" class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPjNBRpS2lY4cHXKl7SLPc2fxzWgjIlttqjt4-o7gzOOZByPR-PToEJBx6KYxNUP_IkAGN3qcuaQrikHZaMKu3XpcRt8PMsuoxSDrwDQy5l-CB0YpIUdMoLHTy9SWLGJkdtGDwwULOIxOXgGQ1ZbHcfXsrPVStenfS93wppEGcVu9O6KVkH4TafXq3gfY2RQFlCg9YY0d4pVXCmUGe9BdClY8ru53n_m8SCG9LCDQ"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full pb-8 space-y-6">
+<!-- 1. Header Greeting & Quick Search Bar -->
+<section class="px-margin pt-2 flex flex-col space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Late Night Session</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Good evening, Kenji</h1>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="bg-surface-container-high px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">14 Days</span>
+</div>
+</div>
+</div>
+<!-- Quick Search Pill -->
+<div class="relative w-full">
+<div class="w-full h-12 bg-surface-container-low rounded-xl flex items-center px-4 gap-3 shadow-sm transition-all focus-within:bg-surface-container-lowest">
+<span class="material-symbols-outlined text-[20px] text-secondary">search</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-secondary focus:outline-none" placeholder="Titles, mangaka, literary narrators..." type="text"/>
+<button class="bg-surface-container px-2 py-1 rounded-lg text-secondary hover:text-on-surface text-[11px] font-label-sm uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. 'Continue Reading' Carousel -->
+<section class="flex flex-col space-y-3">
+<div class="px-margin flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">auto_stories</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Continue Reading</h2>
+</div>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">Shelf (8)</a>
+</div>
+<div class="flex overflow-x-auto gap-3.5 px-margin no-scrollbar snap-x snap-mandatory">
+<!-- Card 1: Chainsaw Man -->
+<div class="snap-start flex-shrink-0 w-64 bg-surface-container-low rounded-xl p-3 shadow-sm flex flex-col justify-between">
+<div class="flex gap-3">
+<div class="relative w-20 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Gritty dynamic manga cover of Chainsaw Man style demon hunter surrounded by cinematic smoke, textured Japanese editorial printing, muted warm tones with vermilion red ink splash accents, high contrast paper grain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3wzoQo2ba24yX_Huypq-SwAgKMzUVkyQqLaQJ312V9rCKquhJT0jHs7RYN7NrgDY7_U28IUB_H_xbUFOCD5CEcA7jC3cpbq484j2dJgnZDuV8pUDPvwleN5MurYdM41KrvZUGsa6wJQQIC_U01tBO5kDIzHvw13WKWedAYcOXGAqVkrRTP_ibJ7g407agO2hVSMI_vt1GE9xZMps8dk1k733-X6mURGaKOq_Xs2M"/>
+<span class="absolute top-1 right-1 bg-inverse-surface/90 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">MANGA</span>
+</div>
+<div class="flex flex-col justify-between min-w-0 flex-1">
+<div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span class="font-label-sm text-label-sm">2h ago</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-on-surface truncate mt-0.5">Chainsaw Man</h3>
+<p class="font-body-sm text-body-sm text-secondary truncate">Vol. 14 / Ch. 128</p>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-semibold">84%</span>
+<button class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 84%;"></div>
+</div>
+</div>
+<!-- Card 2: Kokoro -->
+<div class="snap-start flex-shrink-0 w-64 bg-surface-container-low rounded-xl p-3 shadow-sm flex flex-col justify-between">
+<div class="flex gap-3">
+<div class="relative w-20 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Minimalist vintage Japanese literary novel cover for Kokoro by Natsume Soseki, subtle washi paper texture, sumi ink brushstroke, contemplative silhouette under autumn maple branches, elegant kanji typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7E8-FhHWLFwmuOYvFQpPXKLhzRIaKjj4bKKHyNwobGw6Fn_i619woozebZ0rRxUEGR5EooI4GjHExb2lfANAOCJPfBm07jKpUvvjTTnOJHENCt_6esMruJePZRVRCYZxNzMausoo7PtvE9TYOmelCRqYXOhjcOzV-TNyDJEuJGqJr1W4_ySH_Pbq9e95LgSEVGE-yD5VsWIaFEzlqIqtB4WKSCoLY8TDH8kNItVE"/>
+<span class="absolute top-1 right-1 bg-inverse-surface/90 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">NOVEL</span>
+</div>
+<div class="flex flex-col justify-between min-w-0 flex-1">
+<div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span class="font-label-sm text-label-sm">Yesterday</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-on-surface truncate mt-0.5">Kokoro</h3>
+<p class="font-body-sm text-body-sm text-secondary truncate">Natsume Soseki · Ch. 12</p>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-semibold">42%</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 42%;"></div>
+</div>
+</div>
+<!-- Card 3: Solo Leveling -->
+<div class="snap-start flex-shrink-0 w-64 bg-surface-container-low rounded-xl p-3 shadow-sm flex flex-col justify-between">
+<div class="flex gap-3">
+<div class="relative w-20 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Electric modern manhwa webtoon style character with glowing ethereal daggers in a dark cavern, neon shadow monarch aura, cinematic illustration, clean book trim layout" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG6rlH2ewd33e_wdbMJTzUuamWPvOXXPBsR0MToQfLCM5Vkzs8ffRBcyYn5D-5cn3pisHw4RDA40U0oQl1NkTf0B8BNEuSOTb5i3fnsByFNxFMA-uGd_2VqJaHEFfN7fXklXGbud1QvOsgvF0hkZr-P4PbMU3fj8aJjCiy61wU0833NRVshuDVIJOBJRxDN3tgPhHVpVt976tE0yrKcCA32pT3hOoTetNfp44xqEQ"/>
+<span class="absolute top-1 right-1 bg-inverse-surface/90 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">MANHWA</span>
+</div>
+<div class="flex flex-col justify-between min-w-0 flex-1">
+<div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+<span class="font-label-sm text-label-sm">3d ago</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-on-surface truncate mt-0.5">Solo Leveling</h3>
+<p class="font-body-sm text-body-sm text-secondary truncate">Chapter 179</p>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-semibold">95%</span>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+</button>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 95%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Featured Story Hero Card -->
+<section class="px-margin">
+<div class="relative overflow-hidden rounded-2xl bg-surface-container shadow-md">
+<!-- Ambient Backing Art Container -->
+<div class="relative h-64 w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Poetic fantasy landscape illustration of an elven mage with twin white pigtails walking through blooming blue flower fields under golden hour sunlight, nostalgic peaceful atmosphere, fine line art and soft watercolor wash, premium artbook quality" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcLcMl8jPNAxTtHyH7nC8YhwmA_X7jhqdXXlZFf-_QS2MN9AXDzRQrI8SRYjtxV0lNl6sNlUgsWFHNEUVrs669EE8ipGXzSLSI5cP7hhXBrS3cw95ms9NJp_CkTEEFIvuxjee2idrYd7ZI6fnRFK8m18JdrSyvAFIiKPq_mNOgCtG4ak3czAOPQ5NJ5gxRavuSCx0HDSYSpp6zmfbIzNgUNsaBU_5k_wjNc-KvDL8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/60 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">4.95 Rating</span>
+</div>
+<span class="absolute top-3 right-3 bg-inverse-surface/80 backdrop-blur-md text-inverse-on-surface font-label-sm text-label-sm px-2.5 py-1 rounded-full">
+          Featured of the Month
+        </span>
+</div>
+<!-- Card Editorial Content -->
+<div class="p-4 pt-1 flex flex-col space-y-3">
+<div>
+<div class="flex flex-wrap gap-1.5 mb-1.5">
+<span class="bg-surface-container-high px-2 py-0.5 rounded-md font-label-sm text-label-sm text-secondary">Fantasy</span>
+<span class="bg-surface-container-high px-2 py-0.5 rounded-md font-label-sm text-label-sm text-secondary">Slice of Life</span>
+<span class="bg-surface-container-high px-2 py-0.5 rounded-md font-label-sm text-label-sm text-secondary">Drama</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface leading-tight">Frieren: Beyond Journey's End</h2>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-2 mt-1">
+            An elf mage embarks on a quiet pilgrimage across the continent, unraveling the ephemeral lives and memories of past companions.
+          </p>
+</div>
+<div class="flex items-center gap-2.5 pt-1">
+<button class="flex-1 h-12 bg-primary text-on-primary rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">auto_stories</span>
+<span>Read Now</span>
+</button>
+<button class="h-12 px-4 bg-surface-container-high text-on-surface rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-1.5 active:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[20px]">bookmark_add</span>
+<span class="hidden xs:inline">Library</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. 'Trending Manga & Manhwa' Horizontal Covers -->
+<section class="flex flex-col space-y-3">
+<div class="px-margin flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Trending Serializations</h2>
+<p class="font-body-sm text-body-sm text-secondary">Most read across Tokyo &amp; Seoul</p>
+</div>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="flex overflow-x-auto gap-3.5 px-margin no-scrollbar">
+<!-- Trend 1 -->
+<div class="flex-shrink-0 w-32 flex flex-col space-y-1.5">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm group">
+<img class="w-full h-full object-cover" data-alt="Dungeon Meshi culinary fantasy manga cover art featuring delicious monster stew pot in a rustic torchlit dungeon with expressive characters, high detail ink illustration, Japanese manga cover framing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDItHWsRT7eNhlgZmRNI7mHCXRuu05MAJUhOlg_w4DHs9ZotvKWzUTzYF0pMnk7O9tZHA1JGKBKMJqe0CMBJdOSWqxOgub4cXaPpN3-FxvYK-POWiuTeMwCRelzhqlOsB5om01uyXnAjGC-VB4KIXcOBFNzZsOEChLAcCUFJHfm4I8lCD8A-Q_oEVVxpRg8k_oy9LcaJIpZ6aAj4Cun9vKJjSn_MPns-x3tG-c4674"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">#1</span>
+<div class="absolute bottom-1.5 right-1.5 bg-surface-container-lowest/90 px-1.5 py-0.5 rounded font-label-sm text-label-sm text-on-surface flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.9</span>
+</div>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Delicious in Dungeon</h3>
+<span class="font-label-sm text-label-sm text-secondary">Ch. 97 · Complete</span>
+</div>
+<!-- Trend 2 -->
+<div class="flex-shrink-0 w-32 flex flex-col space-y-1.5">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Oshi no Ko idol mystery manga cover artwork showing glowing star-shaped pupils on a charismatic performer under purple stage spotlights, modern sleek manga visual presentation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUN9zlcOoJxgjOUoCurysh4CaWnEVwJkC82g2xBSMKephKzGjTheI5aj4eHrhDwiLpyCWRcqDFRZ3r4U8kIn4HXqsFZUcM0HjmgqtTiL3lrCSdSwdy04tg1DBLeCHejnwlotBrV5_z4svhQWZC4RLM6SLBBRLaSJNIFZBKYQTuoERTjNfnxWC6ar7whHOkaEtJemDdMww-GdQZe_78Rfmg9D52Hi26q1JyOBeOGBY"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">#2</span>
+<div class="absolute bottom-1.5 right-1.5 bg-surface-container-lowest/90 px-1.5 py-0.5 rounded font-label-sm text-label-sm text-on-surface flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.8</span>
+</div>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Oshi no Ko</h3>
+<span class="font-label-sm text-label-sm text-secondary">Ch. 142 · New</span>
+</div>
+<!-- Trend 3 -->
+<div class="flex-shrink-0 w-32 flex flex-col space-y-1.5">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Tower of God action manhwa cover showing high fantasy celestial scale, brilliant blue shinsu waves, dynamic heroic posing, stylized Korean digital webtoon illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv7KifriwKPXlCpNQlzOA4pTRx08U6S-VAIkscZBdp_ZWSV8TV0BMJQze3QK9nIYCYDfzZmBLYpZLB6uL6wbLqQ-icuNb1ivva6SQTK8VhdgsUspYJERBuofsI5w_VIJDHkRKv4eqhe5rY0FNmuSqkIQJU3jpvx80BE_z26tDKjenHAmDsletkRadg6Ipg5xQ2Ot4OcYSMdHUnTTi0EkS4aN3G9Wss02Ixm0qFw2g"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">#3</span>
+<div class="absolute bottom-1.5 right-1.5 bg-surface-container-lowest/90 px-1.5 py-0.5 rounded font-label-sm text-label-sm text-on-surface flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.7</span>
+</div>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Tower of God</h3>
+<span class="font-label-sm text-label-sm text-secondary">Ch. 598</span>
+</div>
+<!-- Trend 4 -->
+<div class="flex-shrink-0 w-32 flex flex-col space-y-1.5">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Vagabond historical samurai manga cover featuring detailed sumi-e brush ink painting of Miyamoto Musashi with bamboo reeds background, authentic Japanese aesthetic, raw ink texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGIUzUUrC3GBGCzUyMYGoGTiJFPL19_m3dgM2mvLbNXmhEtCunDvSM6RNTv67Lw4SBYOm6GSPkwbDlqevKO6lNvwaoM7bT7-WqWM7zM6-D3ERU_v_gpq0zjF1Mcogz8cZnBeF4L0qzlnUjx8JQ-5Qg4cpZ9wHecNbj7tSNXzoJih9hQfB3PCcSKrVJtU0fSvp5o_BgPwHzNBY3cDrdQMn5gp7bjC1rnCjzbclmSZM"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">#4</span>
+<div class="absolute bottom-1.5 right-1.5 bg-surface-container-lowest/90 px-1.5 py-0.5 rounded font-label-sm text-label-sm text-on-surface flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.9</span>
+</div>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Vagabond (Definitive)</h3>
+<span class="font-label-sm text-label-sm text-secondary">Vol. 37</span>
+</div>
+</div>
+</section>
+<!-- 5. 'Continue Listening' Mini-Player Banner / Audio Card -->
+<section class="px-margin">
+<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm flex flex-col space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary animate-spin" style="animation-duration: 6s;">album</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Audiobook in progress</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-medium">1.2x Speed</span>
+</div>
+<div class="flex items-center gap-3.5">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-surface-container-highest shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Moody square literary audiobook cover of Osamu Dazai The Setting Sun, silhouette of Japanese post-war western villa at dusk with vermilion sky, minimalist typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0h4wURAgelC62DFekX3nXW_DIIIVCXMBmkseo3VLE8TqUXFGs4wVPLW8A2WJ7pdINXVImBQG98sRzXuowjSC4NR1d7m6ixWYH-M_ZDhFb8UA6DN4miOJ9qRMOYZ-6cWyV9dyeZI4MNuLOWX5xnnItHnQmgzoXJaRLASm81EZeqB5Dp2ltmRHOz823F5py2iUk50G1wrsoTnIbXrUzel5DKX56ktQ4OqpxRlG_Nl8"/>
+<div class="absolute inset-0 bg-on-background/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-surface text-[20px]">headphones</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">The Setting Sun</h3>
+<p class="font-body-sm text-body-sm text-secondary truncate">Narrated by Kenjiro Tsuda</p>
+<p class="font-label-sm text-label-sm text-tertiary mt-0.5">Chapter 4 · 24m remaining</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-11 h-11 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform" id="audio-play-btn">
+<span class="material-symbols-outlined text-[24px]">pause</span>
+</button>
+</div>
+</div>
+<!-- Scrubber track -->
+<div class="w-full space-y-1">
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 68%;"></div>
+</div>
+<div class="flex justify-between text-secondary font-label-sm text-label-sm">
+<span>51:12</span>
+<span>-24:08</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. 'Recently Updated' Clean Editorial List -->
+<section class="px-margin flex flex-col space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">update</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Recently Updated</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">All Follows</span>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-2 shadow-sm flex flex-col divide-y-0 space-y-1">
+<!-- Item 1 -->
+<a class="flex items-center p-2.5 rounded-xl hover:bg-surface-container transition-colors gap-3" href="#">
+<div class="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Manga cover artwork of Dandadan supernatural battle featuring occult aliens and yokai spirits in bold kinetic pop-art line art style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTQxDdRoD0V5c-x2BTtcVUVMk7VcM2QOWM-wpczOWuvI8tt0oG--SddfB4GKKNRt1XlVrM2rS2KBo7d4CwigiUrPqDqmhyyTt3Kswm15GqBgOhJw_15Am4RnPVzJ9E3x6W3-feeeitnGtfNQVBvsrfrht4WMUVx9e33P2FlzyNz3qZL1uRz9_lrqXL3uHQhCMc7bNzZArCLiwdb5hiwR_rsYrBDQ6Gz4QEZSh2NVg"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Dandadan</h3>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate">Chapter 148: The Golden Orb</p>
+<span class="font-label-sm text-label-sm text-tertiary">15m ago · Official Translation</span>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm px-2 py-0.5 rounded">NEW</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</a>
+<!-- Item 2 -->
+<a class="flex items-center p-2.5 rounded-xl hover:bg-surface-container transition-colors gap-3" href="#">
+<div class="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Cover artwork of Apothecary Diaries showing Maomao examining Chinese herbal medicine bottles in an imperial court pharmacy setting, vibrant delicate aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHkZUr3hdlX0kQWr4ZOcvvomp-JHL1ym9hahcxCjmkNH9Vp254Lq2LHv9i8PIMfyl-h3aGIcP6g2ElVVvgIsnQ9INswidJBAQqMFHjJQqXzs_XZQ8T4rg2VbYRqSYwxuCzfvn-zO0EFyxW-T1BtxHroqWYhOfzduXsQ24D8oFxqbO3NW_2PauayNO37pUMHGm3ewMHIERvjAypIn9vlQ_wVqpwAhifS7pX9sNRXFA"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">The Apothecary Diaries</h3>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate">Chapter 71: The Powder of Blue</p>
+<span class="font-label-sm text-label-sm text-tertiary">1h ago · Square Enix</span>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm px-2 py-0.5 rounded">NEW</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</a>
+<!-- Item 3 -->
+<a class="flex items-center p-2.5 rounded-xl hover:bg-surface-container transition-colors gap-3" href="#">
+<div class="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Japanese light novel cover art for Ascendance of a Bookworm depicting Myne reading a heavy leatherbound tome in a cathedral scriptorium" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFRtG2Tr4NHnKy76JGzJmgMY6hIb9OrAEHtgO60XHmwqP7popZpXrLDgY0MXb0otV73jgSYQOXbDILbxRP5jX5Q9nxLChNH1hfqc62yBwlMcuwxWl7_tgbtqIUUpGxgqZWwQq8IcwS3re2CChh1kFRiV4ApRBDxWe0JRytjYRQkr3guBOWk1LjKjvbJEvOhl6n72n9o_NbZc9uj_ralX3NcxTGXruYSwdZWCyM2HU"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Ascendance of a Bookworm</h3>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate">Part 5 Volume 8 · Web Chapter 640</p>
+<span class="font-label-sm text-label-sm text-tertiary">4h ago · J-Novel Club</span>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">chevron_right</span>
+</div>
+</a>
+</div>
+</section>
+<!-- 7. 'Recommended For You' 2-Column Grid -->
+<section class="px-margin flex flex-col space-y-3">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Curated For Kenji</h2>
+<p class="font-body-sm text-body-sm text-secondary">Based on psychological manga &amp; modern Japanese novels</p>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3.5">
+<!-- Grid Card 1 -->
+<div class="bg-surface-container-low rounded-xl p-2.5 shadow-sm flex flex-col space-y-2">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden bg-surface-container-highest shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Cover of Monster manga by Naoki Urasawa, dark rain-soaked cobblestone street in 1990s Central Europe, subtle sinister silhouette, psychological thriller atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXuXOIlp80zSXzrDEfnjh8a1CpP7J2P9r5liBv4TVtZ5SSFYdx69hRyaiKEZC5ysu1PE9PVX23wkB69CA5fzsKtqPViHMILx4lbtG0p22-fW87tHikfVOtjP8BlSvgrFr-YbawhIJ14ut1QiCF_H8jZq-tRe0BziG4oDclusP9pAb5pK4hRdcsI-Er1wSG_mW3PlVNmAC3hGRxT9xiUiEYPMD4iJGAfKQbOH2jQ18"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">MANGA</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">Monster: The Perfect Edition</h3>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Naoki Urasawa</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-primary font-semibold">18 Volumes</span>
+<button class="text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Card 2 -->
+<div class="bg-surface-container-low rounded-xl p-2.5 shadow-sm flex flex-col space-y-2">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden bg-surface-container-highest shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Modern Japanese book cover of Convenience Store Woman by Sayaka Murata, bright clean minimalist graphic design of glass convenience store storefront, pastel tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWqgijGAQrvBgK4RWvnOYvcqV6mdayiCIj3ku4glJOJ9akulUFW2Fzup3Rz9JFpZ69jGS0xTPi7Zvm34_NYzzxrUu6nKubUsx_x6pUrwVM581AbmmDuFw9ZCQx1ubYw5NDT_BEH9l2I_zASWDASkpZj-yd83Po0im4iG9ubzxyUFHhILC_vIGh88DDG5cWpDnRc--Mcd7IPUJLvCDElPl8fj3O5-rLwsp9-6o4BZE"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">NOVEL</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">Convenience Store Woman</h3>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Sayaka Murata</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-primary font-semibold">163 Pages</span>
+<button class="text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Card 3 -->
+<div class="bg-surface-container-low rounded-xl p-2.5 shadow-sm flex flex-col space-y-2">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden bg-surface-container-highest shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Manga cover of Land of the Lustrous Houseki no Kuni, translucent prismatic crystalline humanoid character gleaming with mineral fractures, exquisite modern Japanese comic styling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJlw4LdJiecFL-hp9i1TI-07-ngNEoKZ01DTt-NPIveC28BOYmmzgmXRrdyvnLDR5QC0QM1JHZbTopvUC-sHq880MJvzmViGvQWlzWaFEDxnLkPU-HDWXw7RvtZNWlQJEVUJlJKldGnGcZtZFD3boHevEzScD6fSfsjSrIwqXLTsNNu2iXjOTfWA7DYdX9wbylNzqh0QWN-bj7PPi9zHyt_VCefBqiaoEMfQCGehQ"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">MANGA</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">Land of the Lustrous</h3>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Haruko Ichikawa</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Vol. 12</span>
+<button class="text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Grid Card 4 -->
+<div class="bg-surface-container-low rounded-xl p-2.5 shadow-sm flex flex-col space-y-2">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden bg-surface-container-highest shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Literary audiobook artwork of No Longer Human by Osamu Dazai, moody dark inkwash portrait with sorrowful eyes and fractured red thread lines, evocative paper texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD_6AV3grqJd2qdWrOzfH_Z5WyaGeHKSbBuR-v3BwhW7Oss9CJZetjeheeVv9Aq_I-Af5ZPwDcHNCEsB1rA2YQ2y42fNyBGzn5hyZo7wmLhOZM-YVPLK_q5LnLhSw2yuC_YKEclPYgOCZAb-tZENvecUOSULGI9GxkgracOmIXdyxH4vAol74_DU90rNqehP_fpGxDH6yDTtfwnFQiprQV_iAuSbl3uuJYViWZbSw"/>
+<span class="absolute top-1.5 left-1.5 bg-inverse-surface/85 text-inverse-on-surface font-label-sm text-label-sm px-1.5 py-0.5 rounded">AUDIO</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface line-clamp-1">No Longer Human</h3>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">Osamu Dazai</p>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-primary font-semibold">4h 15m</span>
+<button class="text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  (function() {
+    const playBtn = document.getElementById('audio-play-btn');
+    if (playBtn) {
+      let isPlaying = true;
+      playBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        isPlaying = !isPlaying;
+        const icon = playBtn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.textContent = isPlaying ? 'pause' : 'play_arrow';
+        }
+      });
+    }
+
+    const bookmarkBtns = document.querySelectorAll('button:has(.material-symbols-outlined[textContent*="bookmark"])');
+    bookmarkBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const icon = this.querySelector('.material-symbols-outlined');
+        if (icon) {
+          if (icon.textContent === 'bookmark_border') {
+            icon.textContent = 'bookmark';
+            icon.style.fontVariationSettings = "'FILL' 1";
+            icon.classList.add('text-primary');
+          } else if (icon.textContent === 'bookmark') {
+            icon.textContent = 'bookmark_border';
+            icon.style.fontVariationSettings = "'FILL' 0";
+            icon.classList.remove('text-primary');
+          }
+        }
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-medium"><div class="h-16 px-space-xs grid grid-cols-5 items-center"><a aria-current="page" class="flex flex-col items-center justify-center h-full gap-0.5 transition-colors text-primary font-medium" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Home</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="discover" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm">Discover</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">local_library</span><span class="font-label-sm text-label-sm">Library</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="audiobooks" href="#"><span class="material-symbols-outlined text-[24px]">headphones</span><span class="font-label-sm text-label-sm">Audio</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Profile</span></a></div></nav></body></html>
