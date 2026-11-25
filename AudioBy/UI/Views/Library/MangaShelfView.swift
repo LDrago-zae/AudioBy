@@ -18,6 +18,36 @@ public struct MangaShelfView: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            // Dedicated Manga Section Banner
+            Button {
+                AppNavigationState.shared.switchTo(.manga)
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(MangaTheme.vermilion)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Manga has its own dedicated section!")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundStyle(MangaTheme.ink)
+                        Text("Tap to open Komorebi Manga Lounge with a complete UI makeover.")
+                            .font(.system(size: 11))
+                            .foregroundStyle(MangaTheme.secondary)
+                    }
+                    Spacer()
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.white)
+                        .padding(6)
+                        .background(MangaTheme.vermilion, in: Circle())
+                }
+                .padding(12)
+                .background(MangaTheme.surfaceContainer)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(MangaTheme.hairline, lineWidth: 1))
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 20)
             HStack(spacing: 8) {
                 TextField("Search manga", text: $query)
                     .font(.system(size: 16))
@@ -286,7 +316,7 @@ public struct MangaShelfView: View {
     private func cover(_ series: MangaSeries) -> some View {
         if let raw = series.coverURL {
             let url = raw.hasPrefix("http") ? URL(string: raw) : URL(fileURLWithPath: raw)
-            AsyncImage(url: url) { image in
+            CachedAsyncImage(url: url) { image in
                 image.resizable().scaledToFill()
             } placeholder: {
                 Theme.surfaceSubtle
@@ -300,11 +330,7 @@ public struct MangaShelfView: View {
         isSearching = true
         searchError = nil
         defer { isSearching = false }
-        do {
-            results = try await MangaDexService.shared.popular()
-        } catch {
-            searchError = error.localizedDescription
-        }
+            results = await MangaCatalogService.shared.popular()
     }
 
     private func search() async {
@@ -317,11 +343,7 @@ public struct MangaShelfView: View {
         isSearching = true
         searchError = nil
         defer { isSearching = false }
-        do {
-            results = try await MangaDexService.shared.search(title: trimmed)
-            if results.isEmpty { searchError = "No series matched that title." }
-        } catch {
-            searchError = error.localizedDescription
-        }
+        results = await MangaCatalogService.shared.search(trimmed)
+        if results.isEmpty { searchError = "No series matched that title." }
     }
 }
