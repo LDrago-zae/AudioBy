@@ -36,6 +36,196 @@ public final class AudiobookAPIService: @unchecked Sendable {
         }
     }
 
+    // MARK: - Synopsis enrichment
+
+    /// True when `summary` is missing or is just a genre/subject tag (e.g. "Fiction").
+    public static func needsSynopsis(_ summary: String) -> Bool {
+        let t = summary.trimmingCharacters(in: .whitespacesAndNewlines)
+        if t.count < 80 { return true }
+        let lower = t.lowercased()
+        let subjectLike: Set<String> = [
+            "fiction", "literature", "novel", "classics", "classic", "poetry",
+            "drama", "history", "biography", "philosophy", "science", "romance",
+            "adventure", "mystery", "children", "juvenile", "audiobook", "librivox"
+        ]
+        let tokens = lower
+            .split(whereSeparator: { !$0.isLetter && $0 != "&" })
+            .map(String.init)
+            .filter { !$0.isEmpty }
+        if tokens.count <= 4, tokens.allSatisfy({ subjectLike.contains($0) || $0.count < 3 }) {
+            return true
+        }
+        return false
+    }
+
+    /// Fetches a real literary synopsis from Archive metadata, Open Library, Gutendex, or Wikipedia.
+    public func fetchSynopsis(for book: Audiobook) async -> String? {
+        if let cached = Self.loadCachedSynopsis(bookId: book.id), !Self.needsSynopsis(cached) {
+            return cached
+        }
+
+        if let archiveId = book.archiveIdentifier ?? Self.archiveId(fromBookId: book.id) {
+            if let text = await synopsisFromArchive(identifier: archiveId), !Self.needsSynopsis(text) {
+                Self.cacheSynopsis(text, bookId: book.id)
+                return text
+            }
+        }
+
+        if let gid = book.gutenbergId ?? Self.gutenbergId(fromBookId: book.id), gid > 0 {
+            if let text = await synopsisFromGutendex(id: gid), !Self.needsSynopsis(text) {
+                Self.cacheSynopsis(text, bookId: book.id)
+                return text
+            }
+        }
+
+        if let text = await synopsisFromOpenLibrary(title: book.title, author: book.author), !Self.needsSynopsis(text) {
+            Self.cacheSynopsis(text, bookId: book.id)
+            return text
+        }
+
+        if let text = await synopsisFromGutendexSearch(title: book.title, author: book.author), !Self.needsSynopsis(text) {
+            Self.cacheSynopsis(text, bookId: book.id)
+            return text
+        }
+
+        if let text = await synopsisFromWikipedia(title: book.title), !Self.needsSynopsis(text) {
+            Self.cacheSynopsis(text, bookId: book.id)
+            return text
+        }
+
+        return nil
+    }
+
+    private static func archiveId(fromBookId id: String) -> String? {
+        if id.hasPrefix("ia-") { return String(id.dropFirst(3)) }
+        if id.hasPrefix("novel-") { return String(id.dropFirst(6)) }
+        return nil
+    }
+
+    private static func gutenbergId(fromBookId id: String) -> Int? {
+        if id.hasPrefix("gutendex-") { return Int(id.replacingOccurrences(of: "gutendex-", with: "")) }
+        if id.hasPrefix("gutenberg-") { return Int(id.replacingOccurrences(of: "gutenberg-", with: "")) }
+        return nil
+    }
+
+    private static let synopsisCacheKey = "AudioBy.SynopsisCache"
+
+    private static func loadCachedSynopsis(bookId: String) -> String? {
+        guard let map = UserDefaults.standard.dictionary(forKey: synopsisCacheKey) as? [String: String] else { return nil }
+        return map[bookId]
+    }
+
+    private static func cacheSynopsis(_ text: String, bookId: String) {
+        var map = (UserDefaults.standard.dictionary(forKey: synopsisCacheKey) as? [String: String]) ?? [:]
+        map[bookId] = text
+        if map.count > 400 {
+            map = Dictionary(uniqueKeysWithValues: map.suffix(300))
+        }
+        UserDefaults.standard.set(map, forKey: synopsisCacheKey)
+    }
+
+    private func synopsisFromArchive(identifier: String) async -> String? {
+        guard let meta = try? await fetchArchiveMetadata(archiveId: identifier) else { return nil }
+        let raw = meta.metadata?.descriptionValue ?? ""
+        let cleaned = Self.stripHTML(raw).trimmingCharacters(in: .whitespacesAndNewlines)
+        return cleaned.isEmpty ? nil : cleaned
+    }
+
+    private func synopsisFromOpenLibrary(title: String, author: String) async -> String? {
+        var components = URLComponents(string: "https://openlibrary.org/search.json")
+        components?.queryItems = [
+            URLQueryItem(name: "title", value: title),
+            URLQueryItem(name: "author", value: author),
+            URLQueryItem(name: "limit", value: "5"),
+            URLQueryItem(name: "fields", value: "key,title,author_name,first_sentence,subtitle")
+        ]
+        guard let url = components?.url,
+              let data = try? await fetchData(from: url),
+              let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let docs = root["docs"] as? [[String: Any]] else { return nil }
+
+        let wantTitle = Self.normalizedTitle(title)
+        let best = docs.max(by: {
+            Self.titleSimilarity(wantTitle, Self.normalizedTitle(($0["title"] as? String) ?? ""))
+            < Self.titleSimilarity(wantTitle, Self.normalizedTitle(($1["title"] as? String) ?? ""))
+        })
+        guard let best,
+              Self.titleSimilarity(wantTitle, Self.normalizedTitle((best["title"] as? String) ?? "")) >= 50 else { return nil }
+
+        guard let workKey = best["key"] as? String else { return nil }
+        let workPath = workKey.hasPrefix("/") ? workKey : "/\(workKey)"
+        if let workURL = URL(string: "https://openlibrary.org\(workPath).json"),
+           let workData = try? await fetchData(from: workURL),
+           let work = try? JSONSerialization.jsonObject(with: workData) as? [String: Any] {
+            if let desc = work["description"] as? String {
+                let t = Self.stripHTML(desc).trimmingCharacters(in: .whitespacesAndNewlines)
+                if !Self.needsSynopsis(t) { return t }
+            }
+            if let desc = work["description"] as? [String: Any], let value = desc["value"] as? String {
+                let t = Self.stripHTML(value).trimmingCharacters(in: .whitespacesAndNewlines)
+                if !Self.needsSynopsis(t) { return t }
+            }
+        }
+
+        // first_sentence is often just the opening line — only use a single English-looking entry.
+        let sentences: [String]
+        if let arr = best["first_sentence"] as? [String] {
+            sentences = arr
+        } else if let one = best["first_sentence"] as? String {
+            sentences = [one]
+        } else {
+            sentences = []
+        }
+        if let pick = sentences.first(where: {
+            let t = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            return t.count >= 80 && t.unicodeScalars.contains(where: { $0.isASCII })
+        }) {
+            return pick.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        return nil
+    }
+
+    private func synopsisFromGutendex(id: Int) async -> String? {
+        guard let url = URL(string: "https://gutendex.com/books/\(id)"),
+              let data = try? await fetchData(from: url),
+              let item = try? JSONDecoder().decode(GutendexBook.self, from: data) else { return nil }
+        let summary = item.summaries?.first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return summary.isEmpty ? nil : summary
+    }
+
+    private func synopsisFromGutendexSearch(title: String, author: String) async -> String? {
+        let query = Self.gutendexQuery(title: title, author: author)
+        var components = URLComponents(string: "https://gutendex.com/books")
+        components?.queryItems = [URLQueryItem(name: "search", value: query)]
+        guard let url = components?.url,
+              let data = try? await fetchData(from: url),
+              let page = try? JSONDecoder().decode(GutendexResponse.self, from: data),
+              let results = page.results, !results.isEmpty else { return nil }
+        let want = Self.normalizedTitle(title)
+        let best = results.max(by: {
+            Self.titleSimilarity(want, Self.normalizedTitle($0.title ?? ""))
+            < Self.titleSimilarity(want, Self.normalizedTitle($1.title ?? ""))
+        })
+        let summary = best?.summaries?.first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return summary.isEmpty ? nil : summary
+    }
+
+    private func synopsisFromWikipedia(title: String) async -> String? {
+        let slug = title
+            .replacingOccurrences(of: " ", with: "_")
+            .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? title
+        guard let url = URL(string: "https://en.wikipedia.org/api/rest_v1/page/summary/\(slug)"),
+              var req = Optional(URLRequest(url: url)) else { return nil }
+        req.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        req.setValue("application/json", forHTTPHeaderField: "Accept")
+        guard let (data, response) = try? await session.data(for: req),
+              let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
+              let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
+        if let type = root["type"] as? String, type == "disambiguation" { return nil }
+        let extract = (root["extract"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return extract.isEmpty ? nil : extract
+    }
+
     // MARK: - Catalog
 
     public func fetchAudiobooks(
@@ -220,7 +410,7 @@ public final class AudiobookAPIService: @unchecked Sendable {
         guard !title.isEmpty else { return nil }
 
         let author = doc.creatorValue.isEmpty ? "LibriVox Volunteers" : doc.creatorValue
-        let summary = Self.stripHTML(doc.description ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let summary = Self.stripHTML(doc.descriptionValue).trimmingCharacters(in: .whitespacesAndNewlines)
         let duration = Self.parseDuration(doc.runtime)
         let listens = Int(doc.downloads ?? 0)
         let coverURL = URL(string: "https://archive.org/services/img/\(identifier)")
@@ -366,7 +556,7 @@ public final class AudiobookAPIService: @unchecked Sendable {
             return try await fetchAndParseTextFromURL(textURL, bookTitle: book.title)
         }
 
-        let description = archiveMetadata?.metadata?.description ?? book.summary
+        let description = archiveMetadata?.metadata?.descriptionValue ?? book.summary
         if let gid = Self.extractGutenbergId(fromHTML: description) {
             return try await fetchAndParseGutenbergBook(gutenbergId: gid)
         }
@@ -449,6 +639,74 @@ public final class AudiobookAPIService: @unchecked Sendable {
         } catch {
             return []
         }
+    }
+
+    private var novelSession: URLSession {
+        let c = URLSessionConfiguration.ephemeral
+        c.timeoutIntervalForRequest = 15
+        c.timeoutIntervalForResource = 40
+        return URLSession(configuration: c)
+    }
+
+    /// Public-domain novels from the Internet Archive's Project Gutenberg mirror, most downloaded first.
+    public func fetchNovels(query: String?, topic: String?) async throws -> [Audiobook] {
+        var q = "collection:gutenberg AND mediatype:texts AND language:(eng OR English)"
+        if let query, !query.trimmingCharacters(in: .whitespaces).isEmpty {
+            let t = query.replacingOccurrences(of: "\"", with: "")
+            q += " AND (title:(\(t)) OR creator:(\(t)))"
+        } else if let topic, !topic.isEmpty {
+            q += " AND subject:(\(topic))"
+        }
+        var c = URLComponents(string: "https://archive.org/advancedsearch.php")
+        c?.queryItems = [
+            .init(name: "q", value: q),
+            .init(name: "fl[]", value: "identifier"), .init(name: "fl[]", value: "title"),
+            .init(name: "fl[]", value: "creator"), .init(name: "fl[]", value: "description"),
+            .init(name: "sort[]", value: "downloads desc"),
+            .init(name: "rows", value: "40"), .init(name: "output", value: "json")
+        ]
+        guard let url = c?.url else { return [] }
+        let (data, _) = try await novelSession.data(from: url)
+        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let docs = (root["response"] as? [String: Any])?["docs"] as? [[String: Any]] else { return [] }
+        return docs.compactMap { d in
+            guard let id = d["identifier"] as? String, let title = d["title"] as? String else { return nil }
+            let creator = (d["creator"] as? String) ?? (d["creator"] as? [String])?.first ?? "Unknown author"
+            let author = creator.components(separatedBy: ",").prefix(2).reversed().joined(separator: " ").trimmingCharacters(in: .whitespaces)
+            let rawDesc = (d["description"] as? String)
+                ?? (d["description"] as? [String])?.first
+                ?? ""
+            let summary = Self.stripHTML(rawDesc).trimmingCharacters(in: .whitespacesAndNewlines)
+            return Audiobook(
+                id: "novel-\(id)", title: title, author: author, narrator: "On-device voice",
+                summary: summary,
+                coverGradientColors: Theme.coverHexes(seed: title),
+                coverImageURL: URL(string: "https://archive.org/services/img/\(id)"),
+                category: .fiction, rating: 0, reviewCount: 0, chapters: [], reviews: [],
+                archiveIdentifier: id,
+                gutenbergId: nil, textURL: nil, catalogSource: CatalogSourceKind.gutenberg.rawValue,
+                listenCount: 0, estimatedDuration: 0
+            )
+        }
+    }
+
+    /// Downloads the plain-text file of an archive novel and splits it into chapters.
+    public func loadNovelChapters(for book: Audiobook) async throws -> [Chapter] {
+        let identifier = book.id.hasPrefix("novel-") ? String(book.id.dropFirst(6)) : book.id
+        let session = novelSession
+        let (metaData, _) = try await session.data(from: URL(string: "https://archive.org/metadata/\(identifier)")!)
+        guard let meta = try JSONSerialization.jsonObject(with: metaData) as? [String: Any],
+              let files = meta["files"] as? [[String: Any]] else { throw APIServiceError.emptyChapters }
+        let txt = files.filter { ($0["name"] as? String)?.lowercased().hasSuffix(".txt") == true && ($0["format"] as? String) != "Metadata" }
+            .max { (Int($0["size"] as? String ?? "") ?? 0) < (Int($1["size"] as? String ?? "") ?? 0) }
+        guard let name = txt?["name"] as? String, let url = Self.archiveDownloadURL(identifier: identifier, fileName: name) else {
+            throw APIServiceError.emptyChapters
+        }
+        let (data, _) = try await session.data(from: url)
+        guard let raw = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .isoLatin1), raw.count > 200 else {
+            throw APIServiceError.emptyChapters
+        }
+        return try Self.parsePlainText(raw, bookTitle: book.title)
     }
 
     private func categoryToTopic(_ category: AudiobookCategory) -> String {
@@ -849,13 +1107,14 @@ private struct ArchiveSearchDoc: Decodable {
     let identifier: String?
     let title: String?
     let creator: FlexibleString?
-    let description: String?
+    let description: FlexibleString?
     let runtime: String?
     let downloads: Double?
     let subject: FlexibleString?
 
     var creatorValue: String { creator?.value ?? "" }
     var subjectValue: String { subject?.value ?? "" }
+    var descriptionValue: String { description?.value ?? "" }
 }
 
 struct ArchiveFile: Decodable {
@@ -896,8 +1155,10 @@ private struct ArchiveMetadataResponse: Decodable {
 }
 
 private struct ArchiveItemMetadata: Decodable {
-    let description: String?
+    let description: FlexibleString?
     let title: String?
+
+    var descriptionValue: String { description?.value ?? "" }
 }
 
 private struct GutendexResponse: Decodable {

@@ -3,11 +3,13 @@ import Foundation
 enum CBZError: Error, LocalizedError {
     case unreadable
     case empty
+    case unsupported
 
     var errorDescription: String? {
         switch self {
         case .unreadable: return "That file is not a CBZ or ZIP of page images."
         case .empty: return "No page images were found in that file."
+        case .unsupported: return "PDF manga import isn’t supported yet — use a CBZ or ZIP of page images."
         }
     }
 }
@@ -15,7 +17,36 @@ enum CBZError: Error, LocalizedError {
 enum CBZImporter {
     private static let imageExtensions: Set<String> = ["jpg", "jpeg", "png", "webp", "gif"]
 
+    static func libraryRoot() -> URL {
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return docs.appendingPathComponent("Manga", isDirectory: true)
+    }
+
+    /// Resolve a stored page path (absolute legacy or relative `id/0001.jpg`) to a file URL.
+    static func resolvedPageURL(_ path: String) -> URL {
+        if path.hasPrefix("/") {
+            let url = URL(fileURLWithPath: path)
+            if FileManager.default.fileExists(atPath: url.path) { return url }
+            // Reinstall / container move: try remapping by filename under Manga/
+            let name = url.lastPathComponent
+            let parent = url.deletingLastPathComponent().lastPathComponent
+            let candidate = libraryRoot().appendingPathComponent(parent).appendingPathComponent(name)
+            if FileManager.default.fileExists(atPath: candidate.path) { return candidate }
+            return url
+        }
+        return libraryRoot().appendingPathComponent(path)
+    }
+
+    static func resolvedPageURLs(from chapter: MangaChapter) -> [URL] {
+        chapter.imagePaths
+            .map(resolvedPageURL)
+            .filter { FileManager.default.fileExists(atPath: $0.path) }
+    }
+
     static func importFile(at url: URL) throws -> StoredManga {
+        let ext = url.pathExtension.lowercased()
+        if ext == "pdf" { throw CBZError.unsupported }
+
         let accessed = url.startAccessingSecurityScopedResource()
         defer { if accessed { url.stopAccessingSecurityScopedResource() } }
         let data = try Data(contentsOf: url)
@@ -25,23 +56,39 @@ enum CBZImporter {
         let id = UUID().uuidString
         let folder = libraryRoot().appendingPathComponent(id, isDirectory: true)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        var paths: [String] = []
+        var relativePaths: [String] = []
         for (index, entry) in entries.enumerated() {
-            let ext = (entry.name as NSString).pathExtension.lowercased()
-            let filename = String(format: "%04d.%@", index + 1, ext.isEmpty ? "jpg" : ext)
+            let fileExt = (entry.name as NSString).pathExtension.lowercased()
+            let filename = String(format: "%04d.%@", index + 1, fileExt.isEmpty ? "jpg" : fileExt)
             let file = folder.appendingPathComponent(filename)
             try entry.data.write(to: file)
-            paths.append(file.path)
+            relativePaths.append("\(id)/\(filename)")
         }
         let title = url.deletingPathExtension().lastPathComponent
-        let series = MangaSeries(id: id, title: title, author: "Imported", coverURL: paths.first, isLocal: true)
-        let chapter = MangaChapter(id: "\(id)-1", title: title, numberLabel: "1", imagePaths: paths)
+        let cover = relativePaths.first.map { resolvedPageURL($0).path }
+        let series = MangaSeries(
+            id: id,
+            title: title,
+            author: "Imported",
+            coverURL: cover,
+            isLocal: true,
+            source: .local,
+            status: "LOCAL",
+            genres: ["Imported", "Offline"],
+            totalChapters: 1,
+            lastReadChapter: "Ch. 1"
+        )
+        let chapter = MangaChapter(
+            id: "\(id)-1",
+            title: title,
+            numberLabel: "1",
+            imagePaths: relativePaths,
+            pageCount: relativePaths.count,
+            scanGroup: "Local Vault",
+            isDownloaded: true,
+            isRead: false
+        )
         return StoredManga(series: series, chapters: [chapter])
-    }
-
-    private static func libraryRoot() -> URL {
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return docs.appendingPathComponent("Manga", isDirectory: true)
     }
 
     private struct ZipImage {
@@ -71,8 +118,8 @@ enum CBZImporter {
             guard nameEnd <= bytes.count else { break }
             let name = String(decoding: bytes[nameStart..<nameEnd], as: UTF8.self)
             cursor = nameEnd + extraLength + commentLength
-            let ext = (name as NSString).pathExtension.lowercased()
-            guard imageExtensions.contains(ext), !name.hasSuffix("/") else { continue }
+            let fileExt = (name as NSString).pathExtension.lowercased()
+            guard imageExtensions.contains(fileExt), !name.hasSuffix("/") else { continue }
             guard let payload = readLocal(bytes, offset: localOffset, method: method, compressed: compressed, uncompressed: uncompressed) else { continue }
             images.append(ZipImage(name: name, data: payload))
         }

@@ -164,6 +164,29 @@ public final class AudiobookRepository: @unchecked Sendable {
         }
     }
 
+    public func updateSummary(for bookId: String, summary: String) {
+        let trimmed = summary.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        if let index = catalogBooks.firstIndex(where: { $0.id == bookId }) {
+            catalogBooks[index].summary = trimmed
+        }
+        if let index = importedBooks.firstIndex(where: { $0.id == bookId }) {
+            importedBooks[index].summary = trimmed
+            UserImportService.shared.saveImportedBooks(importedBooks)
+        }
+    }
+
+    @discardableResult
+    public func enrichSynopsis(for bookId: String) async -> String? {
+        guard let book = book(id: bookId) else { return nil }
+        if !AudiobookAPIService.needsSynopsis(book.summary) { return book.summary }
+        guard let synopsis = await api.fetchSynopsis(for: book) else { return nil }
+        await MainActor.run {
+            self.updateSummary(for: bookId, summary: synopsis)
+        }
+        return synopsis
+    }
+
     public func upsertImportedBook(_ book: Audiobook) {
         if let index = importedBooks.firstIndex(where: { $0.id == book.id }) {
             importedBooks[index] = book
@@ -245,6 +268,18 @@ public final class AudiobookRepository: @unchecked Sendable {
     private func applyLocalFilters(_ books: [Audiobook], applySearch: Bool) -> [Audiobook] {
         var results = books
 
+        let trimmedSearch = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        if applySearch && !trimmedSearch.isEmpty {
+            let q = trimmedSearch.lowercased()
+            results = results.filter {
+                $0.title.lowercased().contains(q) ||
+                $0.author.lowercased().contains(q) ||
+                $0.narrator.lowercased().contains(q) ||
+                $0.category.rawValue.lowercased().contains(q) ||
+                $0.summary.lowercased().contains(q)
+            }
+        }
+
         switch selectedDurationFilter {
         case .all:
             break
@@ -266,11 +301,11 @@ public final class AudiobookRepository: @unchecked Sendable {
     }
 
     public var exploreBooks: [Audiobook] {
-        applyLocalFilters(catalogBooks, applySearch: false)
+        applyLocalFilters(catalogBooks, applySearch: true)
     }
 
     public var filteredAudiobooks: [Audiobook] {
-        applyLocalFilters(catalogBooks, applySearch: false)
+        applyLocalFilters(catalogBooks, applySearch: true)
     }
 
     public var continueListeningBooks: [Audiobook] {

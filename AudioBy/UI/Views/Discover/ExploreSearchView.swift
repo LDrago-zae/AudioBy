@@ -1,5 +1,7 @@
 import SwiftUI
 
+/// Japanese editorial Search & Catalog Explore screen.
+/// Directly implements the Komorebi Discover design matching stitch_reference/discover_hub.
 public struct ExploreSearchView: View {
     @Bindable var repository = AudiobookRepository.shared
     @State private var showingFilterSheet = false
@@ -13,26 +15,33 @@ public struct ExploreSearchView: View {
 
     public var body: some View {
         ZStack {
-            Theme.appBackground.ignoresSafeArea()
+            MangaTheme.surface.ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 18) {
+                    // Top Bar
                     HStack(spacing: 12) {
                         Button {
                             dismiss()
                         } label: {
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(Theme.textDark)
+                                .foregroundStyle(MangaTheme.ink)
                                 .frame(width: 44, height: 44)
-                                .background(Theme.surfaceWhite)
+                                .background(MangaTheme.surfaceLow)
                                 .clipShape(Circle())
-                                .overlay(Circle().stroke(Theme.cardBorder, lineWidth: 1))
+                                .overlay(Circle().stroke(MangaTheme.hairline, lineWidth: 1))
                         }
 
-                        Text("Explore")
-                            .font(.system(size: 24, weight: .bold))
-                            .foregroundColor(Theme.textDark)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("EXPLORE CATALOG")
+                                .font(.system(size: 10, weight: .bold))
+                                .tracking(1.2)
+                                .foregroundStyle(MangaTheme.vermilion)
+                            Text("Discover")
+                                .font(.system(size: 22, weight: .bold))
+                                .foregroundStyle(MangaTheme.ink)
+                        }
 
                         Spacer()
 
@@ -41,29 +50,31 @@ public struct ExploreSearchView: View {
                         } label: {
                             Image(systemName: "doc.badge.plus")
                                 .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(Theme.brandGreen)
+                                .foregroundStyle(MangaTheme.vermilion)
                                 .frame(width: 44, height: 44)
-                                .background(Theme.surfaceWhite)
+                                .background(MangaTheme.surfaceLow)
                                 .clipShape(Circle())
-                                .overlay(Circle().stroke(Theme.cardBorder, lineWidth: 1))
+                                .overlay(Circle().stroke(MangaTheme.hairline, lineWidth: 1))
                         }
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
 
+                    // Explore Section Selector (Books, Manga)
                     HStack(spacing: 8) {
                         ForEach(ExploreSection.allCases) { item in
+                            let isSel = section == item
                             Button {
                                 section = item
                             } label: {
                                 Text(item.title)
-                                    .font(.system(size: 14, weight: section == item ? .bold : .medium))
-                                    .foregroundColor(section == item ? .black : Theme.textDark)
+                                    .font(.system(size: 13, weight: isSel ? .bold : .medium))
+                                    .foregroundStyle(isSel ? .white : MangaTheme.ink)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 8)
-                                    .background(section == item ? AnyShapeStyle(Theme.brandGreen) : AnyShapeStyle(Theme.surfaceWhite))
+                                    .background(isSel ? MangaTheme.vermilion : MangaTheme.surfaceLow)
                                     .clipShape(Capsule())
-                                    .overlay(Capsule().stroke(section == item ? Color.clear : Theme.cardBorder, lineWidth: 1))
+                                    .overlay(Capsule().stroke(isSel ? Color.clear : MangaTheme.hairline, lineWidth: 1))
                             }
                         }
                     }
@@ -72,222 +83,205 @@ public struct ExploreSearchView: View {
                     if section == .manga {
                         MangaShelfView()
                     } else {
-                    HStack(spacing: 10) {
-                        HStack {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(Theme.textMuted)
-                            TextField("Search titles, authors, narrators...", text: $localSearch)
-                                .font(.system(size: 15))
-                                .foregroundColor(Theme.textDark)
-                                .autocorrectionDisabled()
-                                .textInputAutocapitalization(.never)
-                                .submitLabel(.search)
-                                .onSubmit { runBookSearch() }
+                        // Search Bar & Filter Button
+                        HStack(spacing: 10) {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundStyle(MangaTheme.secondary)
 
-                            if !localSearch.isEmpty {
+                                TextField("Search titles, authors, narrators…", text: $localSearch)
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(MangaTheme.ink)
+                                    .autocorrectionDisabled()
+                                    .textInputAutocapitalization(.never)
+                                    .submitLabel(.search)
+                                    .onSubmit { runBookSearch() }
+                                    .onChange(of: localSearch) { _, newValue in
+                                        repository.searchQuery = newValue
+                                    }
+
+                                if !localSearch.isEmpty {
+                                    Button {
+                                        localSearch = ""
+                                        repository.searchQuery = ""
+                                        Task { await repository.fetchRemoteAudiobooks(reset: true) }
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(MangaTheme.secondary)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 12)
+                            .background(MangaTheme.surfaceLow)
+                            .clipShape(RoundedRectangle(cornerRadius: MangaTheme.cardRadius, style: .continuous))
+                            .overlay(RoundedRectangle(cornerRadius: MangaTheme.cardRadius).stroke(MangaTheme.hairline, lineWidth: 1))
+
+                            Button {
+                                showingFilterSheet = true
+                            } label: {
+                                Image(systemName: (repository.selectedDurationFilter != .all || repository.isOnlyDownloadedFilterActive) ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle((repository.selectedDurationFilter != .all || repository.isOnlyDownloadedFilterActive) ? MangaTheme.vermilion : MangaTheme.ink)
+                                    .frame(width: 46, height: 46)
+                                    .background(MangaTheme.surfaceLow)
+                                    .clipShape(RoundedRectangle(cornerRadius: MangaTheme.cardRadius, style: .continuous))
+                                    .overlay(RoundedRectangle(cornerRadius: MangaTheme.cardRadius).stroke(MangaTheme.hairline, lineWidth: 1))
+                            }
+                        }
+                        .padding(.horizontal, 20)
+
+                        // Category Pill Rail
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(AudiobookCategory.allCases, id: \.self) { category in
+                                    let isSelected = repository.selectedCategory == category
+                                    Button {
+                                        repository.selectedCategory = category
+                                        Task {
+                                            await repository.fetchRemoteAudiobooks(for: category, reset: true)
+                                        }
+                                    } label: {
+                                        HStack(spacing: 6) {
+                                            Image(systemName: category.iconName)
+                                                .font(.system(size: 11))
+                                            Text(category.rawValue)
+                                                .font(.system(size: 12, weight: isSelected ? .bold : .medium))
+                                        }
+                                        .foregroundStyle(isSelected ? .white : MangaTheme.ink)
+                                        .padding(.horizontal, 14)
+                                        .padding(.vertical, 8)
+                                        .background(isSelected ? MangaTheme.vermilion : MangaTheme.surfaceLow)
+                                        .clipShape(Capsule())
+                                        .overlay(Capsule().stroke(isSelected ? Color.clear : MangaTheme.hairline, lineWidth: 1))
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 20)
+                        }
+
+                        // Search Results Header
+                        HStack {
+                            Text(repository.searchQuery.isEmpty ? "All Audiobooks & Novels" : "Results (\(repository.exploreBooks.count))")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundStyle(MangaTheme.ink)
+
+                            Spacer()
+
+                            if repository.isLoadingRemote {
+                                ProgressView()
+                                    .tint(MangaTheme.vermilion)
+                                    .scaleEffect(0.8)
+                            } else {
                                 Button {
-                                    localSearch = ""
-                                    repository.searchQuery = ""
                                     Task { await repository.fetchRemoteAudiobooks(reset: true) }
                                 } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(Theme.textMuted)
+                                    Image(systemName: "arrow.clockwise")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundStyle(MangaTheme.vermilion)
                                 }
                             }
                         }
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 12)
-                        .background(Theme.surfaceWhite)
-                        .cornerRadius(14)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Theme.cardBorder, lineWidth: 1)
-                        )
+                        .padding(.horizontal, 20)
 
-                        Button {
-                            showingFilterSheet = true
-                        } label: {
-                            Image(systemName: (repository.selectedDurationFilter != .all || repository.isOnlyDownloadedFilterActive) ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
-                                .font(.system(size: 20))
-                                .foregroundColor((repository.selectedDurationFilter != .all || repository.isOnlyDownloadedFilterActive) ? Theme.brandGreen : Theme.textDark)
-                                .frame(width: 46, height: 46)
-                                .background(Theme.surfaceWhite)
-                                .cornerRadius(14)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 14)
-                                        .stroke(Theme.cardBorder, lineWidth: 1)
-                                )
-                        }
-                    }
-                    .padding(.horizontal, 20)
-
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(AudiobookCategory.allCases, id: \.self) { category in
-                                let isSelected = repository.selectedCategory == category
+                        if let error = repository.catalogError {
+                            VStack(spacing: 8) {
+                                Text(error)
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(MangaTheme.secondary)
+                                    .multilineTextAlignment(.center)
                                 Button {
-                                    repository.selectedCategory = category
-                                    Task {
-                                        await repository.fetchRemoteAudiobooks(for: category, reset: true)
-                                    }
+                                    Task { await repository.fetchRemoteAudiobooks(reset: true) }
                                 } label: {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: category.iconName)
-                                            .font(.system(size: 12))
-                                        Text(category.rawValue)
-                                            .font(.system(size: 13, weight: isSelected ? .bold : .medium))
-                                    }
-                                    .foregroundColor(isSelected ? .black : Theme.textDark)
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 9)
-                                    .background(
-                                        isSelected
-                                            ? AnyShapeStyle(Theme.brandGreen)
-                                            : AnyShapeStyle(Theme.surfaceWhite)
-                                    )
-                                    .clipShape(Capsule())
-                                    .overlay(
-                                        Capsule().stroke(isSelected ? Color.clear : Theme.cardBorder, lineWidth: 1)
-                                    )
+                                    Text("Retry catalog")
+                                        .font(.system(size: 13, weight: .bold))
+                                        .foregroundStyle(.white)
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 8)
+                                        .background(MangaTheme.vermilion)
+                                        .clipShape(Capsule())
                                 }
                             }
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
-                    }
 
-                    HStack {
-                        Text(repository.searchQuery.isEmpty ? "All Audiobooks" : "Search Results (\(repository.exploreBooks.count))")
-                            .font(.system(size: 17, weight: .bold))
-                            .foregroundColor(Theme.textDark)
-
-                        Spacer()
-
-                        if repository.isLoadingRemote {
-                            ProgressView()
-                                .tint(Theme.brandGreen)
-                                .scaleEffect(0.8)
+                        // 2-Column Grid of Books
+                        if repository.exploreBooks.isEmpty && !repository.isLoadingRemote {
+                            VStack(spacing: 10) {
+                                Image(systemName: "magnifyingglass")
+                                    .font(.system(size: 34))
+                                    .foregroundStyle(MangaTheme.secondary.opacity(0.5))
+                                    .padding(.top, 20)
+                                Text("No audiobooks found")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundStyle(MangaTheme.ink)
+                                Text("Try adjusting your search terms or filters.")
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(MangaTheme.secondary)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 30)
                         } else {
-                            Button {
-                                Task { await repository.fetchRemoteAudiobooks(reset: true) }
-                            } label: {
-                                Image(systemName: "arrow.clockwise")
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(Theme.brandGreen)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 20)
-
-                    if let error = repository.catalogError {
-                        VStack(spacing: 8) {
-                            Text(error)
-                                .font(.system(size: 13))
-                                .foregroundColor(Theme.textMuted)
-                                .multilineTextAlignment(.center)
-                            Button {
-                                Task { await repository.fetchRemoteAudiobooks(reset: true) }
-                            } label: {
-                                Text("Retry catalog")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(.black)
-                                    .padding(.horizontal, 14)
-                                    .padding(.vertical, 8)
-                                    .background(Theme.brandGreen)
-                                    .clipShape(Capsule())
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 20)
-                    }
-
-                    if !repository.isLoadingRemote && repository.exploreBooks.isEmpty {
-                        VStack(spacing: 10) {
-                            Text("No titles matched this search.")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(Theme.textDark)
-                            Text("Try another author or title, then retry.")
-                                .font(.system(size: 13))
-                                .foregroundColor(Theme.textMuted)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 24)
-                    }
-
-                    LazyVStack(spacing: 12) {
-                        ForEach(repository.exploreBooks) { book in
-                            NavigationLink(destination: AudiobookDetailView(book: book)) {
-                                CatalogListRow(book: book) {
-                                    Button {
-                                        repository.toggleFavorite(for: book.id)
-                                    } label: {
-                                        Image(systemName: book.isFavorite ? "bookmark.fill" : "bookmark")
-                                            .font(.system(size: 16, weight: .semibold))
-                                            .foregroundStyle(book.isFavorite ? Theme.ember : Theme.textMuted)
-                                            .frame(width: 36, height: 36)
+                            LazyVGrid(
+                                columns: [
+                                    GridItem(.flexible(), spacing: 14),
+                                    GridItem(.flexible(), spacing: 14)
+                                ],
+                                spacing: 18
+                            ) {
+                                ForEach(repository.exploreBooks) { book in
+                                    NavigationLink(destination: AudiobookDetailView(book: book)) {
+                                        KomorebiBookCard(book: book)
                                     }
                                     .buttonStyle(.plain)
                                 }
                             }
-                            .buttonStyle(.plain)
+                            .padding(.horizontal, 20)
                         }
-                    }
-                    .padding(.horizontal, 20)
 
-                    if repository.hasMoreCatalog && !repository.exploreBooks.isEmpty {
-                        Button {
-                            Task { await repository.loadMore() }
-                        } label: {
-                            HStack(spacing: 8) {
-                                if repository.isLoadingMore {
-                                    ProgressView().tint(Theme.ember)
+                        if repository.hasMoreCatalog && !repository.exploreBooks.isEmpty {
+                            Button {
+                                Task { await repository.loadMore() }
+                            } label: {
+                                HStack(spacing: 8) {
+                                    if repository.isLoadingMore {
+                                        ProgressView().tint(MangaTheme.vermilion)
+                                    }
+                                    Text(repository.isLoadingMore ? "Loading more titles…" : "Load More Titles")
+                                        .font(.system(size: 13, weight: .bold))
                                 }
-                                Text(repository.isLoadingMore ? "Loading more..." : "Load more")
-                                    .font(.system(size: 15, weight: .bold))
+                                .foregroundStyle(MangaTheme.vermilion)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 44)
+                                .background(MangaTheme.surfaceLow)
+                                .clipShape(RoundedRectangle(cornerRadius: MangaTheme.cardRadius))
+                                .overlay(RoundedRectangle(cornerRadius: MangaTheme.cardRadius).stroke(MangaTheme.hairline, lineWidth: 1))
+                                .padding(.horizontal, 20)
                             }
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 48)
-                            .background(Theme.brandGreen)
-                            .cornerRadius(14)
                         }
-                        .disabled(repository.isLoadingMore || repository.isLoadingRemote)
-                        .padding(.horizontal, 20)
                     }
 
                     Spacer(minLength: 160)
-                    }
                 }
             }
         }
         .navigationBarHidden(true)
-        .refreshable {
-            await repository.fetchRemoteAudiobooks(reset: true)
-        }
         .sheet(isPresented: $showingFilterSheet) {
             FilterOptionsSheet()
         }
+        .modifier(PDFImportPresenter(isPresented: $showingImporter, showingPaywall: $showingPaywall))
         .sheet(isPresented: $showingPaywall) {
             PaywallView()
-        }
-        .modifier(PDFImportPresenter(isPresented: $showingImporter, showingPaywall: $showingPaywall))
-        .task(id: localSearch) {
-            guard section == .books else { return }
-            await observeBookSearch()
         }
     }
 
     private func runBookSearch() {
-        repository.searchQuery = localSearch
-        Task { await repository.fetchRemoteAudiobooks(reset: true) }
-    }
-
-    private func observeBookSearch() async {
         let trimmed = localSearch.trimmingCharacters(in: .whitespacesAndNewlines)
-        try? await Task.sleep(nanoseconds: 400_000_000)
-        guard !Task.isCancelled else { return }
-        if repository.searchQuery == trimmed { return }
         repository.searchQuery = trimmed
-        await repository.fetchRemoteAudiobooks(reset: true)
+        Task {
+            await repository.fetchRemoteAudiobooks(reset: true)
+        }
     }
 }
 
@@ -298,11 +292,12 @@ private enum ExploreSection: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .books: return "Books"
-        case .manga: return "Manga"
+        case .books: return "Audiobooks & Novels"
+        case .manga: return "Manga Lounge"
         }
     }
 }
+
 private struct FilterOptionsSheet: View {
     @Bindable var repository = AudiobookRepository.shared
     @Environment(\.dismiss) private var dismiss
@@ -310,66 +305,96 @@ private struct FilterOptionsSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Theme.appBackground.ignoresSafeArea()
+                MangaTheme.surface.ignoresSafeArea()
 
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Length")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(Theme.textDark)
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        // Duration Filters
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Duration Length")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundStyle(MangaTheme.ink)
 
-                        ForEach(DurationFilter.allCases) { filter in
-                            Button {
-                                repository.selectedDurationFilter = filter
-                            } label: {
-                                HStack {
-                                    Text(filter.rawValue)
-                                        .foregroundColor(Theme.textDark)
-                                        .font(.system(size: 15))
-                                    Spacer()
-                                    if repository.selectedDurationFilter == filter {
-                                        Image(systemName: "checkmark")
-                                            .foregroundColor(Theme.brandGreen)
-                                            .font(.system(size: 14, weight: .bold))
+                            ForEach(DurationFilter.allCases) { filter in
+                                Button {
+                                    repository.selectedDurationFilter = filter
+                                } label: {
+                                    HStack {
+                                        Text(filter.rawValue)
+                                            .foregroundStyle(MangaTheme.ink)
+                                            .font(.system(size: 14))
+                                        Spacer()
+                                        if repository.selectedDurationFilter == filter {
+                                            Image(systemName: "checkmark")
+                                                .foregroundStyle(MangaTheme.vermilion)
+                                                .font(.system(size: 13, weight: .bold))
+                                        }
                                     }
+                                    .padding(.vertical, 8)
                                 }
-                                .padding(.vertical, 8)
+                                Divider().background(MangaTheme.hairline)
                             }
-                            Divider().background(Theme.cardBorder)
                         }
-                    }
 
-                    Toggle(isOn: $repository.isOnlyDownloadedFilterActive) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Downloaded Audiobooks Only")
-                                .font(.system(size: 15, weight: .semibold))
-                                .foregroundColor(Theme.textDark)
-                            Text("Only show books saved on device for offline playback")
-                                .font(.system(size: 12))
-                                .foregroundColor(Theme.textMuted)
+                        // Offline toggle
+                        Toggle(isOn: $repository.isOnlyDownloadedFilterActive) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Downloaded Titles Only")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(MangaTheme.ink)
+                                Text("Only show books saved on device for offline playback")
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(MangaTheme.secondary)
+                            }
                         }
-                    }
-                    .tint(Theme.brandGreen)
+                        .tint(MangaTheme.vermilion)
 
-                    Spacer()
+                        // Action Buttons
+                        HStack(spacing: 12) {
+                            Button {
+                                repository.selectedDurationFilter = .all
+                                repository.isOnlyDownloadedFilterActive = false
+                                repository.selectedCategory = .all
+                            } label: {
+                                Text("Reset All")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(MangaTheme.ink)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
+                                    .background(MangaTheme.surfaceHigh)
+                                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(MangaTheme.hairline, lineWidth: 1))
+                            }
 
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Apply Filters")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
-                            .background(Theme.brandGreen)
-                            .cornerRadius(16)
+                            Button {
+                                dismiss()
+                            } label: {
+                                Text("Apply Filters")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
+                                    .background(MangaTheme.vermilion)
+                                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                            }
+                        }
+                        .padding(.top, 10)
                     }
+                    .padding(24)
                 }
-                .padding(24)
             }
-            .navigationTitle("Filter")
+            .navigationTitle("Filter Catalog")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(MangaTheme.vermilion)
+                }
+            }
         }
-        .presentationDetents([.large])
+        .presentationDetents([.medium, .large])
     }
 }
