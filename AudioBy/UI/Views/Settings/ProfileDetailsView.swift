@@ -18,15 +18,38 @@ public struct ProfileDetailsView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                Theme.appBackground.ignoresSafeArea()
+                MangaTheme.surface.ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Settings")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(Theme.textDark)
-                            .padding(.horizontal, 20)
-                            .padding(.top, 8)
+                        HStack(spacing: 12) {
+                            Button {
+                                AppNavigationState.shared.openSidebar()
+                            } label: {
+                                Image(systemName: "line.3.horizontal")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(MangaTheme.ink)
+                                    .frame(width: 44, height: 44)
+                                    .background(MangaTheme.surfaceLow)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(MangaTheme.hairline, lineWidth: 1))
+                            }
+                            .accessibilityLabel("Open Menu")
+
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("設定 / PREFERENCES")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .tracking(1.2)
+                                    .foregroundStyle(MangaTheme.vermilion)
+                                Text("Settings")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundStyle(MangaTheme.ink)
+                            }
+
+                            Spacer()
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 8)
 
                         HStack(spacing: 16) {
                             Image(systemName: "person.crop.circle.fill")
@@ -143,34 +166,34 @@ public struct ProfileDetailsView: View {
                             HStack {
                                 HStack(spacing: 12) {
                                     Image(systemName: isDarkMode ? "moon.stars.fill" : "sun.max.fill")
-                                        .font(.system(size: 20))
-                                        .foregroundColor(Theme.ember)
-                                        .frame(width: 36, height: 36)
-                                        .background(Theme.ember.opacity(0.15))
+                                        .font(.system(size: 18))
+                                        .foregroundStyle(MangaTheme.vermilion)
+                                        .frame(width: 38, height: 38)
+                                        .background(MangaTheme.vermilionFixed)
                                         .clipShape(Circle())
 
                                     VStack(alignment: .leading, spacing: 2) {
-                                        Text(isDarkMode ? "Dark Theme" : "Light Theme")
+                                        Text(isDarkMode ? "Dark Theme" : "Light Paper Theme")
                                             .font(.system(size: 15, weight: .semibold))
-                                            .foregroundColor(Theme.textDark)
-                                        Text(isDarkMode ? "Ink ground, ember marks" : "Paper ground, ember marks")
+                                            .foregroundStyle(MangaTheme.ink)
+                                        Text(isDarkMode ? "Sumi-e ink canvas, cinnabar accents" : "Warm washi paper, charcoal marks")
                                             .font(.system(size: 12))
-                                            .foregroundColor(Theme.textMuted)
+                                            .foregroundStyle(MangaTheme.secondary)
                                     }
                                 }
 
                                 Spacer()
 
-                                Toggle("", isOn: $isDarkMode)
-                                    .tint(Theme.brandGreen)
+                                Toggle("", isOn: $isDarkMode.animation(.easeInOut(duration: 0.25)))
+                                    .tint(MangaTheme.vermilion)
                                     .labelsHidden()
                             }
                             .padding(16)
-                            .background(Theme.surfaceWhite)
-                            .cornerRadius(18)
+                            .background(MangaTheme.surfaceLow)
+                            .clipShape(RoundedRectangle(cornerRadius: MangaTheme.cardRadius, style: .continuous))
                             .overlay(
-                                RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Theme.cardBorder, lineWidth: 1)
+                                RoundedRectangle(cornerRadius: MangaTheme.cardRadius, style: .continuous)
+                                    .stroke(MangaTheme.hairline, lineWidth: 1)
                             )
                             .padding(.horizontal, 20)
                         }

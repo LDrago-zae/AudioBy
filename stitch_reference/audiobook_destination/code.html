@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary": "#615e59", "surface-container-highest": "#e5e2d9", "tertiary-container": "#79746a", "error-container": "#ffdad6", "surface-container-high": "#ebe8de", "on-primary-fixed-variant": "#822700", "surface-container-low": "#f6f4ea", "background": "#fcf9ef", "tertiary": "#605b52", "on-tertiary-fixed": "#1e1b14", "on-tertiary-container": "#fffbff", "tertiary-fixed": "#e9e2d5", "primary-fixed": "#ffdbcf", "primary-container": "#cc4811", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#494642", "on-error": "#ffffff", "surface-bright": "#fcf9ef", "surface-tint": "#ab3600", "on-tertiary": "#ffffff", "on-primary-fixed": "#390c00", "outline-variant": "#e1bfb4", "surface-container-lowest": "#ffffff", "surface-dim": "#dcdad0", "surface-variant": "#e5e2d9", "on-primary-container": "#fffbff", "on-background": "#1c1c16", "on-surface": "#1c1c16", "inverse-surface": "#31312a", "on-primary": "#ffffff", "secondary-fixed-dim": "#cbc5c0", "tertiary-fixed-dim": "#cdc6ba", "secondary-container": "#e8e1db", "on-secondary-container": "#68645f", "on-surface-variant": "#594139", "primary-fixed-dim": "#ffb59c", "surface-container": "#f1eee4", "secondary-fixed": "#e8e1db", "surface": "#fcf9ef", "on-error-container": "#93000a", "error": "#ba1a1a", "primary": "#a73400", "on-tertiary-fixed-variant": "#4a463d", "inverse-primary": "#ffb59c", "outline": "#8d7168", "on-secondary-fixed": "#1d1b18", "inverse-on-surface": "#f4f1e7" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1rem", "space-xs": "0.25rem" }, fontFamily: { "label-md": ["Inter"], "headline-sm": ["Manrope"], "headline-md": ["Manrope"], "headline-xl": ["Manrope"], "body-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-xl-mobile": ["Manrope"], "label-lg": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Manrope"] }, fontSize: { "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-sm": ["17px", { lineHeight: "22px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "26px", letterSpacing: "-0.015em", fontWeight: "600" }], "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.03em", fontWeight: "700" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }], "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }], "headline-xl-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.025em", fontWeight: "700" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { margin: 0; padding: 0; min-height: 100%; } body { overscroll-behavior-y: none; } .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px); } .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Komorebi App Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1VOLyooPYdFPd2UHVPpIl5TTAgJ-krkILgVD21j8WAyrV1_1Fh1bWh5RHYiK-6GHXx36woeR51RCBcQESNQBWgLf-CCLH3yNyPN_xROeeeCHmj8vZ7gCOg4DhBv8zXdmXJckzJCvmdLWuJvNiJco8uPRAySGTIpPCOns1BhaLvdWwfFPCdwyc3hBN5pTKSVvQnRbRjlkGulxE6mnM4C3ya_ER1ZB8-Wuwp4s81H4ySa"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-surface truncate">Audiobooks</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Komorebi</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary"></span></button><button aria-label="User Profile" class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPjNBRpS2lY4cHXKl7SLPc2fxzWgjIlttqjt4-o7gzOOZByPR-PToEJBx6KYxNUP_IkAGN3qcuaQrikHZaMKu3XpcRt8PMsuoxSDrwDQy5l-CB0YpIUdMoLHTy9SWLGJkdtGDwwULOIxOXgGQ1ZbHcfXsrPVStenfS93wppEGcVu9O6KVkH4TafXq3gfY2RQFlCg9YY0d4pVXCmUGe9BdClY8ru53n_m8SCG9LCDQ"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full pb-12">
+<!-- Search & Discovery Prompt Header -->
+<section class="px-margin pt-2 pb-space-sm flex flex-col gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-medium">Immersive Audio Hub</span>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface">What would you like to listen to?</h1>
+</div>
+<!-- Search Input Bar (No borders, tonal depth) -->
+<div class="relative w-full flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-tertiary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-12 pl-11 pr-12 rounded-xl bg-surface-container-high text-on-surface placeholder:text-tertiary font-body-md text-body-md focus:outline-none focus:bg-surface-container-highest transition-colors" placeholder="Search voices, manga dramas, light novels..." type="text"/>
+<button aria-label="Audio filter options" class="absolute right-2.5 w-8 h-8 rounded-lg bg-surface flex items-center justify-center text-on-surface-variant shadow-sm hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</section>
+<!-- Horizontal Scroll Content Pills -->
+<section class="w-full overflow-x-auto no-scrollbar py-space-xs pl-margin">
+<div class="flex items-center gap-space-xs pr-margin">
+<!-- Active Pill -->
+<button class="flex items-center gap-1.5 h-8 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md flex-shrink-0 shadow-sm transition-transform active:scale-95">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+<span>All Audio</span>
+</button>
+<button class="flex items-center h-8 px-3.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md flex-shrink-0 hover:bg-surface-container-highest active:scale-95 transition-all">
+        Manga Audiobooks
+      </button>
+<button class="flex items-center h-8 px-3.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md flex-shrink-0 hover:bg-surface-container-highest active:scale-95 transition-all">
+        Novels
+      </button>
+<button class="flex items-center h-8 px-3.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md flex-shrink-0 hover:bg-surface-container-highest active:scale-95 transition-all">
+        Light Novels
+      </button>
+<button class="flex items-center h-8 px-3.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md flex-shrink-0 hover:bg-surface-container-highest active:scale-95 transition-all">
+        Web Novels
+      </button>
+<button class="flex items-center h-8 px-3.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md flex-shrink-0 hover:bg-surface-container-highest active:scale-95 transition-all">
+        Audio Fiction
+      </button>
+</div>
+</section>
+<!-- Continue Listening Bento/Card Section -->
+<section class="px-margin mt-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Continue Listening</h2>
+</div>
+<a class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold" href="#">History</a>
+</div>
+<!-- Active Resume Card -->
+<div class="w-full bg-surface-container-low rounded-xl p-3.5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex gap-3.5 items-center">
+<!-- 1:1 Audiobook Disc Aspect Thumbnail -->
+<div class="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Cover of Norwegian Wood audiobook in Tokyo editorial style, deep forest green mist, minimalist typography, vintage vinyl texture aesthetic with muted vermilion accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA29LDYbouU2RCF1FCu2MCCVl_EzCRNV1KafUffN7lx14Q1fp03DAew5qklWskN3JyiR68MvmL4ZgcSm47Vd3_YXMytjAr6oiMUfnnalsPzRK01B8HTDedP4M8Psc57GegsXvc_eNy8lc_PyJcRuD2V8M9CvRP1-9GxhAOZiCyQYKOoWqLzm530nJqoOGxYx8lrnSdEtC40_1V60VGxpT59c-hd1IEhQ4Eb7aJOwzA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 to-transparent"></div>
+<span class="absolute bottom-1 right-1 font-label-sm text-[9px] text-surface-bright bg-inverse-surface/85 px-1 py-0.5 rounded leading-none">34%</span>
+</div>
+<!-- Meta info -->
+<div class="flex flex-col min-w-0 flex-1 justify-center">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="font-label-sm text-[10px] uppercase tracking-wider px-1.5 py-0.2 rounded bg-primary-fixed text-on-primary-fixed font-semibold">Chapter 7</span>
+<span class="font-label-sm text-label-sm text-tertiary">38m left</span>
+</div>
+<h3 class="font-headline-sm text-[16px] leading-tight text-on-surface truncate">Norwegian Wood</h3>
+<p class="font-body-sm text-body-sm text-tertiary truncate mt-0.5">Ensemble Cast • Haruki Murakami</p>
+</div>
+<!-- Quick Resume Action Button -->
+<button aria-label="Resume Norwegian Wood" class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center flex-shrink-0 shadow-md hover:bg-primary-container active:scale-95 transition-all" id="resume-playback-btn">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Scrubber Track Visualizer -->
+<div class="w-full flex flex-col gap-1">
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 34%;"></div>
+</div>
+<div class="flex justify-between items-center text-tertiary font-label-sm text-[11px]">
+<span>03:14:20</span>
+<span>11h 45m total</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Story Hero Banner -->
+<section class="px-margin mt-space-lg">
+<div class="relative w-full rounded-xl overflow-hidden bg-inverse-surface shadow-md">
+<!-- Rich Cover Art Background with Gradient Scrim -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity" data-alt="Dramatic dynamic manga battlefield art with traditional Japanese ink strokes, lightning and sound wave visuals, showcasing a hashira sound warrior in motion, vibrant vermilion and deep charcoal colors." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCdwq4APPl3epZjquZPrO5zk231bYx-Cu9guZ9XBefr4ncSK2MpWQMpAgOBqqee1c36GPL2lA6IAOpLpS38HAAPkaEEbdi_e2NHznFg2kuDLXQopprhsjVLUtZngXUNSHVh8ZjuAPPjKWJgJVETsWSdldTMZMD9gM_MYp-2IO0dzeEnvSFhgJ2gS2ZGpfpFrYUke6GussbfRdQTTZdlQAdc7rjS7DEYwhk2AJeQjKM')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface via-inverse-surface/80 to-transparent"></div>
+<div class="relative p-5 flex flex-col gap-3">
+<!-- Badges Row -->
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider px-2 py-0.5 rounded bg-primary text-on-primary font-bold">Featured Premiere</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container/20 text-inverse-on-surface backdrop-blur-md">
+<span class="material-symbols-outlined text-[13px] text-primary-fixed">spatial_audio</span>
+            Binaural 3D Audio
+          </span>
+<span class="font-label-sm text-label-sm text-inverse-on-surface/70 ml-auto">52m • Ep 1</span>
+</div>
+<!-- Title & Cast Credits -->
+<div class="flex flex-col">
+<h2 class="font-headline-lg text-headline-lg text-inverse-on-surface leading-tight">Demon Slayer: Sound Hashira Chronicles</h2>
+<p class="font-body-sm text-body-sm text-inverse-on-surface/80 mt-1 line-clamp-2">
+            Narrated audio manga adaptation with original foley soundscapes, cinematic orchestral scoring, and dual-track sword combat effects.
+          </p>
+<div class="flex items-center gap-1.5 mt-2 text-inverse-on-surface/70 font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed">record_voice_over</span>
+<span class="truncate">Takahiro Sakurai, Natsuki Hanae • Cast of 14</span>
+</div>
+</div>
+<!-- Primary CTA with Inline Audio Preview Micro-interaction -->
+<div class="flex items-center gap-3 pt-1">
+<button class="flex-1 h-12 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm hover:bg-primary-container active:scale-98 transition-all">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">headphones</span>
+<span>Listen Now</span>
+</button>
+<button aria-label="Sample 30s Audio" class="h-12 w-12 rounded-xl bg-surface-container-high/30 backdrop-blur-md text-inverse-on-surface flex items-center justify-center hover:bg-surface-container-high/50 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">graphic_eq</span>
+</button>
+<button aria-label="Bookmark to library" class="h-12 w-12 rounded-xl bg-surface-container-high/30 backdrop-blur-md text-inverse-on-surface flex items-center justify-center hover:bg-surface-container-high/50 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">bookmark_add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 1: Trending Manga Audiobooks (Narrated with SFX) -->
+<section class="mt-space-lg">
+<div class="px-margin flex items-center justify-between mb-space-xs">
+<div>
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Trending Manga Audiobooks</h2>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Voice acted with immersive Foley and dynamic SFX</p>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-semibold uppercase tracking-wider" href="#">See All</a>
+</div>
+<!-- Carousel: 2:3 Cover format -->
+<div class="w-full overflow-x-auto no-scrollbar pl-margin">
+<div class="flex gap-space-sm pr-margin py-1">
+<!-- Item 1 -->
+<div class="w-36 flex flex-col flex-shrink-0 group">
+<div class="relative w-36 h-52 rounded-xl overflow-hidden bg-surface-container shadow-sm group-hover:shadow-md transition-shadow">
+<img class="w-full h-full object-cover" data-alt="Cover of Jujutsu Kaisen audio drama with supernatural cursed energy visual effects, dark modern Tokyo aesthetic, dynamic typography, inkwash illustration style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA21fITgApRMJqmXk_SBQScPYTMlecfRhc362aBU6bBYho12GbaTe15DGVI3XoGIz7azhwMDtY5yv-T63asbLnd-1KMYDcbJSlNeR_vBH8esMsvFcldlfvJteolPAhjg88358GeFO22wfyXcGY4u2L737d5IDeId3yRMY2KidcBjqNDHPFICUrlPXCLXZ02nRVUao1Q0SeS-ytjFoD8ZRVB5g6yegj5Aq7Qd7zmXw"/>
+<!-- Format badge top right -->
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-inverse-surface/85 backdrop-blur-xs text-surface-bright font-label-sm text-[10px] font-semibold">
+              FX Drama
+            </span>
+<!-- Floating play trigger -->
+<button aria-label="Play sample" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded bg-surface/90 text-on-surface font-label-sm text-[10px]">
+              48m / ep
+            </span>
+</div>
+<div class="flex flex-col mt-2">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Jujutsu Sorcery Arc</h3>
+<p class="font-body-sm text-[12px] text-tertiary truncate">Junya Enoki • Ep 1-12</p>
+<div class="flex items-center gap-1 mt-0.5 text-on-surface-variant font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.9</span>
+<span class="text-tertiary">• 14k listens</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="w-36 flex flex-col flex-shrink-0 group">
+<div class="relative w-36 h-52 rounded-xl overflow-hidden bg-surface-container shadow-sm group-hover:shadow-md transition-shadow">
+<img class="w-full h-full object-cover" data-alt="Cyberpunk mech sci-fi manga audiobook cover with sleek neon accents, tactile paper grain, high-contrast monochrome ink wash and cinnabar orange highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANwfjw5vp7wXWwzR_-R5lM-xa4JsecJC40_TROBuzPY1wB7M6xkuP657Pcc7ianc0BG8IBZ6XaMdwjDxXUmSYT4sH9uvKst_46A77B9_ifFdUPRcvSLrX2XBJ7Lj3_DI1AaUnl9SCbTogb9Gwlv9fIaahCzyVJ3hVjj5zDpimEfvLaf33P1EUudDkTCGF87TXyb0mu4ZZ5QZIIZ9euoW2fo58AJKLvNPfnO6yAnn8"/>
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-inverse-surface/85 backdrop-blur-xs text-surface-bright font-label-sm text-[10px] font-semibold">
+              Full Cast
+            </span>
+<button aria-label="Play sample" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded bg-surface/90 text-on-surface font-label-sm text-[10px]">
+              6h 20m
+            </span>
+</div>
+<div class="flex flex-col mt-2">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Ghost Runner 2099</h3>
+<p class="font-body-sm text-[12px] text-tertiary truncate">Kenjiro Tsuda • Vol. 1-3</p>
+<div class="flex items-center gap-1 mt-0.5 text-on-surface-variant font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.8</span>
+<span class="text-tertiary">• 8.2k</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="w-36 flex flex-col flex-shrink-0 group">
+<div class="relative w-36 h-52 rounded-xl overflow-hidden bg-surface-container shadow-sm group-hover:shadow-md transition-shadow">
+<img class="w-full h-full object-cover" data-alt="Historical samurai audio manga cover artwork, traditional sumi-e bamboo forest, cherry blossoms, quiet tension, refined Japanese calligraphic title design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtHh9UXWpFfAzqNJm1kGzAC27kmuLZ6Dwzf0JkB0DvY049W8nRfJbPU050T_dogoiZnJbVb8pY6oJramFUhIPAbVv825qW_RSI1wSWN1yUrc83PKo7lxiX-OUhJmCPXLb2FPmE_VbhV4YJxHxXtHGQK_4n1v8fREpU_onk_clshA-MgpSV7gZE2OPkw96cTwKxkU_81T0Y_4bUYsv_oZOXa5uAgKFPpG8PW3NJZD4"/>
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-inverse-surface/85 backdrop-blur-xs text-surface-bright font-label-sm text-[10px] font-semibold">
+              Dolby Atmos
+            </span>
+<button aria-label="Play sample" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded bg-surface/90 text-on-surface font-label-sm text-[10px]">
+              3h 15m
+            </span>
+</div>
+<div class="flex flex-col mt-2">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Ronin of the Edo Rain</h3>
+<p class="font-body-sm text-[12px] text-tertiary truncate">Mamoru Miyano • Complete</p>
+<div class="flex items-center gap-1 mt-0.5 text-on-surface-variant font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.9</span>
+<span class="text-tertiary">• 21k</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Popular Full-Length Novels -->
+<section class="mt-space-lg px-margin">
+<div class="flex items-center justify-between mb-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Popular Full-Length Novels</h2>
+<p class="font-body-sm text-body-sm text-tertiary">Literary fiction, intricate mysteries, &amp; sci-fi</p>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-semibold uppercase tracking-wider" href="#">Explore</a>
+</div>
+<!-- Stacked Editorial Cards -->
+<div class="flex flex-col gap-space-xs">
+<!-- Novel Row 1 -->
+<div class="p-3 rounded-xl bg-surface-container-low flex items-center gap-3.5 hover:bg-surface-container transition-colors">
+<div class="relative w-16 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Cover of The Memory Police novel by Yoko Ogawa in minimalist vintage cream and charcoal aesthetic, surreal melting island shapes with warm paper texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBi4Cptk2DTJ7h34VPoD_aJR3dm0DFWJOS_iXzShFViLMmsLU55dNZaonWvecrAyL2FPvcNwqjHFYGlDvs8DFCip6-gUzYmt2dM-PkYEMQ6BSa5zwm8hMW3Cz1wJVnrNFYcHWaZZmBehAMrRkjO8HXrsDPiulrwHdPZ8-L1wRJjkEnitRbA30DoyIFD7X4PJDuh-_2-jUKS7w9DDRcoWEpQYXnDMp5d4g9FnKU-6Q"/>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-[10px] uppercase font-semibold text-primary">Dystopian</span>
+<span class="font-label-sm text-label-sm text-tertiary">10h 14m</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate">The Memory Police</h3>
+<p class="font-body-sm text-body-sm text-tertiary truncate">Yoko Ogawa • Narrated by Faye Chin</p>
+<div class="flex items-center gap-3 mt-1 text-tertiary font-label-sm text-label-sm">
+<span class="flex items-center gap-0.5 text-on-surface">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+              4.8
+            </span>
+<span>• Unabridged</span>
+</div>
+</div>
+<button aria-label="Listen preview" class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center flex-shrink-0 hover:bg-primary hover:text-on-primary active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Novel Row 2 -->
+<div class="p-3 rounded-xl bg-surface-container-low flex items-center gap-3.5 hover:bg-surface-container transition-colors">
+<div class="relative w-16 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Cover of The Devotion of Suspect X mystery novel, dark psychological Tokyo crime thriller aesthetic with clean typography, red and charcoal contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOOR6OWfZdcX-sogfOMsVr54XJHyu-cDu-VL2Z_fBScU4CGlQtbdtvZy6whWFT4OQ8eJaNYHu2R4XUgaa5aZctx2LqFrJ-pX6q7kdwfU2o-1Hb_Op9oqRbJdnYRuhqj2GOxYFD-8p_C4Fc_LtTqaXsVlg7JXZz_h58FHkMgS5nw4TR1982fIHMOdSsCR-jFa0IcLv1bu7zzFfaWI7HPTqpynVQrrEifXI7QQlUCfM"/>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-[10px] uppercase font-semibold text-primary">Mystery / Noir</span>
+<span class="font-label-sm text-label-sm text-tertiary">8h 42m</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface truncate">The Devotion of Suspect X</h3>
+<p class="font-body-sm text-body-sm text-tertiary truncate">Keigo Higashino • Narrated by David Shih</p>
+<div class="flex items-center gap-3 mt-1 text-tertiary font-label-sm text-label-sm">
+<span class="flex items-center gap-0.5 text-on-surface">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+              4.9
+            </span>
+<span>• Tokyo Crime Series</span>
+</div>
+</div>
+<button aria-label="Listen preview" class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center flex-shrink-0 hover:bg-primary hover:text-on-primary active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Japanese Light Novel Audiobooks -->
+<section class="mt-space-lg">
+<div class="px-margin flex items-center justify-between mb-space-xs">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Japanese Light Novels</h2>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-[10px]">Official Audio</span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Official series adaptations with original anime cast</p>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-semibold uppercase tracking-wider" href="#">Series</a>
+</div>
+<div class="w-full overflow-x-auto no-scrollbar pl-margin">
+<div class="flex gap-space-sm pr-margin py-1">
+<!-- Light Novel 1: Overlord -->
+<div class="w-40 flex flex-col flex-shrink-0 group">
+<div class="relative w-40 h-56 rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Cover of Overlord light novel audiobook, majestic dark skeletal sorcerer king on ornate gothic throne, dark purple and vermilion gold hues, intricate Japanese fantasy art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIauiozqdTL-7jj1WDp2x8sK-OBwQAYWhBPYU48RqDpTujOX1EoEkBTStcz1bUlRxdR9oUK9GtWHIN-FCS9Titl7_NbpgEkMueaZb-1qRavyXHOEehtQdHj5-abmPfdRjDNHahY78tYbkaEnGweKoG1nkLYwDlOjykIHaEaR6NqLXMTTorAjOJmIj0-o861EgPF1uUPC9tcqvDXaAAWiKaVid6WWw5MRKFJe5Vjc0"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-inverse-surface/90 text-surface-bright font-label-sm text-[10px] font-bold">
+              VOL. 14
+            </span>
+<button aria-label="Play Overlord" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col mt-2">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Overlord: The Witch of the Ruined Kingdom</h3>
+<p class="font-body-sm text-[12px] text-tertiary truncate">Kugane Maruyama • Chris Guerrero</p>
+<div class="flex items-center justify-between mt-1 text-tertiary font-label-sm text-[11px]">
+<span>9h 38m</span>
+<span class="font-semibold text-primary">Audiobook</span>
+</div>
+</div>
+</div>
+<!-- Light Novel 2: Monogatari -->
+<div class="w-40 flex flex-col flex-shrink-0 group">
+<div class="relative w-40 h-56 rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Cover of Bakemonogatari light novel audiobook, avant-garde minimalist Tokyo architectural line art with floating staplers and typography, red cinnabar and ivory cream." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2RsW1x9hCcxOzs1Nz4uVZcJyTIu7Ncv2LiycTUc3mYzoEXFnerar8PBUnajbLIrXEKF2rZEjSA-XN2-9dGNlD9W2U7EN0BiaSAQRG48eNMsefy_m1anO-2LHOudWfbzQTa_Q1vtMxmiVZDn-N1FAm8Pxwa8Mu0wnyyAyfB5WpxF0x3xTZxW7zWc-xAbWojOTjdPbuJkK7dbXfxjKX8BAFgC2wahcqOdgMW4PPQJs"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-inverse-surface/90 text-surface-bright font-label-sm text-[10px] font-bold">
+              PART 01
+            </span>
+<button aria-label="Play Monogatari" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col mt-2">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Bakemonogatari: Monster Tale</h3>
+<p class="font-body-sm text-[12px] text-tertiary truncate">NISIOISIN • Keith Silverstein, Cast</p>
+<div class="flex items-center justify-between mt-1 text-tertiary font-label-sm text-[11px]">
+<span>7h 52m</span>
+<span class="font-semibold text-primary">Audiobook</span>
+</div>
+</div>
+</div>
+<!-- Light Novel 3: Re:Zero -->
+<div class="w-40 flex flex-col flex-shrink-0 group">
+<div class="relative w-40 h-56 rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Cover of Re:Zero light novel audiobook, fantasy clocktower backdrop with silver-haired maiden portrait, deep indigo night sky and warm lanterns, Japanese print aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPCn6oVTB-vWeMv1N3Rt7E-O7Sx8EaiuaJ0Ma-YvAU6ku07AED-36XGXvc1FBZWc7F7sb1gJRMApljvpVqze7KnTtMt0Upo84lvvC0F9emwkyIuiTfLFt3aROLPlvEDYJEm5Bny2CgCTUsMpGDE6nrFTPfetWFqOg2jDGyvLjfIFlOX0pZEkE8Jci0LFXWVPC2tHcFu52-WUsiaQdzYrNiaCL65YyrrZpgAhqM7rw"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-inverse-surface/90 text-surface-bright font-label-sm text-[10px] font-bold">
+              VOL. 08
+            </span>
+<button aria-label="Play Re:Zero" class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col mt-2">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Re:Zero -Starting Life in Another World-</h3>
+<p class="font-body-sm text-[12px] text-tertiary truncate">Tappei Nagatsuki • Sean Chiplock</p>
+<div class="flex items-center justify-between mt-1 text-tertiary font-label-sm text-[11px]">
+<span>8h 12m</span>
+<span class="font-semibold text-primary">Audiobook</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: Trending Web Novels & Serialized Fiction -->
+<section class="mt-space-lg px-margin">
+<div class="flex items-center justify-between mb-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Trending Web Novels &amp; Serialized Fiction</h2>
+<p class="font-body-sm text-body-sm text-tertiary">Weekly episode drops recorded by voice ensembles</p>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-semibold uppercase tracking-wider" href="#">Top 20</a>
+</div>
+<!-- Editorial Compact List -->
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Item 1 -->
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cover artwork for a popular web novel about a solo dungeon necromancer, dark blue magical shadows and piercing light, high digital illustration quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTTAjoRRA2n7GxxcQSYdruEwODcBK6-F6EtfdJfr21iNPPS4tFQwElXEiiDvmT3Gum4sKrJrMRb3sOFCY-Rv3dtMioyJdWWvMIAbs6qX1EzXKajv-Z4BtiZgMLmMhfOpM6QfrLehtOYo4-QL4mgw5PpNdWOebMqsdyzQp7ZcWQulGTfcN6sZQrwObipdf7Cfjzvqz1z-_jb5UzXyCICMijifcG3gia1kyVuHSjPHA"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-[10px] text-primary uppercase font-bold">New Episode 142</span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface truncate">Shadow Monarch Sovereign</h4>
+<span class="font-body-sm text-[12px] text-tertiary truncate">Ch. 142: The Monarch Awakens • 26m</span>
+</div>
+</div>
+<button aria-label="Play chapter" class="w-9 h-9 rounded-full bg-primary-fixed text-on-primary-fixed-variant flex items-center justify-center flex-shrink-0 hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Web novel cover featuring an ancient Chinese celestial cultivation master floating amidst golden clouds, elegant flowing calligraphy and muted jade pigments." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4oBOG6wod6UDaDKolc6_9rinqyz2ht0BfNPoezxCWmU1pvhLZNynGieyBKKRGRGH6gKR84Z_kToSQgefhyjr_hfTRNsFwhcPK1J_3hM9imuTbnrOnkcvpZ_odIkdkYgAI3Rbw5Vyp95eyxTwnA5c0KkssOWg_fqmI3EEnt79Ggcexr7gxCy5Nf7wKmqiQmo-Dpk6whpPHxUf4HAbde579wTK0wGQcn2nkZPcJKkg"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-[10px] text-tertiary uppercase font-bold">Daily Drop</span>
+</div>
+<h4 class="font-label-lg text-label-lg text-on-surface truncate">Path of the Nine Heavens</h4>
+<span class="font-body-sm text-[12px] text-tertiary truncate">Ch. 88: Tribulation of Fire • 34m</span>
+</div>
+</div>
+<button aria-label="Play chapter" class="w-9 h-9 rounded-full bg-primary-fixed text-on-primary-fixed-variant flex items-center justify-center flex-shrink-0 hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 5: Top Cast & Narrators (Circular Profiles with Sample Triggers) -->
+<section class="mt-space-lg mb-4">
+<div class="px-margin flex items-center justify-between mb-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Top Cast &amp; Narrators</h2>
+<p class="font-body-sm text-body-sm text-tertiary">Listen to iconic voice actors and award-winning narrators</p>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-semibold uppercase tracking-wider" href="#">All Voices</a>
+</div>
+<!-- Horizontal Scroll Circular Cards -->
+<div class="w-full overflow-x-auto no-scrollbar pl-margin">
+<div class="flex gap-4 pr-margin py-2">
+<!-- Narrator 1 -->
+<div class="flex flex-col items-center w-24 flex-shrink-0 text-center">
+<div class="relative w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-primary to-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of charismatic Japanese male voice actor in contemporary Tokyo recording studio with high-end microphone and warm acoustic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyEvA2Sh0JTbyqRYI-_h-VU5ztU9wynmoss9lGNf09oCcy6BV8StYy2OGjCfClujk7JcLufWD5_qstMkO_em-SC5rwHY8cgsQfI0BoSoLRG4BzHtm092L4eWNQEUm8-MKMKXJnU32eANH44-qPstAxpfx89Ewpbd2YDLhZhzeY5EWsVrT-QMWZanzwT5FpVk0yNOXBsjRVXW-Tu5uuBPdUzgvBHSIHv5YlryO4HzE"/>
+</div>
+<button aria-label="Listen sample from Kenjiro Tsuda" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<span class="font-label-md text-label-md text-on-surface mt-2 truncate w-full">Kenjiro Tsuda</span>
+<span class="font-label-sm text-[10px] text-tertiary truncate w-full">Deep / Noir</span>
+</div>
+<!-- Narrator 2 -->
+<div class="flex flex-col items-center w-24 flex-shrink-0 text-center">
+<div class="relative w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-primary to-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of expressive Japanese female anime voice actress in warm sound booth with studio headphones and acoustic foam background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8VZrDK-dUTTvgDw4teEkFjV98vp2j0aue_g_HzqIRICf9owPwroiRshJR5QNSlBBO7vvPSo9NvifDvZaCPcLg5AIIQsuZHOQe8Sg8yyErjxjI58X0ju0aCyKGl3J2cDje6cdrivQv8WwzmXiEh25TgssEpi8IZf-cA1UplPTEX0n-Fu3B637IMw-YroGYVRgtlWUGTx7PTPkeMtlGrPRuDPLUcR_EkuCCReMiJds"/>
+</div>
+<button aria-label="Listen sample from Saori Hayami" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<span class="font-label-md text-label-md text-on-surface mt-2 truncate w-full">Saori Hayami</span>
+<span class="font-label-sm text-[10px] text-tertiary truncate w-full">Serene / Poetic</span>
+</div>
+<!-- Narrator 3 -->
+<div class="flex flex-col items-center w-24 flex-shrink-0 text-center">
+<div class="relative w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-primary to-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of veteran literary audiobook narrator with warm thoughtful expression in a Tokyo library setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhd33kIC7zOUzWtn34acQbLx5QHXtHHK7St4cFzFnI-U0fydQ15T6kw4n3MKkE6WsU9nBj6V8GL3hHldLxDPmauA2smBVKKpODQ9X1TMS0Pag0Zu9GlAYJcn9vG_SV5Ro2DcM_ksF8yOWkRWZaWoPX6BETItz9DNETTPmqaNtgPNjAoVL8hneRyyFHH_-jGVFbqJXg9iCKW8q2sx1BSmi0PSSRY7EncS2D_JrqeQo"/>
+</div>
+<button aria-label="Listen sample from David Shih" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<span class="font-label-md text-label-md text-on-surface mt-2 truncate w-full">David Shih</span>
+<span class="font-label-sm text-[10px] text-tertiary truncate w-full">Audie Awardee</span>
+</div>
+<!-- Narrator 4 -->
+<div class="flex flex-col items-center w-24 flex-shrink-0 text-center">
+<div class="relative w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-primary to-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of dynamic young voice actor smiling near a pop-filter studio microphone in a Japanese animation production house." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxVSAyeGJ2klrS9kR4h1q1hvxDlzZiXhPF9FayWt2i09WP2dMVPL3L-y4y873RJ-JK88IRNE5ArKiZJwVahQn1HFHC1Giy8ucf0YIrzUC2zMIyLnCYg86w8jlXEI97UQgNX0sMwaFI7inp45P9ca7z0UNr0IAVRm7ViTBPONeREWdTc-ZkvJq5uvt-FTOgPkhLgxJKCR0HrtxpRQEi4sWFUfkc2D1A8RTNOt6pc98"/>
+</div>
+<button aria-label="Listen sample from Natsuki Hanae" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<span class="font-label-md text-label-md text-on-surface mt-2 truncate w-full">Natsuki Hanae</span>
+<span class="font-label-sm text-[10px] text-tertiary truncate w-full">Shonen / Hero</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Sticky Audiobook Mini-Player Anchor (Elevated above shell tab navigation) -->
+<div class="sticky bottom-2 inset-x-0 px-margin z-40 mt-space-sm">
+<div class="w-full h-16 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md shadow-lg flex items-center justify-between px-3 gap-3">
+<!-- Mini Artwork 1:1 -->
+<div class="w-11 h-11 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="Mini player cover thumbnail for Norwegian Wood audiobook in Tokyo editorial colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1nOA02cP6JzndxtD0a7yb6Duqrew54BcGaBN2JEHxdtxePY0IVi41u-iSU__K4DxEu2E1WeA_Cbp17T-QiihEv224Fk04YL9B0YvYFWb_pydVz5_kjNPgCjR3I3QOWtwFGXxfauPl7-OzaL5lGpv0Fx4Olk-kadUzU_WPXamyWJ-IuWug4_Rhqi_19C1TloSKECehIoy1dBLBZlFgfoQlCPRw0OzrpduZ6_IoRCg"/>
+</div>
+<!-- Playback text info & Mini Scrubber -->
+<div class="flex flex-col flex-1 min-w-0 justify-center">
+<div class="flex items-center justify-between">
+<h4 class="font-label-md text-label-md text-on-surface truncate">Norwegian Wood • Ch. 7</h4>
+<span class="font-label-sm text-[10px] text-primary font-mono">1.25x</span>
+</div>
+<p class="font-body-sm text-[11px] text-tertiary truncate">Haruki Murakami • Faye Chin</p>
+<!-- Tiny Progress Bar -->
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden mt-1">
+<div class="h-full bg-primary rounded-full" style="width: 34%;"></div>
+</div>
+</div>
+<!-- Playback Controls -->
+<div class="flex items-center gap-1 flex-shrink-0">
+<button aria-label="Skip backward 15 seconds" class="w-8 h-8 rounded-full flex items-center justify-center text-tertiary hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">replay_10</span>
+</button>
+<button aria-label="Pause or resume" class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform" id="mini-play-toggle">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction for toggling play/pause icon in audio triggers
+  document.addEventListener('DOMContentLoaded', () => {
+    const playBtns = document.querySelectorAll('#resume-playback-btn, #mini-play-toggle');
+    playBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          if (icon.textContent.trim() === 'play_arrow') {
+            icon.textContent = 'pause';
+          } else {
+            icon.textContent = 'play_arrow';
+          }
+        }
+      });
+    });
+  });
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-medium"><div class="h-16 px-space-xs grid grid-cols-5 items-center"><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Home</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="discover" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm">Discover</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">local_library</span><span class="font-label-sm text-label-sm">Library</span></a><a aria-current="page" class="flex flex-col items-center justify-center h-full gap-0.5 transition-colors text-primary font-medium" data-path="audiobooks" href="#"><span class="material-symbols-outlined text-[24px]">headphones</span><span class="font-label-sm text-label-sm">Audio</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Profile</span></a></div></nav></body></html>

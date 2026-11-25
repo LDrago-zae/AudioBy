@@ -19,6 +19,14 @@ public struct FullScreenPlayerView: View {
     public init() {}
 
     public var body: some View {
+        if let book = playerService.currentBook, !isTranscriptionMode {
+            FullScreenAudiobookPlayerMakeover(book: book)
+        } else {
+            legacyBody
+        }
+    }
+
+    private var legacyBody: some View {
         ZStack {
             if isTranscriptionMode {
                 SceneBackdrop(scene: scenes.active, scrim: 0.62)
@@ -114,23 +122,26 @@ public struct FullScreenPlayerView: View {
                     VStack(spacing: 18) {
                         ZStack {
                             Circle()
-                                .stroke(Theme.ink.opacity(0.18), lineWidth: 3)
-                                .frame(width: 250, height: 250)
+                                .stroke(Theme.ink.opacity(0.15), style: StrokeStyle(lineWidth: 5, dash: [2, 6]))
+                                .frame(width: 292, height: 292)
                             Circle()
                                 .trim(from: 0, to: min(max(fraction, 0), 1))
-                                .stroke(Theme.ink, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                                .stroke(Theme.ember, style: StrokeStyle(lineWidth: 5, lineCap: .round))
                                 .rotationEffect(.degrees(-90))
-                                .frame(width: 250, height: 250)
+                                .frame(width: 292, height: 292)
                             CoverArtView(
                                 title: book.title,
                                 author: book.author,
                                 gradientHexes: book.coverGradientColors,
                                 coverImageURL: book.coverImageURL,
-                                cornerRadius: 8,
-                                shadowRadius: 10,
-                                ratio: 0.72
+                                cornerRadius: 0,
+                                shadowRadius: 0,
+                                ratio: 1
                             )
-                            .frame(width: 140)
+                            .frame(width: 270, height: 270)
+                            .clipShape(Circle())
+                            .shadow(color: .black.opacity(0.25), radius: 18, y: 10)
+                            .rotationEffect(.degrees(0))
                         }
                         .overlay(alignment: .leading) {
                             Text("Ch. \(playerService.currentChapterIndex + 1)")

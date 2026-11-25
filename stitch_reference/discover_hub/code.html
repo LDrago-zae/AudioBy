@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary": "#615e59", "surface-container-highest": "#e5e2d9", "tertiary-container": "#79746a", "error-container": "#ffdad6", "surface-container-high": "#ebe8de", "on-primary-fixed-variant": "#822700", "surface-container-low": "#f6f4ea", "background": "#fcf9ef", "tertiary": "#605b52", "on-tertiary-fixed": "#1e1b14", "on-tertiary-container": "#fffbff", "tertiary-fixed": "#e9e2d5", "primary-fixed": "#ffdbcf", "primary-container": "#cc4811", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#494642", "on-error": "#ffffff", "surface-bright": "#fcf9ef", "surface-tint": "#ab3600", "on-tertiary": "#ffffff", "on-primary-fixed": "#390c00", "outline-variant": "#e1bfb4", "surface-container-lowest": "#ffffff", "surface-dim": "#dcdad0", "surface-variant": "#e5e2d9", "on-primary-container": "#fffbff", "on-background": "#1c1c16", "on-surface": "#1c1c16", "inverse-surface": "#31312a", "on-primary": "#ffffff", "secondary-fixed-dim": "#cbc5c0", "tertiary-fixed-dim": "#cdc6ba", "secondary-container": "#e8e1db", "on-secondary-container": "#68645f", "on-surface-variant": "#594139", "primary-fixed-dim": "#ffb59c", "surface-container": "#f1eee4", "secondary-fixed": "#e8e1db", "surface": "#fcf9ef", "on-error-container": "#93000a", "error": "#ba1a1a", "primary": "#a73400", "on-tertiary-fixed-variant": "#4a463d", "inverse-primary": "#ffb59c", "outline": "#8d7168", "on-secondary-fixed": "#1d1b18", "inverse-on-surface": "#f4f1e7" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-md": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1rem", "space-xs": "0.25rem" }, fontFamily: { "label-md": ["Inter"], "headline-sm": ["Manrope"], "headline-md": ["Manrope"], "headline-xl": ["Manrope"], "body-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-xl-mobile": ["Manrope"], "label-lg": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Manrope"] }, fontSize: { "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-sm": ["17px", { lineHeight: "22px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "26px", letterSpacing: "-0.015em", fontWeight: "600" }], "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.03em", fontWeight: "700" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0.005em", fontWeight: "400" }], "body-md": ["15px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["17px", { lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "400" }], "headline-xl-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.025em", fontWeight: "700" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "600" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "600" }] } } } };</script><style>@layer base { html, body { margin: 0; padding: 0; min-height: 100%; } body { overscroll-behavior-y: none; } .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px); } .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Komorebi App Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1VOLyooPYdFPd2UHVPpIl5TTAgJ-krkILgVD21j8WAyrV1_1Fh1bWh5RHYiK-6GHXx36woeR51RCBcQESNQBWgLf-CCLH3yNyPN_xROeeeCHmj8vZ7gCOg4DhBv8zXdmXJckzJCvmdLWuJvNiJco8uPRAySGTIpPCOns1BhaLvdWwfFPCdwyc3hBN5pTKSVvQnRbRjlkGulxE6mnM4C3ya_ER1ZB8-Wuwp4s81H4ySa"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-surface truncate">Home</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Komorebi</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary"></span></button><button aria-label="User Profile" class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPjNBRpS2lY4cHXKl7SLPc2fxzWgjIlttqjt4-o7gzOOZByPR-PToEJBx6KYxNUP_IkAGN3qcuaQrikHZaMKu3XpcRt8PMsuoxSDrwDQy5l-CB0YpIUdMoLHTy9SWLGJkdtGDwwULOIxOXgGQ1ZbHcfXsrPVStenfS93wppEGcVu9O6KVkH4TafXq3gfY2RQFlCg9YY0d4pVXCmUGe9BdClY8ru53n_m8SCG9LCDQ"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full">
+<!-- Top Search & Filter Toolbar -->
+<section class="px-margin pt-space-xs pb-space-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Curated Catalog</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Discover</h1>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Open Filter Controls" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-transform active:scale-95" id="toggle-filter-btn">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Quick Search Pill Input -->
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-11 pl-10 pr-10 bg-surface-container rounded-xl font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none focus:bg-surface-container-low transition-all" placeholder="Titles, creators, genres, scanlators..." type="text"/>
+<button aria-label="Voice search or visual lens" class="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+</div>
+</section>
+<!-- Format Horizontal Pill Carousel -->
+<section class="w-full pb-space-sm">
+<div class="flex items-center gap-space-xs overflow-x-auto px-margin no-scrollbar py-1">
+<button class="format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-inverse-surface text-inverse-on-surface flex items-center gap-1.5 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>All</span>
+</button>
+<button class="format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors">
+        Manga
+      </button>
+<button class="format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors">
+        Manhwa
+      </button>
+<button class="format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors">
+        Manhua
+      </button>
+<button class="format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors">
+        Novels
+      </button>
+<button class="format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors">
+        Light Novels
+      </button>
+</div>
+</section>
+<!-- Editorial Spotlight Banner -->
+<section class="px-margin py-space-xs">
+<div class="relative w-full rounded-2xl overflow-hidden bg-surface-container-high shadow-sm">
+<!-- Background Ambient Cover Art -->
+<div class="relative w-full h-[270px]">
+<img class="w-full h-full object-cover" data-alt="Intricate Japanese fantasy manga editorial cover artwork, celestial floating islands with ancient shinto shrines enveloped in cinnabar clouds and vermilion leaves, glowing paper lanterns, rich sumi ink brush linework paired with soft cream and burnt sienna textures, painterly atmospheric lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSMCvuBw7Kw4DH0b8Q7-94Ig__4uFY-xbxDUkOkmuQhTCzpFL7_t72nalWCzP5-TQ97vn1ufw_jcF9aHfyyXYqBuNghjpcZc-t8BEZbzPZUq3r0JKTXPw9zwjodGMo73sULNoHkYiUUkA6hwiYxyEk2K3MOaaUlgRjpKSWfXWz-fFNzOURsM3liMNZ-1hkVYu7WvXdFmkP872d17xJFFRTfnhaBSH-ISXTIDd7C3w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface via-inverse-surface/60 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-inverse-surface/85 backdrop-blur-md px-2.5 py-1 rounded-md flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-primary tracking-wider uppercase">Staff Spotlight</span>
+</div>
+<div class="absolute top-3 right-3 bg-inverse-surface/75 backdrop-blur-md px-2 py-0.5 rounded text-inverse-on-surface font-label-sm text-label-sm">
+          VOL. 8 DROP
+        </div>
+</div>
+<!-- Editorial Info Panel Overlay -->
+<div class="absolute bottom-0 inset-x-0 p-space-md flex flex-col gap-1 text-on-primary">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary-fixed">Weekly Masterwork</span>
+<h2 class="font-headline-md text-headline-md text-inverse-on-surface line-clamp-1 leading-snug">
+          The Scribe of Ashen Windmills
+        </h2>
+<p class="font-body-sm text-body-sm text-surface-container-highest/90 line-clamp-2">
+          When the ancient ink-towers collapse, a renegade archivist must decode living scrolls to rekindle the dying auroras.
+        </p>
+<div class="flex items-center justify-between pt-space-xs mt-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm bg-surface-container-highest/20 px-2 py-0.5 rounded text-inverse-on-surface">Ch. 74</span>
+<span class="font-label-sm text-label-sm text-primary-fixed flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.96
+            </span>
+</div>
+<button class="h-9 px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform">
+<span>Explore Spotlight</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Genre Chips -->
+<section class="w-full pt-space-md pb-space-xs">
+<div class="px-margin flex items-center justify-between mb-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Explore by Tropes</h3>
+<span class="font-label-sm text-label-sm text-primary uppercase font-semibold cursor-pointer">View All</span>
+</div>
+<div class="flex items-center gap-space-xs overflow-x-auto px-margin no-scrollbar py-1">
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Action
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container-high font-label-md text-label-md text-on-surface flex-shrink-0 font-medium">
+        Fantasy
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Mystery
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Slice of Life
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Romance
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Supernatural
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Sci-Fi
+      </button>
+<button class="genre-chip px-3.5 py-1.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface-variant flex-shrink-0 hover:bg-surface-container-high transition-colors">
+        Psychological
+      </button>
+</div>
+</section>
+<!-- Trending This Week Horizontal Rail -->
+<section class="w-full pt-space-md">
+<div class="px-margin flex items-baseline justify-between mb-space-xs">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Trending This Week</h3>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Updated 2h ago</span>
+</div>
+<div class="flex gap-space-md overflow-x-auto px-margin no-scrollbar py-2">
+<!-- Card #1 -->
+<div class="w-36 flex-shrink-0 flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Cover of dark fantasy Korean manhwa with ethereal shadow knight wielding a cinnabar glowing sword amidst ancient temple ruins, intricate lineart, warm paper tone highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5-TWLIn0AF0KCtOCsJmAwPzGsSR8WI-7ftlU1qhhGFkdcfhkZcRpsej2th6xau80CdCEMwOtQ4XdtsP2xZHRnTvTkwzS000g3fetvC7K0L3DmLAWOznWt8Ru-PXGIoNPX_mQCVxmsgqbBALwm8QxTExcKALdTVwKjRHviTTtmp4-xXaARr-zcHDuj5vjltNChqeeblszrpyPgWDDJh5jtlDIYIfS9Vxui8oyaWg8"/>
+<div class="absolute top-2 left-2 w-6 h-6 rounded-md bg-primary text-on-primary font-headline-sm text-[12px] flex items-center justify-center font-bold shadow-sm">
+            #1
+          </div>
+<div class="absolute top-2 right-2 bg-inverse-surface/85 backdrop-blur-sm px-1.5 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface">
+            MANHWA
+          </div>
+<div class="absolute bottom-0 inset-x-0 h-1 bg-surface-container-highest">
+<div class="h-full bg-primary w-3/4"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1">Monarch of Shadows</span>
+<div class="flex items-center justify-between text-secondary pt-0.5">
+<span class="font-label-sm text-label-sm">Ch. 182</span>
+<span class="font-label-sm text-label-sm flex items-center gap-0.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.98
+            </span>
+</div>
+</div>
+</div>
+<!-- Card #2 -->
+<div class="w-36 flex-shrink-0 flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Serene Japanese slice of life manga cover showing an antique teahouse interior drenched in warm afternoon sunlight through shoji paper screens, delicate ink brush details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJFD6bjx-urHqpX-9HvbUT2SEryeEYV_gFqXFOzl__GPYcRkQ8_wA2KoN0suXZqlgJdoEZxlWqP382_mGpilY1ZxmevGZ5rZnbdYIcM-u1fcILZ_jVFwIjjAP0Q4SWsMna2QnRidwlM-eSBQtyaw6hdwYnA9sgSnqTij_k3Gxcr4H5fD6GjeviGXDTUGH9kV2jOhQAD-Z5xMH10888xHRVWHeFUUVCvVGH7Xx7hdk"/>
+<div class="absolute top-2 left-2 w-6 h-6 rounded-md bg-inverse-surface text-inverse-on-surface font-headline-sm text-[12px] flex items-center justify-center font-bold shadow-sm">
+            #2
+          </div>
+<div class="absolute top-2 right-2 bg-inverse-surface/85 backdrop-blur-sm px-1.5 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface">
+            MANGA
+          </div>
+<div class="absolute bottom-0 inset-x-0 h-1 bg-surface-container-highest">
+<div class="h-full bg-primary w-1/2"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1">Komorebi Teahouse</span>
+<div class="flex items-center justify-between text-secondary pt-0.5">
+<span class="font-label-sm text-label-sm">Ch. 45</span>
+<span class="font-label-sm text-label-sm flex items-center gap-0.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.92
+            </span>
+</div>
+</div>
+</div>
+<!-- Card #3 -->
+<div class="w-36 flex-shrink-0 flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Sci-fi cyberpunk light novel artwork showing a neon-lit rain alley with holographic Japanese calligraphy and a lone trenchcoat detective holding a data stylus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC90r7KNiuXDRr048uVCc_RCbU24lpfboBXeBIwtKFO4Otm4Dn5C0F4Olpdfk3Ri-1AhVU0epqFLX37G-GtsepQVy6ScW5W1W6g83AgYqlivIn4t30drEba-GBS7ZoaGT3QHbS0oMcZ0XalRh-d_gTfmY6K4aZeiBrV1kq3s6FAsDKlgjDA_L2KW4ZYH-qAL3nL3Ps94PLtroiq2o8KNj2zyxTpLAZOZtPZoo-qVHY"/>
+<div class="absolute top-2 left-2 w-6 h-6 rounded-md bg-inverse-surface text-inverse-on-surface font-headline-sm text-[12px] flex items-center justify-center font-bold shadow-sm">
+            #3
+          </div>
+<div class="absolute top-2 right-2 bg-inverse-surface/85 backdrop-blur-sm px-1.5 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface">
+            NOVEL
+          </div>
+<div class="absolute bottom-0 inset-x-0 h-1 bg-surface-container-highest">
+<div class="h-full bg-primary w-1/4"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1">Cipher &amp; Silicon</span>
+<div class="flex items-center justify-between text-secondary pt-0.5">
+<span class="font-label-sm text-label-sm">Vol. 4</span>
+<span class="font-label-sm text-label-sm flex items-center gap-0.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.87
+            </span>
+</div>
+</div>
+</div>
+<!-- Card #4 -->
+<div class="w-36 flex-shrink-0 flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container-high shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Traditional Chinese wuxia manhua cover with soaring celestial dragons winding around mist-covered mountain peaks, elegant cinnabar red brush strokes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzSboWyCJDycIhBwqXWvHngUF2IjP3IK7jRBHnmTZmKLR8Ih9klE9aN_dvRLlF6T3MvSPPyvwg73gGM3oB8EH_AK3iZLARmm0p2vPmQyKFQRo6WVj8FwBtnqEjkXvuvQmIrJLm4HOSqYX18bnN-KcBEWV5hilv2TUi2kk3Am7VeHjm_zIgcraSpZ91YNhjP2dq2tLrbEb00CHKq9LQ7idcvV_8omcYK3YNX1MBlEU"/>
+<div class="absolute top-2 left-2 w-6 h-6 rounded-md bg-inverse-surface text-inverse-on-surface font-headline-sm text-[12px] flex items-center justify-center font-bold shadow-sm">
+            #4
+          </div>
+<div class="absolute top-2 right-2 bg-inverse-surface/85 backdrop-blur-sm px-1.5 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface">
+            MANHUA
+          </div>
+<div class="absolute bottom-0 inset-x-0 h-1 bg-surface-container-highest">
+<div class="h-full bg-primary w-5/6"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1">Cloudstep Immortal</span>
+<div class="flex items-center justify-between text-secondary pt-0.5">
+<span class="font-label-sm text-label-sm">Ch. 210</span>
+<span class="font-label-sm text-label-sm flex items-center gap-0.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[13px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span> 4.81
+            </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Editor's Picks Cards (Warm Paper Framing) -->
+<section class="px-margin pt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Tokyo Bureau Selection</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Editor's Picks</h3>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Pick 1 -->
+<div class="p-3 rounded-2xl bg-surface-container-low flex gap-space-sm items-center hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="relative w-16 h-24 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Moody psychological thriller manga cover with expressive monochrome pen crosshatching, a shadowed figure looking over a rainy Tokyo bridge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUbRagNh-RRSgwNrQYUTIWGaxKM7sv4ePHTsPKcWiiASb-8AT2bWCpH6TsS7M7yTkoWf5yP9tuVCKChp-v2Zt0KCDTsLZhu-LUuNMldbJCLKRWp8Xd2UMy1zf0-3T49ZlftjZX5ZJrEVe3wJb_R4p9dV3_lgCJyBrQJhfdsZOnQh7TKteqOT69flXRwkBfXGSzGiRfDBAjV320aBEU920re775y7Gga-GOLEbXo2c"/>
+<div class="absolute bottom-1 right-1 bg-inverse-surface/80 text-inverse-on-surface rounded px-1 text-[9px] font-label-sm">
+            SEINEN
+          </div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-[10px]">Staff Note</span>
+<span class="font-label-sm text-label-sm text-secondary">10 min read</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors">
+            Echoes in the Blind Alley
+          </h4>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">
+            "A masterclass in narrative tension and unvarnished pen work."
+          </p>
+<div class="flex items-center gap-3 pt-1 text-secondary font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span> 34 Ch.
+            </span>
+<span class="flex items-center gap-0.5 text-primary font-semibold">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.95
+            </span>
+<span class="text-on-surface-variant">Completed</span>
+</div>
+</div>
+<button aria-label="Bookmark" class="w-9 h-9 rounded-full bg-surface flex items-center justify-center text-secondary hover:text-primary transition-colors shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+</button>
+</div>
+<!-- Pick 2 -->
+<div class="p-3 rounded-2xl bg-surface-container-low flex gap-space-sm items-center hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="relative w-16 h-24 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Watercolor fantasy manga artwork featuring a young botanist cataloging luminous glowing flora inside an overgrown conservatory cathedral." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_nZRs-JnZwVFHAdt-Xb_oSvwsSd82UwK0HfjS04ducwvWJ0pAm7I7Oyn6Y15MZLIfHjR3arVdBfTagpVq2eabMF7nZdBBGAofKv7MdqaWl67_FpyAqAYEIWuC8LppJ0Vk-T2InMQYYm2-H-iP9TO3tcOjb9s6OeforBsRWWvZzPxEp1nVJPoHbIyrdWdCfkCwTVkApos_4XpMSlMKjP1W9S0BjPtd1CYK63f_wgw"/>
+<div class="absolute bottom-1 right-1 bg-inverse-surface/80 text-inverse-on-surface rounded px-1 text-[9px] font-label-sm">
+            IYASHIKEI
+          </div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-[10px]">Hidden Gem</span>
+<span class="font-label-sm text-label-sm text-secondary">Ongoing</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface truncate group-hover:text-primary transition-colors">
+            The Glasshouse Herbarium
+          </h4>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1">
+            "Gentle worldbuilding that smells of damp earth and herbal tisanes."
+          </p>
+<div class="flex items-center gap-3 pt-1 text-secondary font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">auto_stories</span> 19 Ch.
+            </span>
+<span class="flex items-center gap-0.5 text-primary font-semibold">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.89
+            </span>
+<span class="text-on-surface-variant">Bi-weekly</span>
+</div>
+</div>
+<button aria-label="Bookmark" class="w-9 h-9 rounded-full bg-surface flex items-center justify-center text-secondary hover:text-primary transition-colors shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Interactive Sort Bar & Filter Summary -->
+<section class="px-margin pt-space-lg pb-space-xs">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Popular Serializations</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm">842</span>
+</div>
+<button aria-label="Toggle display grid" class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary hover:text-on-surface" id="view-toggle-btn">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+</div>
+<!-- Editorial Sort Segments -->
+<div class="w-full bg-surface-container-low p-1 rounded-xl flex items-center gap-1">
+<button class="sort-pill flex-1 py-1.5 rounded-lg bg-surface font-label-sm text-label-sm text-on-surface font-semibold text-center shadow-sm">
+        Popularity
+      </button>
+<button class="sort-pill flex-1 py-1.5 rounded-lg font-label-sm text-label-sm text-secondary hover:text-on-surface text-center">
+        Rating
+      </button>
+<button class="sort-pill flex-1 py-1.5 rounded-lg font-label-sm text-label-sm text-secondary hover:text-on-surface text-center">
+        Latest
+      </button>
+<button class="sort-pill flex-1 py-1.5 rounded-lg font-label-sm text-label-sm text-secondary hover:text-on-surface text-center">
+        A-Z
+      </button>
+</div>
+</section>
+<!-- Responsive 2-Column Grid "Popular Serializations" -->
+<section class="px-margin py-space-xs">
+<div class="grid grid-cols-2 gap-space-md">
+<!-- Item 1 -->
+<div class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="High fantasy action manga cover showing a dual-wielding swordsman in intricate plate armor facing a towering shadow titan, dynamic Japanese manga composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACNMWcWc0M8y4UtM89TdKcp1hFQac-Wi427tWDHGRL0YevgoPA4g67l9NZePkGWbmytA_8s0KuT-lCQ8BDUCxmIV_S8-pUjTnW90iimOnN_Rnvm4Ub8l48ITLLKK_E8F-D3MqMOuQrc27yNBmml9mlPz2WOrxydR4Ed9crmSK8RBato7uWewFhMmRR7LV-Ae4urPGm3cq-UYhHj53SwRtfBB_SSSCjeYN9nUXgOXw"/>
+<div class="absolute top-2 left-2 bg-inverse-surface/85 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface font-semibold">
+            ONGOING
+          </div>
+<button aria-label="Save to Library" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-inverse-surface/80 backdrop-blur-sm flex items-center justify-center text-inverse-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+</button>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between bg-inverse-surface/85 backdrop-blur-md rounded-md px-2 py-1 text-inverse-on-surface">
+<span class="font-label-sm text-[10px] text-surface-container-highest">Ch. 142</span>
+<span class="font-label-sm text-[10px] flex items-center gap-0.5 text-primary-fixed">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+            </span>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1 group-hover:text-primary transition-colors">
+            Return of the Frost Vanguard
+          </span>
+<span class="font-label-sm text-label-sm text-secondary line-clamp-1">Fantasy, Action, Reincarnation</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Charming romantic slice of life manhwa artwork showing two university students sheltering under a single umbrella during a spring rainstorm with falling cherry blossoms." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4BwcWXH8wOrzy8UmBunUbdy3WUp7dURFtcw8ZEMv0b6m8yFtc1MZH2dVphif-6gteJ2gnro3buPCcY2FvkzpGE-3KW09OV4yXcehwzrHebBTmU0h-LUWm6weGu0K00NI0k_WadUnq3t1b-3SAeKNk4v2KQLEZEstXaOcD-oM01vwEtO3JV41VvrArhmKQbNzNQHzS4HQvyLDP4YdYzDYd44_JBwomHyGrKXRlpKs"/>
+<div class="absolute top-2 left-2 bg-inverse-surface/85 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface font-semibold">
+            COMPLETED
+          </div>
+<button aria-label="Save to Library" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-inverse-surface/80 backdrop-blur-sm flex items-center justify-center text-inverse-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+</button>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between bg-inverse-surface/85 backdrop-blur-md rounded-md px-2 py-1 text-inverse-on-surface">
+<span class="font-label-sm text-[10px] text-surface-container-highest">98 Ch.</span>
+<span class="font-label-sm text-[10px] flex items-center gap-0.5 text-primary-fixed">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.8
+            </span>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1 group-hover:text-primary transition-colors">
+            Springtime Soliloquy
+          </span>
+<span class="font-label-sm text-label-sm text-secondary line-clamp-1">Romance, Slice of Life</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Gothic supernatural manga cover with a white-haired vampire investigator reading tarot cards in a velvet candlelight study with intricate textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLbJMAqOF2i8TNnGnlvEKBJxiNGMq4iaInoGo_H4EP9lfxSWJQt4X4LuLWzbPNq0RB1NIw2VhxL84sHAw5nE_tLtbVZPS0LBq9Yz4zoUlLat4IlJW-Xth_lcUQY8WNkEMfCw95cZYvhBRo-RZY_oAYx8usaVmJvpsURnK7gYytushCBV0uyBzAGqRfp5L1gSBxMU1jSWwV7wx2BSfhGQoKoz4Ahl3SMDgOJhrxGtU"/>
+<div class="absolute top-2 left-2 bg-inverse-surface/85 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface font-semibold">
+            ONGOING
+          </div>
+<button aria-label="Save to Library" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-inverse-surface/80 backdrop-blur-sm flex items-center justify-center text-inverse-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+</button>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between bg-inverse-surface/85 backdrop-blur-md rounded-md px-2 py-1 text-inverse-on-surface">
+<span class="font-label-sm text-[10px] text-surface-container-highest">Ch. 64</span>
+<span class="font-label-sm text-[10px] flex items-center gap-0.5 text-primary-fixed">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.95
+            </span>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1 group-hover:text-primary transition-colors">
+            The Velvet Nocturne
+          </span>
+<span class="font-label-sm text-label-sm text-secondary line-clamp-1">Supernatural, Mystery</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex flex-col group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-xl overflow-hidden bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="High energy sports manga artwork displaying a badminton player mid-jump smash in an illuminated stadium with motion blur and sweat droplets." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATfarRIvvPBcfZSVzKvoYPc4esKycGGqrcgR4RFxxjCa4EOEFc9ICF0nhhkDtPfElBBPCfdy4gQ6-b2ppFyZrLGVZhrtuXxFVXd73z1JVIcpFEErI0_fq6LUtNprp2K0RLltAA8p37BXKybA2Pf5uCnDfOvCa1N6N4Hldl1HUtfzrbQwtd2EQaEU2pw07FFI-nKqhNrzTj5qP3eLJJXQHlx-vQAqRdZLDwuBeSWkg"/>
+<div class="absolute top-2 left-2 bg-inverse-surface/85 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-label-sm text-inverse-on-surface font-semibold">
+            ONGOING
+          </div>
+<button aria-label="Save to Library" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-inverse-surface/80 backdrop-blur-sm flex items-center justify-center text-inverse-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+</button>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between bg-inverse-surface/85 backdrop-blur-md rounded-md px-2 py-1 text-inverse-on-surface">
+<span class="font-label-sm text-[10px] text-surface-container-highest">Ch. 115</span>
+<span class="font-label-sm text-[10px] flex items-center gap-0.5 text-primary-fixed">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.87
+            </span>
+</div>
+</div>
+<div class="pt-2 flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface line-clamp-1 group-hover:text-primary transition-colors">
+            Apex Shuttle
+          </span>
+<span class="font-label-sm text-label-sm text-secondary line-clamp-1">Sports, Shonen, Drama</span>
+</div>
+</div>
+</div>
+<!-- Load More Editorial Trigger -->
+<div class="w-full pt-space-md pb-space-sm flex justify-center">
+<button class="px-6 py-2.5 rounded-full bg-surface-container font-label-md text-label-md text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-2 active:scale-95">
+<span class="material-symbols-outlined text-[18px]">cached</span>
+<span>Fetch More Titles</span>
+</button>
+</div>
+</section>
+<!-- Persistent Audiobook / Ambient Player Shelf Anchor -->
+<section class="px-margin pt-space-xs pb-space-md">
+<div class="w-full bg-surface-container-low p-3 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-11 h-11 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="Minimalist Japanese vinyl disc cover art with cinnabar red kanji typography on textured washi paper." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6qTRbJUFjFwKcpH5xgX0xghjuv-pfG5Y-r3mrka51keWWl0cJvvgFp9a8vgjJipglkxH_be321AfoVSdC0z-IYx-3_5hsxAf7y9x8vKah9lTxgxwa-3X3XT5aCRtIlFw-AyR0jKJv-7owW_mu6tznC1fOlZ7hQJ2tzHhQ6O66pLqVe-fgfo3GQxGmxECmFic1CNZhcD3ZWj-uuTy1GZrYe5mnpzYg2EvyQ4ZYUNQ"/>
+<div class="absolute inset-0 bg-inverse-surface/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-surface-bright">headphones</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[10px] uppercase tracking-wider text-primary font-semibold">Resuming Ambient Narration</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Kafka on the Shore — Pt. 4</span>
+<span class="font-body-sm text-[11px] text-secondary truncate">Narrated by Kenji Sato • 18:24 left</span>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button aria-label="Play Narration" class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<script>
+  // Discover category toggle interactions
+  document.querySelectorAll('.format-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.format-pill').forEach(el => {
+        el.className = 'format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors';
+        const dot = el.querySelector('span.rounded-full');
+        if (dot) dot.remove();
+      });
+      btn.className = 'format-pill px-4 py-2 rounded-full font-label-md text-label-md whitespace-nowrap bg-inverse-surface text-inverse-on-surface flex items-center gap-1.5 shadow-sm';
+      const indicator = document.createElement('span');
+      indicator.className = 'w-1.5 h-1.5 rounded-full bg-primary';
+      btn.prepend(indicator);
+    });
+  });
+
+  // Sort bar selection toggle
+  document.querySelectorAll('.sort-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sort-pill').forEach(el => {
+        el.className = 'sort-pill flex-1 py-1.5 rounded-lg font-label-sm text-label-sm text-secondary hover:text-on-surface text-center';
+      });
+      btn.className = 'sort-pill flex-1 py-1.5 rounded-lg bg-surface font-label-sm text-label-sm text-on-surface font-semibold text-center shadow-sm';
+    });
+  });
+
+  // Genre chip micro-interaction
+  document.querySelectorAll('.genre-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('bg-primary');
+      chip.classList.toggle('text-on-primary');
+      chip.classList.toggle('bg-surface-container');
+      chip.classList.toggle('text-on-surface-variant');
+    });
+  });
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-medium"><div class="h-16 px-space-xs grid grid-cols-5 items-center"><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Home</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="discover" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm">Discover</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">local_library</span><span class="font-label-sm text-label-sm">Library</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="audiobooks" href="#"><span class="material-symbols-outlined text-[24px]">headphones</span><span class="font-label-sm text-label-sm">Audio</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-secondary hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Profile</span></a></div></nav></body></html>
