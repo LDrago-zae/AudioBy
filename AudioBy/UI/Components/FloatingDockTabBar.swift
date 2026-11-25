@@ -40,7 +40,6 @@ public enum DockTab: Int, CaseIterable {
 
 public struct FloatingDockTabBar: View {
     @Binding public var selectedTab: DockTab
-    @Namespace private var glass
 
     private let iconSize: CGFloat = 46
     private let gap: CGFloat = 10
@@ -50,21 +49,13 @@ public struct FloatingDockTabBar: View {
     }
 
     public var body: some View {
-        if #available(iOS 26.0, *) {
-            GlassEffectContainer(spacing: 12) {
-                icons
-                    .padding(6)
-                    .glassEffect(.regular, in: Capsule())
-            }
-            .animation(.smooth(duration: 0.45), value: selectedTab)
+        icons
+            .padding(6)
+            .background(MangaTheme.surfaceLow.opacity(0.95), in: Capsule())
+            .overlay(Capsule().stroke(MangaTheme.hairline, lineWidth: 1))
+            .shadow(color: Color.black.opacity(0.08), radius: 12, y: 4)
+            .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selectedTab)
             .fixedSize()
-        } else {
-            icons
-                .padding(6)
-                .background(.ultraThinMaterial, in: Capsule())
-                .animation(.smooth(duration: 0.45), value: selectedTab)
-                .fixedSize()
-        }
     }
 
     private var icons: some View {
@@ -76,46 +67,19 @@ public struct FloatingDockTabBar: View {
                 } label: {
                     ZStack {
                         Circle()
-                            .fill(Color.white.opacity(0.16))
-                        if selected {
-                            Circle()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [
-                                            Color(red: 1.0, green: 0.64, blue: 0.28),
-                                            Theme.ember
-                                        ],
-                                        startPoint: .top,
-                                        endPoint: .bottom
-                                    )
-                                )
-                                .modifier(FocusGlass(namespace: glass))
-                        }
+                            .fill(selected ? MangaTheme.vermilion : MangaTheme.surfaceContainer)
                         Image(systemName: selected ? tab.selectedIconName : tab.iconName)
-                            .font(.system(size: 17, weight: .semibold))
-                            .foregroundStyle(Color.white)
+                            .font(.system(size: 16, weight: selected ? .bold : .medium))
+                            .foregroundStyle(selected ? Color.white : MangaTheme.ink)
                     }
                     .frame(width: iconSize, height: iconSize)
                     .contentShape(Circle())
+                    .shadow(color: selected ? MangaTheme.vermilion.opacity(0.35) : Color.clear, radius: 6, y: 2)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(tab.title)
                 .accessibilityAddTraits(selected ? .isSelected : [])
             }
-        }
-    }
-}
-
-private struct FocusGlass: ViewModifier {
-    let namespace: Namespace.ID
-
-    func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
-            content
-                .glassEffect(.regular.tint(Theme.ember).interactive(), in: Circle())
-                .glassEffectID("focus", in: namespace)
-        } else {
-            content
         }
     }
 }

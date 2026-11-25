@@ -12,32 +12,55 @@ public struct ActivityStatsView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                Theme.appBackground.ignoresSafeArea()
+                MangaTheme.surface.ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 18) {
-                        Text("Activity")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(Theme.textDark)
-                            .padding(.horizontal, 20)
-                            .padding(.top, 8)
+                        HStack(spacing: 12) {
+                            Button {
+                                AppNavigationState.shared.openSidebar()
+                            } label: {
+                                Image(systemName: "line.3.horizontal")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(MangaTheme.ink)
+                                    .frame(width: 44, height: 44)
+                                    .background(MangaTheme.surfaceLow)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(MangaTheme.hairline, lineWidth: 1))
+                            }
+                            .accessibilityLabel("Open Menu")
+
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("読書記録 / HABITS")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .tracking(1.2)
+                                    .foregroundStyle(MangaTheme.vermilion)
+                                Text("Reading Habits")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundStyle(MangaTheme.ink)
+                            }
+
+                            Spacer()
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 8)
 
                         paperCard {
                             HStack(spacing: 16) {
                                 Image(systemName: "flame.fill")
                                     .font(.system(size: 22, weight: .bold))
-                                    .foregroundStyle(Theme.onAccent)
+                                    .foregroundStyle(.white)
                                     .frame(width: 52, height: 52)
-                                    .background(Theme.ember)
+                                    .background(MangaTheme.vermilion)
                                     .clipShape(Circle())
 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("\(stats.streakDays) day streak")
-                                        .font(.system(size: 22, weight: .bold))
-                                        .foregroundStyle(Theme.textDark)
+                                        .font(.system(size: 20, weight: .bold))
+                                        .foregroundStyle(MangaTheme.ink)
                                     Text(stats.streakDays == 0 ? "Listen today to start your streak." : "You've listened on consecutive days.")
                                         .font(.system(size: 13))
-                                        .foregroundStyle(Theme.textMuted)
+                                        .foregroundStyle(MangaTheme.secondary)
                                         .lineLimit(2)
                                 }
                             }
@@ -173,9 +196,10 @@ public struct ActivityStatsView: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Theme.surfaceWhite)
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: Theme.ink.opacity(0.06), radius: 10, x: 0, y: 4)
+        .background(MangaTheme.surfaceLow)
+        .clipShape(RoundedRectangle(cornerRadius: MangaTheme.cardRadius, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: MangaTheme.cardRadius).stroke(MangaTheme.hairline, lineWidth: 1))
+        .shadow(color: MangaTheme.cardShadow, radius: 8, x: 0, y: 3)
         .padding(.horizontal, 20)
     }
 
@@ -222,30 +246,31 @@ private struct BadgeItem: View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(isUnlocked ? Theme.onAccent : Theme.textMuted)
+                .foregroundStyle(isUnlocked ? .white : MangaTheme.secondary)
                 .frame(width: 40, height: 40)
-                .background(isUnlocked ? color : Theme.surfaceSubtle)
+                .background(isUnlocked ? color : MangaTheme.surfaceContainer)
                 .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(isUnlocked ? Theme.textDark : Theme.textMuted)
+                    .foregroundStyle(isUnlocked ? MangaTheme.ink : MangaTheme.secondary)
                 Text(subtitle)
                     .font(.system(size: 12))
-                    .foregroundStyle(Theme.textMuted)
+                    .foregroundStyle(MangaTheme.secondary)
                     .lineLimit(1)
             }
             Spacer()
             if isUnlocked {
                 Image(systemName: "checkmark")
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(Theme.ember)
+                    .foregroundStyle(MangaTheme.vermilion)
             }
         }
         .padding(12)
-        .background(Theme.surfaceWhite)
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: Theme.ink.opacity(0.06), radius: 10, x: 0, y: 4)
+        .background(MangaTheme.surfaceLow)
+        .clipShape(RoundedRectangle(cornerRadius: MangaTheme.cardRadius, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: MangaTheme.cardRadius).stroke(MangaTheme.hairline, lineWidth: 1))
+        .shadow(color: MangaTheme.cardShadow, radius: 8, x: 0, y: 3)
     }
 }

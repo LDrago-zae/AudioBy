@@ -35,7 +35,7 @@ public struct CoverArtView: View {
         GeometryReader { geometry in
             ZStack {
                 if let imageURL = coverImageURL {
-                    AsyncImage(url: imageURL) { phase in
+                    CachedAsyncImage(url: imageURL) { phase in
                         switch phase {
                         case .success(let image):
                             image
