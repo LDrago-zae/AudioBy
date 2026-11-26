@@ -21,13 +21,21 @@ private final class ScrollBox { weak var scroll: UIScrollView? }
 private struct PageTapScrollModifier: ViewModifier {
     var onCenterTap: () -> Void
     @State private var box = ScrollBox()
+    @State private var containerWidth: CGFloat = 390
 
     func body(content: Content) -> some View {
         content
+            .background(
+                GeometryReader { geo in
+                    Color.clear
+                        .onAppear { containerWidth = geo.size.width }
+                        .onChange(of: geo.size.width) { _, newW in containerWidth = newW }
+                }
+            )
             .background(ScrollFinder { box.scroll = $0 })
             .simultaneousGesture(
                 SpatialTapGesture().onEnded { value in
-                    let w = UIScreen.main.bounds.width
+                    let w = max(1, containerWidth)
                     if value.location.x < w * 0.3 {
                         page(-1)
                     } else if value.location.x > w * 0.7 {

@@ -263,10 +263,7 @@ public struct MangaLibraryScreenView: View {
                     .padding(.vertical, 30)
                 } else {
                     LazyVGrid(
-                        columns: [
-                            GridItem(.flexible(), spacing: 14),
-                            GridItem(.flexible(), spacing: 14)
-                        ],
+                        columns: DuoLayout.adaptiveCardColumns,
                         spacing: 18
                     ) {
                         ForEach(displaySeries) { series in

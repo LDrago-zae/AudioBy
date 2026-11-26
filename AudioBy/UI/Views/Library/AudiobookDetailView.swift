@@ -775,6 +775,7 @@ public struct AudiobookDetailView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 20).stroke(MangaTheme.hairline, lineWidth: 1))
         .shadow(color: Color.black.opacity(0.08), radius: 12, y: 4)
+        .duoFloatingBarWidth()
         .padding(.horizontal, 16)
         .padding(.bottom, 10)
     }

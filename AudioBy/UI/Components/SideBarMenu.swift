@@ -9,22 +9,23 @@ public struct SideBarMenu: View {
     public init() {}
 
     public var body: some View {
-        ZStack(alignment: .leading) {
-            // Backdrop scrim
-            if nav.isSidebarOpen {
-                Color.black.opacity(0.45)
-                    .ignoresSafeArea()
-                    .transition(.opacity)
-                    .onTapGesture {
-                        nav.closeSidebar()
-                    }
-            }
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                // Backdrop scrim
+                if nav.isSidebarOpen {
+                    Color.black.opacity(0.45)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+                        .onTapGesture {
+                            nav.closeSidebar()
+                        }
+                }
 
-            // Drawer content
-            if nav.isSidebarOpen {
-                drawerContent
-                    .frame(width: 310)
-                    .frame(maxHeight: .infinity)
+                // Drawer content
+                if nav.isSidebarOpen {
+                    drawerContent
+                        .frame(width: DuoLayout.sidebarWidth(for: geo.size.width))
+                        .frame(maxHeight: .infinity)
                     .background(MangaTheme.surfaceLow)
                     .clipShape(
                         UnevenRoundedRectangle(
@@ -56,6 +57,7 @@ public struct SideBarMenu: View {
             }
         }
         .animation(.spring(response: 0.35, dampingFraction: 0.85), value: nav.isSidebarOpen)
+        }
     }
 
     private var drawerContent: some View {
