@@ -764,6 +764,7 @@ public struct MangaDetailView: View {
         .clipShape(Capsule())
         .overlay(Capsule().stroke(Color.white.opacity(0.12), lineWidth: 1))
         .shadow(color: Color.black.opacity(0.3), radius: 16, y: 6)
+        .duoFloatingBarWidth()
         .padding(.horizontal, 20)
         .padding(.bottom, 12)
     }

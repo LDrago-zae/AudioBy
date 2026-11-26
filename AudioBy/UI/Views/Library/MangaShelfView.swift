@@ -289,7 +289,7 @@ public struct MangaShelfView: View {
     }
 
     private func seriesGrid(_ items: [MangaSeries], destination: @escaping (MangaSeries) -> MangaDetailView) -> some View {
-        LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 16) {
+        LazyVGrid(columns: DuoLayout.adaptiveCardColumns, spacing: 16) {
             ForEach(items) { series in
                 NavigationLink(destination: destination(series)) {
                     VStack(alignment: .leading, spacing: 8) {

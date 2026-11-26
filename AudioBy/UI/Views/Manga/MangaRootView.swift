@@ -73,6 +73,7 @@ public struct MangaRootView: View {
         .clipShape(Capsule())
         .overlay(Capsule().stroke(MangaTheme.hairline, lineWidth: 1))
         .shadow(color: MangaTheme.cardShadow, radius: 12, y: 4)
+        .duoFloatingBarWidth(maxWidth: 460)
         .padding(.horizontal, 24)
         .padding(.bottom, 10)
     }

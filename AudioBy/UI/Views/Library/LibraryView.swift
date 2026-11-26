@@ -338,10 +338,7 @@ public struct LibraryView: View {
                 emptyLibraryPlaceholder
             } else if layoutMode == .grid {
                 LazyVGrid(
-                    columns: [
-                        GridItem(.flexible(), spacing: 14),
-                        GridItem(.flexible(), spacing: 14)
-                    ],
+                    columns: DuoLayout.adaptiveCardColumns,
                     spacing: 18
                 ) {
                     ForEach(currentBooks) { book in

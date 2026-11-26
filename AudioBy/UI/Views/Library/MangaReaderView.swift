@@ -227,28 +227,32 @@ public struct MangaReaderView: View {
 
     // MARK: - Webtoon Scroll View
     private var webtoonScrollView: some View {
-        ScrollView {
-            LazyVStack(spacing: cropBorders ? 0 : 4) {
-                ForEach(pages.indices, id: \.self) { index in
-                    pageImage(pages[index])
-                        .id(index)
+        GeometryReader { geo in
+            ScrollView {
+                LazyVStack(spacing: cropBorders ? 0 : 4) {
+                    ForEach(pages.indices, id: \.self) { index in
+                        pageImage(pages[index])
+                            .frame(maxWidth: 780)
+                            .frame(maxWidth: .infinity)
+                            .id(index)
+                    }
                 }
+                .scrollTargetLayout()
             }
-            .scrollTargetLayout()
+            .scrollPosition(id: Binding<Int?>(get: { page }, set: { if let val = $0 { page = val } }))
+            .simultaneousGesture(
+                SpatialTapGesture().onEnded { value in
+                    let w = max(1, geo.size.width)
+                    if value.location.x < w * 0.3 {
+                        withAnimation { stepPage(-1) }
+                    } else if value.location.x > w * 0.7 {
+                        withAnimation { stepPage(1) }
+                    } else {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) { showHUD.toggle() }
+                    }
+                }
+            )
         }
-        .scrollPosition(id: Binding<Int?>(get: { page }, set: { if let val = $0 { page = val } }))
-        .simultaneousGesture(
-            SpatialTapGesture().onEnded { value in
-                let w = UIScreen.main.bounds.width
-                if value.location.x < w * 0.3 {
-                    withAnimation { stepPage(-1) }
-                } else if value.location.x > w * 0.7 {
-                    withAnimation { stepPage(1) }
-                } else {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) { showHUD.toggle() }
-                }
-            }
-        )
     }
 
     // MARK: - Double Page Spread

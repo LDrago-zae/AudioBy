@@ -174,10 +174,7 @@ public struct MangaBrowseView: View {
                     .padding(.horizontal, 16)
 
                     LazyVGrid(
-                        columns: [
-                            GridItem(.flexible(), spacing: 14),
-                            GridItem(.flexible(), spacing: 14)
-                        ],
+                        columns: DuoLayout.adaptiveCardColumns,
                         spacing: 16
                     ) {
                         ForEach(results) { series in

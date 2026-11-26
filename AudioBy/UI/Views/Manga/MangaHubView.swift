@@ -680,10 +680,7 @@ public struct MangaHubView: View {
             }
 
             LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 14),
-                    GridItem(.flexible(), spacing: 14)
-                ],
+                columns: DuoLayout.adaptiveCardColumns,
                 spacing: 16
             ) {
                 ForEach(Array(popularSerializations.enumerated()), id: \.element.id) { index, item in
