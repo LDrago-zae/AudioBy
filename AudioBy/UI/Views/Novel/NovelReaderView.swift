@@ -98,6 +98,7 @@ public struct NovelReaderView: View {
 
                     Spacer(minLength: 120)
                 }
+                .duoReadableContainer(maxWidth: 700)
                 .padding(.horizontal, marginPadding)
                 .padding(.top, 70)
             }

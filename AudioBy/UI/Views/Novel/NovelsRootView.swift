@@ -47,7 +47,7 @@ public struct NovelsRootView: View {
                         }
                         .frame(maxWidth: .infinity).padding(.top, 40).padding(.horizontal, 30)
                     } else {
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 18) {
+                        LazyVGrid(columns: DuoLayout.adaptiveCardColumns, spacing: 18) {
                             ForEach(books) { book in
                                 Button { opened = book } label: {
                                     KomorebiBookCard(book: book, badgeText: "NOVEL", showProgress: false)

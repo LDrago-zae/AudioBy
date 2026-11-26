@@ -47,6 +47,7 @@
 		5D943880B9A54315B4FE9BBF /* SleepTimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65A197F4BBF16C2E6970A73 /* SleepTimerService.swift */; };
 		5DDDE909B07EEA87AC0516BF /* CatalogBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FF3227ABB8E2C0F35C4D4 /* CatalogBook.swift */; };
 		5E9730A10B3FF65AAD97B1CF /* BookReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E688E7FE340335AA6F139 /* BookReview.swift */; };
+		5F26E9EA2F3BC8293E02DB0A /* DuoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24931D2B33369CC0E643DFD /* DuoLayout.swift */; };
 		5FA48D542220D80D7D1D0029 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FE093090D11862B88ACB45 /* AudioPlayerService.swift */; };
 		614CC7D999BF187DB429747B /* UserImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B04B7EF23F8CA3BDFE7A279 /* UserImportService.swift */; };
 		61A92C3AEC979F6C25B94EAB /* ContentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24326B5FD946AA4544D8EDE /* ContentCache.swift */; };
@@ -212,6 +213,7 @@
 		CBD674C2255EB44F91709DE3 /* FullScreenPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPlayerView.swift; sourceTree = "<group>"; };
 		CF68A84BC26A60F87CBC63F3 /* KaraokeTranscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokeTranscriptionView.swift; sourceTree = "<group>"; };
 		D20290754F100B1A46C566AA /* MangaTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaTheme.swift; sourceTree = "<group>"; };
+		D24931D2B33369CC0E643DFD /* DuoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuoLayout.swift; sourceTree = "<group>"; };
 		D24E688E7FE340335AA6F139 /* BookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReview.swift; sourceTree = "<group>"; };
 		D38EB3D4F107C466F8EA498C /* AudioBy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AudioBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D431979789911B2A0F32C2ED /* zip_inflate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = zip_inflate.c; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 		95FB19CF119AFFA6C009DBF0 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				D24931D2B33369CC0E643DFD /* DuoLayout.swift */,
 				D20290754F100B1A46C566AA /* MangaTheme.swift */,
 				F0D664FD4EE09D3062A8A548 /* Theme.swift */,
 			);
@@ -723,6 +726,7 @@
 				55F43F6A13E67509C9D10DA1 /* DiscoverView.swift in Sources */,
 				43C880F2F1F9E4DE732878E9 /* DotMatrixChartView.swift in Sources */,
 				66CB1E61FCDFAAC0F86B5929 /* DownloadManager.swift in Sources */,
+				5F26E9EA2F3BC8293E02DB0A /* DuoLayout.swift in Sources */,
 				C9BB485B6D065603D61FA5BC /* EdgeSpeechService.swift in Sources */,
 				084139D0234F0E7E8BD90999 /* ElevenLabsService.swift in Sources */,
 				CEEEE484F5D4AA81BCC3666C /* Engagement.swift in Sources */,

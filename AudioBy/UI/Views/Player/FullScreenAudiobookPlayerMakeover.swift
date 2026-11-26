@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct FullScreenAudiobookPlayerMakeover: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     public let book: Audiobook
 
     @Bindable private var playerService = AudioPlayerService.shared
@@ -31,32 +32,55 @@ public struct FullScreenAudiobookPlayerMakeover: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 18) {
-                // Top Action Bar
-                topActionBar
+            GeometryReader { geo in
+                let isDualPane = DuoLayout.isWide(geo.size, sizeClass: horizontalSizeClass) || DuoLayout.isLandscape(geo.size)
 
-                Spacer(minLength: 8)
+                VStack(spacing: 16) {
+                    // Top Action Bar
+                    topActionBar
 
-                // Artwork & Title Details
-                artworkAndTitleSection
+                    if isDualPane {
+                        HStack(alignment: .center, spacing: 28) {
+                            artworkAndTitleSection
+                                .frame(maxWidth: geo.size.width * 0.44)
 
-                // Dynamic Audio Waveform & Scrubber
-                waveformAndScrubberSection
+                            ScrollView(showsIndicators: false) {
+                                VStack(spacing: 18) {
+                                    waveformAndScrubberSection
+                                    primaryPlaybackControls
+                                    secondaryToolbar
+                                    upNextRibbon
+                                }
+                                .padding(.vertical, 8)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .frame(maxHeight: .infinity)
+                    } else {
+                        Spacer(minLength: 8)
 
-                // Primary Playback Controls
-                primaryPlaybackControls
+                        // Artwork & Title Details
+                        artworkAndTitleSection
 
-                // Secondary Contextual Toolbar
-                secondaryToolbar
+                        // Dynamic Audio Waveform & Scrubber
+                        waveformAndScrubberSection
 
-                // Up Next Cue Ribbon
-                upNextRibbon
+                        // Primary Playback Controls
+                        primaryPlaybackControls
 
-                Spacer(minLength: 16)
+                        // Secondary Contextual Toolbar
+                        secondaryToolbar
+
+                        // Up Next Cue Ribbon
+                        upNextRibbon
+
+                        Spacer(minLength: 16)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 16)
-            .padding(.bottom, 12)
 
             // Bookmark Toast
             if showingBookmarkToast {

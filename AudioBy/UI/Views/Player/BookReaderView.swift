@@ -197,6 +197,7 @@ public struct BookReaderView: View {
 
                     Color.clear.frame(height: 160)
                 }
+                .duoReadableContainer(maxWidth: 700)
                 .padding(.horizontal, 24)
             }
             .contentShape(Rectangle())
