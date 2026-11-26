@@ -31,11 +31,36 @@ public struct CoverArtView: View {
         Theme.coverHexes(seed: "\(title)|\(author)", stored: gradientHexes).map { Color(hexString: $0) }
     }
 
+    private var resolvedCoverURLs: (primary: URL?, fallback: URL?) {
+        let openLibraryURL = Self.openLibraryCoverURL(for: title)
+        guard let url = coverImageURL else {
+            return (openLibraryURL, nil)
+        }
+        // www.gutenberg.org returns HTTP 503 rate limits; prefer Open Library and fall back to Gutenberg mirror.
+        if url.host?.contains("gutenberg.org") == true {
+            let mirrorURL = URL(string: url.absoluteString.replacingOccurrences(of: "www.gutenberg.org", with: "gutenberg.pglaf.org"))
+            return (openLibraryURL ?? mirrorURL, mirrorURL)
+        }
+        return (url, openLibraryURL)
+    }
+
+    private static func openLibraryCoverURL(for rawTitle: String) -> URL? {
+        let cleanTitle = rawTitle
+            .components(separatedBy: CharacterSet(charactersIn: ";(:")).first?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? rawTitle
+        guard !cleanTitle.isEmpty,
+              let encoded = cleanTitle.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
+            return nil
+        }
+        return URL(string: "https://covers.openlibrary.org/b/title/\(encoded)-M.jpg?default=false")
+    }
+
     public var body: some View {
+        let urls = resolvedCoverURLs
         GeometryReader { geometry in
             ZStack {
-                if let imageURL = coverImageURL {
-                    CachedAsyncImage(url: imageURL) { phase in
+                if let imageURL = urls.primary {
+                    CachedAsyncImage(url: imageURL, fallbackURL: urls.fallback) { phase in
                         switch phase {
                         case .success(let image):
                             image

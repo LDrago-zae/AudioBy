@@ -851,10 +851,7 @@ public struct HomeDashboardView: View {
                 .padding(.vertical, 30)
             } else {
                 LazyVGrid(
-                    columns: [
-                        GridItem(.flexible(), spacing: 14),
-                        GridItem(.flexible(), spacing: 14)
-                    ],
+                    columns: DuoLayout.adaptiveCardColumns,
                     spacing: 18
                 ) {
                     ForEach(shelf) { book in

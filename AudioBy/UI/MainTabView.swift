@@ -62,6 +62,7 @@ public struct MainTabView: View {
                 }
                 FloatingDockTabBar(selectedTab: $nav.dockTab)
             }
+            .duoFloatingBarWidth()
             .padding(.horizontal, 16)
             .padding(.bottom, 6)
             .background(Color.clear)

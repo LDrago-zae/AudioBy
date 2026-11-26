@@ -20,8 +20,10 @@ public final class ImageCache: @unchecked Sendable {
         memory.countLimit = 300
         memory.totalCostLimit = 120 * 1024 * 1024
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 20
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 20
         config.requestCachePolicy = .returnCacheDataElseLoad
+        config.httpAdditionalHeaders = ["User-Agent": "AudioBy/2.0 (iOS)"]
         session = URLSession(configuration: config)
         Task.detached(priority: .background) { [weak self] in self?.trimDiskIfNeeded() }
     }
@@ -55,9 +57,14 @@ public final class ImageCache: @unchecked Sendable {
             return await existing.value
         }
         let task = Task<UIImage?, Never> { [session] in
-            guard let (data, response) = try? await session.data(from: url),
+            var request = URLRequest(url: url)
+            request.setValue("AudioBy/2.0 (iOS)", forHTTPHeaderField: "User-Agent")
+            guard let (data, response) = try? await session.data(for: request),
                   (response as? HTTPURLResponse).map({ (200..<300).contains($0.statusCode) }) ?? true,
-                  let image = UIImage(data: data) else { return nil }
+                  data.count > 200,
+                  let image = UIImage(data: data),
+                  image.size.width > 4,
+                  image.size.height > 4 else { return nil }
             self.memory.setObject(image, forKey: k as NSString, cost: data.count)
             try? data.write(to: self.fileURL(k), options: .atomic)
             return image
@@ -108,23 +115,28 @@ private struct ImageLoadFailure: Error {}
 /// Drop-in replacement for `AsyncImage` that persists images after the first load.
 public struct CachedAsyncImage<Content: View>: View {
     private let url: URL?
+    private let fallbackURL: URL?
     private let content: (AsyncImagePhase) -> Content
     @State private var phase: AsyncImagePhase = .empty
 
-    public init(url: URL?, @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
+    public init(url: URL?, fallbackURL: URL? = nil, @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
         self.url = url
+        self.fallbackURL = fallbackURL
         self.content = content
         if let url, let hit = ImageCache.shared.cached(url) {
+            _phase = State(initialValue: .success(Image(uiImage: hit)))
+        } else if let fallbackURL, let hit = ImageCache.shared.cached(fallbackURL) {
             _phase = State(initialValue: .success(Image(uiImage: hit)))
         }
     }
 
     public init<I: View, P: View>(
         url: URL?,
+        fallbackURL: URL? = nil,
         @ViewBuilder content: @escaping (Image) -> I,
         @ViewBuilder placeholder: @escaping () -> P
     ) where Content == _ConditionalContent<I, P> {
-        self.init(url: url) { phase in
+        self.init(url: url, fallbackURL: fallbackURL) { phase in
             if let image = phase.image {
                 content(image)
             } else {
@@ -140,14 +152,23 @@ public struct CachedAsyncImage<Content: View>: View {
 
     @MainActor
     private func load() async {
-        guard let url else { phase = .failure(ImageLoadFailure()); return }
-        if case .success = phase, let hit = ImageCache.shared.cached(url) {
-            phase = .success(Image(uiImage: hit))
-            return
+        if let url {
+            if case .success = phase, let hit = ImageCache.shared.cached(url) {
+                phase = .success(Image(uiImage: hit))
+                return
+            }
+            if let image = await ImageCache.shared.image(for: url) {
+                phase = .success(Image(uiImage: image))
+                return
+            }
         }
-        if let image = await ImageCache.shared.image(for: url) {
-            phase = .success(Image(uiImage: image))
-        } else if !Task.isCancelled {
+        if !Task.isCancelled, let fallbackURL {
+            if let image = await ImageCache.shared.image(for: fallbackURL) {
+                phase = .success(Image(uiImage: image))
+                return
+            }
+        }
+        if !Task.isCancelled {
             phase = .failure(ImageLoadFailure())
         }
     }
